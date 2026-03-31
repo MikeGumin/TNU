@@ -23,7 +23,7 @@ public partial class JobEntryViewModel : ReactiveObject
     };
 
     // Данные модели
-    public JobEntry Entry { get; } = new();
+    public JobEntry Entry { get; set; } = new();
     
     public Worker JobWorker => Entry.JobWorker;
     public string JobName

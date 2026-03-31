@@ -1,10 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using ReactiveUI;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using DynamicData.Binding;
 using TNU.Models;
 using TNU.Services.EntryExport;
+using TNU.Services.EntrySave;
 
 namespace TNU.ViewModels;
 
@@ -14,26 +17,20 @@ public partial class MainWindowViewModel : ViewModelBase
     /// Коллекция для хранения текущих записей
     /// </summary>
     public ObservableCollection<JobEntryViewModel> TimerList { get; private set; } = [];
-    private readonly IEntryExportService _entryExportService;
-    
     /// <summary>
-    /// Флаг для указания возможности экспорта записей
+    /// Коллекция для хранения завершенных записей
     /// </summary>
-    private bool _isExporting = false;
-    public bool IsExporting
-    {
-        get => _isExporting;
-        private set
-        {
-            _isExporting = value;
-            ExportEntriesCommand.NotifyCanExecuteChanged();
-        }
-    }
+    public static ObservableCollection<JobEntry> FinishedEntries { get; private set; } = new();
+    
+    private readonly IEntryExportService _entryExportService;
+    private readonly IEntrySaveService _entrySaveService;
 
     public MainWindowViewModel(
-        IEntryExportService entryExportService)
+        IEntryExportService entryExportService,
+        IEntrySaveService entrySaveService)
     {
         _entryExportService = entryExportService;
+        _entrySaveService = entrySaveService;
     }
 
     /// <summary>
@@ -51,7 +48,36 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanExport))]
     private void ExportEntries()
     {
-        _entryExportService.ExportEntry(TimerList.Select(vm => vm.Entry));
+        _entryExportService.ExportEntry(FinishedEntries);
+    }
+    
+    /// <summary>
+    /// Метод для сохранения завершенных задач
+    /// </summary>
+    [RelayCommand]
+    private void SaveEntries()
+    {
+        _entrySaveService.SaveEntry(TimerList.Select(vm => vm.Entry));
+        
+        var toRemove = TimerList.Where(vm => vm.Entry.RecordStatus == RecordStatusEnum.Finish).ToList();
+        foreach (var vm in toRemove)
+        {
+            TimerList.Remove(vm);
+        }
+    }
+    
+    /// <summary>
+    /// Флаг для указания возможности экспорта записей
+    /// </summary>
+    private bool _isExporting = false;
+    public bool IsExporting
+    {
+        get => _isExporting;
+        private set
+        {
+            _isExporting = value;
+            ExportEntriesCommand.NotifyCanExecuteChanged();
+        }
     }
     
     /// <summary>

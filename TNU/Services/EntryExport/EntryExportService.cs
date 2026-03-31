@@ -8,9 +8,11 @@ using TNU.Services.EntryExport.Model;
 
 namespace TNU.Services.EntryExport;
 
+/// <inheritdoc />
 public class EntryExportService: IEntryExportService
 {
-    public void ExportEntry(IEnumerable<JobEntry> entryList)
+    /// <inheritdoc />
+    public void ExportEntry(ObservableCollection<JobEntry> entryList)
     {
         if (!entryList.Any())
         {
