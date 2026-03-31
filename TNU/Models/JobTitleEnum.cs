@@ -5,7 +5,7 @@ namespace TNU.Models
     /// <summary>
     /// Класс для создания экземпляров возможных работ
     /// </summary>
-    internal class JobTitleEnum
+    public class JobTitleEnum
     {
         /// <summary>
         /// Наименование работы

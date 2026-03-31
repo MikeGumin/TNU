@@ -9,7 +9,9 @@
 
 		xmlns:local="clr-namespace:TNU.Services"
 		xmlns:models="using:TNU.Models"
-		
+
+		FontFamily="Segoe UI, Arial, sans-serif"
+
 		Icon="/Assets/avalonia-logo.ico"
 		Title="TNU">
 
@@ -18,6 +20,7 @@
 		to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
+	
 
 	<Grid ShowGridLines="True">
 
@@ -39,40 +42,51 @@
 		<DockPanel Background="DarkGray" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3">
 			<Border>
 				<ScrollViewer>
-					<ItemsControl ItemsSource="{Binding Path=TimerList}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<Grid ColumnDefinitions="Auto, *,Auto, 100">
-									<TextBlock Grid.Column="0" Text="{Binding Path=JobWorker.FullName}"/>
+					<StackPanel>
 
-									<AutoCompleteBox Grid.Column="1"
-									ItemsSource="{x:Static local:JobNameRepository.JobNameList }"
-									ValueMemberBinding="{Binding Name}" 
-									FilterMode="Contains"
-									MinimumPrefixLength="1">
+						<ItemsControl ItemsSource="{Binding Path=TimerList}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Grid ColumnDefinitions="Auto, *,Auto, 100">
+										<TextBlock Grid.Column="0" Text="{Binding Path=JobWorker.FullName}"/>
 
-									<AutoCompleteBox.ItemTemplate>
-										<DataTemplate x:DataType="models:JobTitleEnum">
-											<TextBlock Text="{Binding Name}"
-													   FontSize="14"
-													   Padding="4"/>
-										</DataTemplate>
-									</AutoCompleteBox.ItemTemplate>
-									</AutoCompleteBox>
+										<AutoCompleteBox Grid.Column="1"
+														 Text="{Binding Path=JobName}"
+														 ItemsSource="{x:Static local:JobNameRepository.JobNameList}"
+														 ValueMemberBinding="{Binding Name}"
+														 FilterMode="Contains"
+														 MinimumPrefixLength="1"
+														 >
+
+											<AutoCompleteBox.ItemTemplate>
+												<DataTemplate x:DataType="models:JobTitleEnum">
+													<TextBlock Text="{Binding Name}"
+															   FontSize="14"
+															   Padding="4"/>
+												</DataTemplate>
+											</AutoCompleteBox.ItemTemplate>
+										</AutoCompleteBox>
 
 
-									<Button Grid.Column="2" Content="Stop" Command="{Binding StopTimerCommand}"/>
-									<TextBlock Grid.Column="3" Text="{Binding Path=JobTimer}"/>
-								</Grid>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
+										<Button Grid.Column="2" Content="Stop" Command="{Binding StopTimerCommand}"/>
+										<TextBlock Grid.Column="3" Text="{Binding Path=JobTimer}"/>
+									</Grid>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+						<Button
+						Content="Добавить новую задачу"
+								HorizontalAlignment="Stretch" 
+								VerticalAlignment="Center"
+								HorizontalContentAlignment="Center"
+								Command="{Binding StartTimerCommand}" />
+					</StackPanel>
 				</ScrollViewer>
 			</Border>
+
 		</DockPanel>
 
 
 
-		<Button Grid.Column="1" Grid.Row="0" Content="Start/Stop" Command="{Binding StartTimerCommand}" />
 	</Grid>
 </Window>
