@@ -2,10 +2,20 @@
 
 namespace TNU.Models
 {
+    /// <summary>
+    /// Класс для создания экземпляров возможных работ
+    /// </summary>
     internal class JobTitleEnum
     {
+        /// <summary>
+        /// Наименование работы
+        /// </summary>
         public string Name { get; set; }
-        public List<Role> Enums { get; set; } = new List<Role>() { Role.Defolt };
+
+        /// <summary>
+        /// Для каких должностей данная работа будет использоваться
+        /// </summary>
+        public List<JobPositionEnum> Enums { get; set; } = new List<JobPositionEnum>() { JobPositionEnum.Defolt };
 
         public JobTitleEnum(string jobName) 
         {

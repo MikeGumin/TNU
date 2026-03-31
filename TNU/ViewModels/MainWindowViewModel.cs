@@ -14,12 +14,19 @@ public partial class MainWindowViewModel : ViewModelBase
     //    get => greeting;
     //    private set => this.RaiseAndSetIfChanged(ref greeting, value);
     //}
+
+    /// <summary>
+    /// Коллекция для хранения текущих записей
+    /// </summary>
     public ObservableCollection<JobEntry> TimerList { get; private set; } = [];
 
     public MainWindowViewModel()
     {
     }
 
+    /// <summary>
+    /// Метод создания новой записи
+    /// </summary>
     [RelayCommand]
     private void StartTimer()
     {
