@@ -1,22 +1,19 @@
-﻿namespace TNU.Models
-{
-    public class Worker
-    {
-        /// <summary>
-        /// ФИО работника
-        /// </summary>
-        public string FullName { get; set; }
-        /// <summary>
-        /// Должность работника
-        /// </summary>
-        JobPositionEnum JobPosition { get; set; }
-    }
+﻿using TNU.Models.Enum;
 
+namespace TNU.Models;
+
+/// <summary>
+/// Модель работника
+/// </summary>
+public class Worker
+{
     /// <summary>
-    /// Перечесление Должностей для работника
+    /// ФИО работника
     /// </summary>
-    public enum JobPositionEnum 
-    {
-        Defolt,
-    }
+    public string FullName { get; set; }
+    
+    /// <summary>
+    /// Должность работника
+    /// </summary>
+    JobPositionEnum JobPosition { get; set; }
 }

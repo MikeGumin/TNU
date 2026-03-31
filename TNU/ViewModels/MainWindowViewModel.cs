@@ -1,26 +1,70 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using ReactiveUI;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using DynamicData.Binding;
 using TNU.Models;
 using TNU.Services.EntryExport;
+using TNU.Services.EntrySave;
 
 namespace TNU.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    //private decimal greeting = 0;
-    //public decimal Greeting
-    //{
-    //    get => greeting;
-    //    private set => this.RaiseAndSetIfChanged(ref greeting, value);
-    //}
-
     /// <summary>
     /// Коллекция для хранения текущих записей
     /// </summary>
-    public ObservableCollection<JobEntry> TimerList { get; private set; } = [];
+    public ObservableCollection<JobEntryViewModel> TimerList { get; private set; } = [];
+    /// <summary>
+    /// Коллекция для хранения завершенных записей
+    /// </summary>
+    public static ObservableCollection<JobEntry> FinishedEntries { get; private set; } = new();
+    
     private readonly IEntryExportService _entryExportService;
+    private readonly IEntrySaveService _entrySaveService;
+
+    public MainWindowViewModel(
+        IEntryExportService entryExportService,
+        IEntrySaveService entrySaveService)
+    {
+        _entryExportService = entryExportService;
+        _entrySaveService = entrySaveService;
+    }
+
+    /// <summary>
+    /// Метод создания новой записи
+    /// </summary>
+    [RelayCommand]
+    private void StartTimer()
+    {
+        TimerList.Add(new JobEntryViewModel());
+    }
+
+    /// <summary>
+    /// Метод для экспорта завершенных задач
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanExport))]
+    private void ExportEntries()
+    {
+        _entryExportService.ExportEntry(FinishedEntries);
+    }
+    
+    /// <summary>
+    /// Метод для сохранения завершенных задач
+    /// </summary>
+    [RelayCommand]
+    private void SaveEntries()
+    {
+        _entrySaveService.SaveEntry(TimerList.Select(vm => vm.Entry));
+        
+        var toRemove = TimerList.Where(vm => vm.Entry.RecordStatus == RecordStatusEnum.Finish).ToList();
+        foreach (var vm in toRemove)
+        {
+            TimerList.Remove(vm);
+        }
+    }
     
     /// <summary>
     /// Флаг для указания возможности экспорта записей
@@ -33,38 +77,6 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             _isExporting = value;
             ExportEntriesCommand.NotifyCanExecuteChanged();
-        }
-    }
-
-    public MainWindowViewModel(
-        IEntryExportService entryExportService)
-    {
-        _entryExportService = entryExportService;
-    }
-
-    /// <summary>
-    /// Метод создания новой записи
-    /// </summary>
-    [RelayCommand]
-    private void StartTimer()
-    {
-        TimerList.Add(new JobEntry());
-    }
-
-    /// <summary>
-    /// Метод для экспорта завершенных задач
-    /// </summary>
-    [RelayCommand(CanExecute = nameof(CanExport))]
-    private void ExportEntries()
-    {
-        IsExporting = true;
-        try
-        {
-            _entryExportService.ExportEntry(TimerList);
-        }
-        finally
-        {
-            IsExporting = false;
         }
     }
     
