@@ -1,8 +1,10 @@
 ﻿namespace TNU.Models
 {
-    internal class Worker
+    public class Worker
     {
-        string FullName { get; set; }
+        public string FullName { get; set; }
         string Role { get; set; }
+
+
     }
 }
