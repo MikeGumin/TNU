@@ -45,7 +45,7 @@ namespace TNU.Models
         /// <summary>
         /// Статус записи
         /// </summary>
-        public RecordStatusEnum RecordStatus { get; private set; } = RecordStatusEnum.Start;
+        public RecordStatusEnum RecordStatus { get; private set; }
         /// <summary>
         /// Работник для которого делаеться запись
         /// </summary>
@@ -87,6 +87,8 @@ namespace TNU.Models
         {
             _stopwatch.Start();
             _timer.Start();
+
+            RecordStatus = RecordStatusEnum.Start;
         }
 
         /// <summary>
