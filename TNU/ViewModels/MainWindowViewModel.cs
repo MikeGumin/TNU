@@ -1,30 +1,35 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Tmds.DBus.Protocol;
+﻿using CommunityToolkit.Mvvm.Input;
+using ReactiveUI;
+using System;
+using System.Collections.ObjectModel;
+using TNU.Models;
 
 namespace TNU.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
+public partial class MainWindowViewModel : ViewModelBase
 {
-    public string Greeting { get; private set; } = "dfgdfgdfgdfg";
-    List<double> TimerList { get; set; }
+    //private decimal greeting = 0;
+    //public decimal Greeting
+    //{
+    //    get => greeting;
+    //    private set => this.RaiseAndSetIfChanged(ref greeting, value);
+    //}
 
+    /// <summary>
+    /// Коллекция для хранения текущих записей
+    /// </summary>
+    public ObservableCollection<JobEntry> TimerList { get; private set; } = [];
 
     public MainWindowViewModel()
     {
-        OnPropertyChanged("Greeting");
-        Greeting = "1123";
-    }
-    public void Button_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        Greeting = "eeeeeeeeeeeeeee";
     }
 
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    /// <summary>
+    /// Метод создания новой записи
+    /// </summary>
+    [RelayCommand]
+    private void StartTimer()
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        TimerList.Add(new JobEntry());
     }
 }

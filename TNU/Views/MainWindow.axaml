@@ -6,6 +6,10 @@
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		x:Class="TNU.Views.MainWindow"
 		x:DataType="vm:MainWindowViewModel"
+
+		xmlns:local="clr-namespace:TNU.Services"
+		xmlns:models="using:TNU.Models"
+		
 		Icon="/Assets/avalonia-logo.ico"
 		Title="TNU">
 
@@ -32,10 +36,43 @@
 			<RowDefinition Height="*"></RowDefinition>
 		</Grid.RowDefinitions>
 
-		<TextBlock Grid.Column="2" Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-		<TextBox Grid.Column="1" Text="11sdfsdfs"/>
-		<Button Grid.Column="1" Grid.Row="1" Content="Создать" Click="Button_Click" />
+		<DockPanel Background="DarkGray" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3">
+			<Border>
+				<ScrollViewer>
+					<ItemsControl ItemsSource="{Binding Path=TimerList}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Grid ColumnDefinitions="Auto, *,Auto, 100">
+									<TextBlock Grid.Column="0" Text="{Binding Path=JobWorker.FullName}"/>
+
+									<AutoCompleteBox Grid.Column="1"
+									ItemsSource="{x:Static local:JobNameRepository.JobNameList }"
+									ValueMemberBinding="{Binding Name}" 
+									FilterMode="Contains"
+									MinimumPrefixLength="1">
+
+									<AutoCompleteBox.ItemTemplate>
+										<DataTemplate x:DataType="models:JobTitleEnum">
+											<TextBlock Text="{Binding Name}"
+													   FontSize="14"
+													   Padding="4"/>
+										</DataTemplate>
+									</AutoCompleteBox.ItemTemplate>
+									</AutoCompleteBox>
+
+
+									<Button Grid.Column="2" Content="Stop" Command="{Binding StopTimerCommand}"/>
+									<TextBlock Grid.Column="3" Text="{Binding Path=JobTimer}"/>
+								</Grid>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</ScrollViewer>
+			</Border>
+		</DockPanel>
+
+
+
+		<Button Grid.Column="1" Grid.Row="0" Content="Start/Stop" Command="{Binding StartTimerCommand}" />
 	</Grid>
-
-
 </Window>

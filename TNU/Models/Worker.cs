@@ -1,8 +1,22 @@
 ﻿namespace TNU.Models
 {
-    internal class Worker
+    public class Worker
     {
-        string FullName { get; set; }
-        string Role { get; set; }
+        /// <summary>
+        /// ФИО работника
+        /// </summary>
+        public string FullName { get; set; }
+        /// <summary>
+        /// Должность работника
+        /// </summary>
+        JobPositionEnum JobPosition { get; set; }
+    }
+
+    /// <summary>
+    /// Перечесление Должностей для работника
+    /// </summary>
+    public enum JobPositionEnum 
+    {
+        Defolt,
     }
 }
