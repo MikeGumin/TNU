@@ -1,0 +1,4 @@
+* text=auto
+*.cs text eol=lf encoding=UTF-8
+*.axaml text eol=lf encoding=UTF-8
+*.xaml text eol=lf encoding=UTF-8

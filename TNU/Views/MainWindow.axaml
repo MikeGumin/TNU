@@ -43,43 +43,44 @@
 			<Border>
 				<ScrollViewer>
 					<StackPanel>
-
 						<ItemsControl ItemsSource="{Binding Path=TimerList}">
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
-									<Grid ColumnDefinitions="Auto, *,Auto, 100">
+									<Grid ColumnDefinitions="Auto, *, Auto, 100">
 										<TextBlock Grid.Column="0" Text="{Binding Path=JobWorker.FullName}"/>
 
 										<AutoCompleteBox Grid.Column="1"
-														 Text="{Binding Path=JobName}"
-														 ItemsSource="{x:Static local:JobNameRepository.JobNameList}"
-														 ValueMemberBinding="{Binding Name}"
-														 FilterMode="Contains"
-														 MinimumPrefixLength="1"
-														 >
-
+										                 Text="{Binding Path=JobName}"
+										                 ItemsSource="{x:Static local:JobNameRepository.JobNameList}"
+										                 FilterMode="Contains"
+										                 MinimumPrefixLength="1">
 											<AutoCompleteBox.ItemTemplate>
 												<DataTemplate x:DataType="models:JobTitleEnum">
 													<TextBlock Text="{Binding Name}"
-															   FontSize="14"
-															   Padding="4"/>
+													           FontSize="14"
+													           Padding="4"/>
 												</DataTemplate>
 											</AutoCompleteBox.ItemTemplate>
 										</AutoCompleteBox>
 
-
 										<Button Grid.Column="2" Content="Stop" Command="{Binding StopTimerCommand}"/>
-										<TextBlock Grid.Column="3" Text="{Binding Path=JobTimer}"/>
+										<Button Grid.Column="3" Content="End" Command="{Binding EndTimerCommand}"/>
+										<TextBlock Grid.Column="4" Text="{Binding Path=JobTimer}"/>
 									</Grid>
 								</DataTemplate>
 							</ItemsControl.ItemTemplate>
 						</ItemsControl>
-						<Button
-						Content="Äîáàâèòü íîâóþ çàäà÷ó"
-								HorizontalAlignment="Stretch" 
-								VerticalAlignment="Center"
-								HorizontalContentAlignment="Center"
-								Command="{Binding StartTimerCommand}" />
+
+						<Button Content="Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð½Ð¾Ð²ÑƒÑŽ Ð·Ð°Ð¿Ð¸ÑÑŒ"
+						        HorizontalAlignment="Stretch"
+						        VerticalAlignment="Center"
+						        HorizontalContentAlignment="Center"
+						        Command="{Binding StartTimerCommand}" />
+						
+						<Button Content="Ð­ÐºÑÐ¿Ð¾Ñ€Ñ‚"
+						        HorizontalAlignment="Right"
+						        Margin="0,10,10,10"
+						        Command="{Binding ExportEntriesCommand}" />
 					</StackPanel>
 				</ScrollViewer>
 			</Border>
