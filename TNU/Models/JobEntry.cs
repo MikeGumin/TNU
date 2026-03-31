@@ -39,8 +39,6 @@ namespace TNU.Models
                 TimeSpan elapsed = _stopwatch.Elapsed;
                 JobTimer = $"{elapsed.Minutes:00}:{elapsed.Seconds:00}:{elapsed.Milliseconds:000}";
 
-                //jobTimer += $"{minutes:00}:{seconds:00}:{milliseconds:000}";
-                //JobTimer += 0.01M;
             };
 
             StartTimer();
@@ -57,8 +55,7 @@ namespace TNU.Models
         {
             _timer.Stop();
             _stopwatch.Stop();
-
+            
         }
-
     }
 }

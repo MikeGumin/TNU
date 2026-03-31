@@ -3,8 +3,11 @@
     public class Worker
     {
         public string FullName { get; set; }
-        string Role { get; set; }
+        Role Role { get; set; }
+    }
 
-
+    public enum Role 
+    {
+        Defolt,
     }
 }
