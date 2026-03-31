@@ -7,6 +7,14 @@ using System.Reactive.Concurrency;
 
 namespace TNU.Models
 {
+
+    public enum RecordStatusEnum
+    {
+        Start,
+        Stop,
+        Finish
+    }
+
     /// <summary>
     /// Модель записи работы
     /// </summary>
@@ -22,7 +30,7 @@ namespace TNU.Models
             private set => this.RaiseAndSetIfChanged(ref jobTimer, value);
         }
 
-
+        public RecordStatusEnum RecordStatus = RecordStatusEnum.Start;
         public Worker JobWorker { get; set; }
         public DateTimeOffset JobDate { get; set; } = DateTimeOffset.Now;
         public string JobName { get; set; }
@@ -55,7 +63,8 @@ namespace TNU.Models
         {
             _timer.Stop();
             _stopwatch.Stop();
-            
+
+            RecordStatus = RecordStatusEnum.Stop;
         }
     }
 }
