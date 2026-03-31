@@ -5,7 +5,7 @@ namespace TNU.Models;
 /// <summary>
 /// Модель записи работы
 /// </summary>
-public class JobEntry
+public partial class JobEntry
 {
     /// <summary>
     /// Работник для которого делаеться запись

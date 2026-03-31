@@ -1,45 +1,70 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using ReactiveUI;
+﻿using Avalonia.Threading;
+using CommunityToolkit.Mvvm.Input;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using DynamicData.Binding;
 using TNU.Models;
 using TNU.Services.EntryExport;
 using TNU.Services.EntrySave;
 
 namespace TNU.ViewModels;
 
+delegate void ReDrowTimerStr(object? sender, EventArgs e);
+
 public partial class MainWindowViewModel : ViewModelBase
 {
+
+    /// <summary>
+    /// Переменная для обновления отображаемого времени
+    /// </summary>
+    private DispatcherTimer _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
+
+    ReDrowTimerStr dl;
+
     /// <summary>
     /// Коллекция для хранения текущих записей
     /// </summary>
     public ObservableCollection<JobEntryViewModel> TimerList { get; private set; } = [];
+
+
     /// <summary>
     /// Коллекция для хранения завершенных записей
     /// </summary>
     public static ObservableCollection<JobEntry> FinishedEntries { get; private set; } = new();
-    
+
     private readonly IEntryExportService _entryExportService;
     private readonly IEntrySaveService _entrySaveService;
 
-    public MainWindowViewModel(
-        IEntryExportService entryExportService,
-        IEntrySaveService entrySaveService)
+    public MainWindowViewModel(IEntryExportService entryExportService, IEntrySaveService entrySaveService)
     {
         _entryExportService = entryExportService;
         _entrySaveService = entrySaveService;
+
+        //___________________________________________________
+        _timer.Tick += (_, __) =>
+        {
+            dl?.Invoke(_, __);
+
+            System.Diagnostics.Debug.WriteLine("Work!!!");
+        };
+        //___________________________________________________
+
     }
 
     /// <summary>
     /// Метод создания новой записи
     /// </summary>
     [RelayCommand]
-    private void StartTimer()
+    private void AddNewTask()
     {
-        TimerList.Add(new JobEntryViewModel());
+        var a = new JobEntryViewModel();
+        //___________________________________________________
+        if(!_timer.IsEnabled)
+            _timer.Start();
+        dl += a.Timer.ReDrowTimer;
+        //___________________________________________________
+
+        TimerList.Add(a);
     }
 
     /// <summary>
@@ -50,7 +75,7 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         _entryExportService.ExportEntry(FinishedEntries);
     }
-    
+
     /// <summary>
     /// Метод для сохранения завершенных задач
     /// </summary>
@@ -58,14 +83,21 @@ public partial class MainWindowViewModel : ViewModelBase
     private void SaveEntries()
     {
         _entrySaveService.SaveEntry(TimerList.Select(vm => vm.Entry));
-        
+
         var toRemove = TimerList.Where(vm => vm.Entry.RecordStatus == RecordStatusEnum.Finish).ToList();
         foreach (var vm in toRemove)
         {
             TimerList.Remove(vm);
         }
+
+        //___________________________________________________
+
+        if (TimerList.Count <= 0)
+            _timer.Stop();
+        //___________________________________________________
+
     }
-    
+
     /// <summary>
     /// Флаг для указания возможности экспорта записей
     /// </summary>
@@ -79,7 +111,7 @@ public partial class MainWindowViewModel : ViewModelBase
             ExportEntriesCommand.NotifyCanExecuteChanged();
         }
     }
-    
+
     /// <summary>
     /// Метод проверки на возможность экспорта записей
     /// </summary>
