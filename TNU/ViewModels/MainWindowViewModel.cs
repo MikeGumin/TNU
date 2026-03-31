@@ -2,6 +2,7 @@
 using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using TNU.Models;
 using TNU.Services.EntryExport;
 
@@ -9,17 +10,10 @@ namespace TNU.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    //private decimal greeting = 0;
-    //public decimal Greeting
-    //{
-    //    get => greeting;
-    //    private set => this.RaiseAndSetIfChanged(ref greeting, value);
-    //}
-
     /// <summary>
     /// Коллекция для хранения текущих записей
     /// </summary>
-    public ObservableCollection<JobEntry> TimerList { get; private set; } = [];
+    public ObservableCollection<JobEntryViewModel> TimerList { get; private set; } = [];
     private readonly IEntryExportService _entryExportService;
     
     /// <summary>
@@ -48,7 +42,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void StartTimer()
     {
-        TimerList.Add(new JobEntry());
+        TimerList.Add(new JobEntryViewModel());
     }
 
     /// <summary>
@@ -57,15 +51,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanExport))]
     private void ExportEntries()
     {
-        IsExporting = true;
-        try
-        {
-            _entryExportService.ExportEntry(TimerList);
-        }
-        finally
-        {
-            IsExporting = false;
-        }
+        _entryExportService.ExportEntry(TimerList.Select(vm => vm.Entry));
     }
     
     /// <summary>

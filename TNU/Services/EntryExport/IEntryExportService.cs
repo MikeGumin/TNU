@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using TNU.Models;
 
@@ -12,5 +13,5 @@ public interface IEntryExportService
     /// Метод для экспорта записей
     /// </summary>
     /// <param name="entryList">Массив записей</param>
-    public void ExportEntry(ObservableCollection<JobEntry> entryList);
+    public void ExportEntry(IEnumerable<JobEntry> entryList);
 }

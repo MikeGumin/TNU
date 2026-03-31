@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using MiniExcelLibs;
 using TNU.Models;
 using TNU.Services.EntryExport.Model;
@@ -9,9 +10,9 @@ namespace TNU.Services.EntryExport;
 
 public class EntryExportService: IEntryExportService
 {
-    public void ExportEntry(ObservableCollection<JobEntry> entryList)
+    public void ExportEntry(IEnumerable<JobEntry> entryList)
     {
-        if (entryList.Count == 0)
+        if (!entryList.Any())
         {
             return; // todo: Нужно придумать какую-то систему уведомлений. Например - "У вас нет завершенных записей"
         }

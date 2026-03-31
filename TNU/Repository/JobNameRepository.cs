@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using TNU.Models;
+using TNU.Models.Enum;
 
-namespace TNU.Services
+namespace TNU.Repository
 {
     /// <summary>
     /// Репозиторий для наименований возможных работ
