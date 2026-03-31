@@ -11,6 +11,8 @@ namespace TNU.Models
         /// Наименование работы
         /// </summary>
         public string Name { get; set; }
+        
+        public override string ToString() => Name;
 
         /// <summary>
         /// Для каких должностей данная работа будет использоваться

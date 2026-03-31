@@ -58,6 +58,12 @@ namespace TNU.Models
         /// Наименование выполняемой работы
         /// </summary>
         public string JobName { get; set; }
+        
+        /// <summary>
+        /// Время выполнения задачи
+        /// </summary>
+        public string JobSample { get; set; }
+        
         /// <summary>
         /// Описание выполняемой работы
         /// </summary>
@@ -101,6 +107,16 @@ namespace TNU.Models
             _stopwatch.Stop();
 
             RecordStatus = RecordStatusEnum.Stop;
+        }
+        
+        /// <summary>
+        /// Метод завершения записи
+        /// </summary>
+        [RelayCommand]
+        public void EndTimer()
+        {
+            JobSample = _stopwatch.Elapsed.ToString().Split(".")[0];
+            RecordStatus = RecordStatusEnum.Finish;
         }
     }
 }
