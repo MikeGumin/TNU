@@ -26,14 +26,16 @@ public class FinishedEntryService : IFinishedEntryService
     }
     
     /// <inheritdoc />
-    public JobEntry EditEntry(JobEntry entry)
+    public JobEntry EditEntry(JobEntry editEntry, JobEntry entry)
     {
         return new  JobEntry()
         {
+            Id =  entry.Id,
             JobDate = entry.JobDate,
-            JobName = "Новое название таски",
-            JobWorker =  entry.JobWorker,
+            JobName = editEntry.JobName,
+            JobWorker =  editEntry.JobWorker,
             RecordStatus =  entry.RecordStatus,
+            JobSample =  entry.JobSample,
         };
     }
 }

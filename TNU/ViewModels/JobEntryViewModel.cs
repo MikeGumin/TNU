@@ -1,5 +1,4 @@
-﻿using Avalonia.Threading;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using ReactiveUI;
 using System.Collections.Generic;
 using TNU.Models;
@@ -64,14 +63,5 @@ public partial class JobEntryViewModel : ReactiveObject
         _parent.TimerList.Remove(this);
 
         //System.Diagnostics.Debug.WriteLine(Entry.JobSample);
-    }
-    
-    /// <summary>
-    /// Метод для сохранения завершенных задач
-    /// </summary>
-    [RelayCommand]
-    private void EditEntry()
-    {
-        Entry = _finishedEntryService.EditEntry(Entry);
     }
 }

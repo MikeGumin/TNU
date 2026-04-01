@@ -19,10 +19,11 @@ public interface IFinishedEntryService
     /// Метод удаления всех завершенных записей о работе
     /// </summary>
     public void DeleteEntry();
-    
+
     /// <summary>
     /// Метод редактирования завершенной записи о работе
     /// </summary>
+    /// <param name="editEntry">Отредактированная запись</param>
     /// <param name="entry">Запись о работе</param>
-    public JobEntry EditEntry(JobEntry entry);
+    public JobEntry EditEntry(JobEntry editEntry, JobEntry entry);
 }
