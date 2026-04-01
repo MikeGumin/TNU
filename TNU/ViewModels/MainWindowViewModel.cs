@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using TNU.Models;
+using TNU.Repository;
 using TNU.Services.EntryExport;
 using TNU.Services.EntrySave;
 
@@ -27,10 +28,7 @@ public partial class MainWindowViewModel : ViewModelBase
     public ObservableCollection<JobEntryViewModel> TimerList { get; private set; } = [];
 
 
-    /// <summary>
-    /// Коллекция для хранения завершенных записей
-    /// </summary>
-    public static ObservableCollection<JobEntry> FinishedEntries { get; private set; } = new();
+    
 
     private readonly IEntryExportService _entryExportService;
     private readonly IEntrySaveService _entrySaveService;
@@ -73,7 +71,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanExport))]
     private void ExportEntries()
     {
-        _entryExportService.ExportEntry(FinishedEntries);
+        _entryExportService.ExportEntry(FinishedEntriesRepository.FinishedEntries);
     }
 
     /// <summary>

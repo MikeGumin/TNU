@@ -100,7 +100,7 @@
 						           Margin="5" 
 						           HorizontalAlignment="Center"/>
 						
-						<ItemsControl ItemsSource="{Binding FinishedEntries}">
+						<ItemsControl ItemsSource="{x:Static repository:FinishedEntriesRepository.FinishedEntries}">
 							<ItemsControl.ItemTemplate>
 								<DataTemplate x:DataType="models:JobEntry">
 									<Border BorderThickness="0,0,0,1" BorderBrush="Black" Margin="5,2">
