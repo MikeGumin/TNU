@@ -34,7 +34,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void AddNewTask()
     {
-        JobEntryViewModel model = new JobEntryViewModel(_finishedEntryService);
+        JobEntryViewModel model = new JobEntryViewModel(_finishedEntryService, this);
         GeneralUpdateTimer.AddEvent(model);
 
         if(!GeneralUpdateTimer.IsEnabled)
@@ -52,22 +52,30 @@ public partial class MainWindowViewModel : ViewModelBase
         _entryExportService.ExportEntry(FinishedEntriesRepository.FinishedEntries);
     }
 
+
+
+
+    //_____________________________________________________________________________
     /// <summary>
     /// Метод для сохранения завершенных задач
     /// </summary>
     [RelayCommand]
     private void SaveEntries()
     {
-        _finishedEntryService.SaveEntry(TimerList.Select(vm => vm.Entry));
+        //_finishedEntryService.SaveEntry(TimerList.Select(vm => vm.Entry));
 
-        var toRemove = TimerList.Where(vm => vm.Entry.RecordStatus == RecordStatusEnum.Finish).ToList();
-        foreach (var vm in toRemove)
-        {
-            TimerList.Remove(vm);
-        }
+        //var toRemove = TimerList.Where(vm => vm.Entry.RecordStatus == RecordStatusEnum.Finish).ToList();
+        //foreach (var vm in toRemove)
+        //{
+        //    TimerList.Remove(vm);
+        //}
 
-        if (TimerList.Count <= 0) GeneralUpdateTimer.StopTimer();
+        //if (TimerList.Count <= 0) GeneralUpdateTimer.StopTimer();
     }
+    //_____________________________________________________________________________
+
+
+
 
     /// <summary>
     /// Метод для сохранения завершенных задач

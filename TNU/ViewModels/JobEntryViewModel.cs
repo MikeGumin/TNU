@@ -1,6 +1,7 @@
 ﻿using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using ReactiveUI;
+using System.Collections.Generic;
 using TNU.Models;
 using TNU.Services.ClockAction;
 using TNU.Services.FinishedEntry;
@@ -10,6 +11,7 @@ namespace TNU.ViewModels;
 public partial class JobEntryViewModel : ReactiveObject
 {
     private readonly IFinishedEntryService _finishedEntryService;
+    private readonly MainWindowViewModel _parent;
 
     /// <summary>
     /// Переменная для отсчета времени
@@ -25,9 +27,10 @@ public partial class JobEntryViewModel : ReactiveObject
     /// ctor
     /// </summary>
     /// <param name="finishedEntryService">Сервис для работы с завершенными записями</param>
-    public JobEntryViewModel(IFinishedEntryService finishedEntryService)
+    public JobEntryViewModel(IFinishedEntryService finishedEntryService, MainWindowViewModel parent)
     {
         _finishedEntryService = finishedEntryService;
+        _parent = parent;
         Entry.JobWorker = new Worker() { FullName = "test" };
 
         StartTimer();
@@ -55,6 +58,10 @@ public partial class JobEntryViewModel : ReactiveObject
 
         Entry.JobSample = Timer.StrTimer;
         Entry.RecordStatus = RecordStatusEnum.Finish;
+
+        
+        _finishedEntryService.SaveEntry(new List<JobEntry>() { Entry });
+        _parent.TimerList.Remove(this);
 
         //System.Diagnostics.Debug.WriteLine(Entry.JobSample);
     }
