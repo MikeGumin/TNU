@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TNU.Models;
+using TNU.Repository;
 using TNU.ViewModels;
 
 namespace TNU.Services.EntrySave;
@@ -14,7 +15,7 @@ public class EntrySaveService : IEntrySaveService
         {
             if (entry.RecordStatus is RecordStatusEnum.Finish)
             {
-                MainWindowViewModel.FinishedEntries.Add(entry);
+                FinishedEntriesRepository.FinishedEntries.Add(entry);
             }
         }
     }

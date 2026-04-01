@@ -1,4 +1,4 @@
-<Window xmlns="https://github.com/avaloniaui"
+﻿<Window xmlns="https://github.com/avaloniaui"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:vm="using:TNU.ViewModels"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -41,17 +41,22 @@
 			<Border>
 				<ScrollViewer>
 					<StackPanel>
+
+
 						<ItemsControl ItemsSource="{Binding TimerList}">
+
+
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
-									<Grid ColumnDefinitions="Auto, *, Auto, 100">
-										<TextBlock Grid.Column="0" Text="{Binding JobWorker.FullName}"/>
+									<Grid ColumnDefinitions="Auto, *, Auto, Auto,100">
+										<TextBlock Grid.Column="0" Text="{Binding Entry.JobWorker.FullName}"/>
 
 										<AutoCompleteBox Grid.Column="1"
-										                 Text="{Binding JobName}"
+										                 Text="{Binding Entry.JobName}"
 										                 ItemsSource="{x:Static repository:JobNameRepository.JobNameList}"
 										                 FilterMode="Contains"
 										                 MinimumPrefixLength="1">
+
 											<AutoCompleteBox.ItemTemplate>
 												<DataTemplate x:DataType="enum:JobTitleEnum">
 													<TextBlock Text="{Binding Name}"
@@ -62,8 +67,8 @@
 										</AutoCompleteBox>
 
 										<Button Grid.Column="2" Content="Stop" Command="{Binding StopTimerCommand}"/>
-										<Button Grid.Column="3" Content="End" Command="{Binding EndTimerCommand}"/>
-										<TextBlock Grid.Column="4" Text="{Binding JobTimer}"/>
+										<Button Grid.Column="3" Content="End" Margin="10 0" Command="{Binding EndTimerCommand}"/>
+										<TextBlock Grid.Column="4" Text="{Binding Timer.StrTimer}"/>
 									</Grid>
 								</DataTemplate>
 							</ItemsControl.ItemTemplate>
@@ -73,7 +78,7 @@
 						        HorizontalAlignment="Stretch"
 						        VerticalAlignment="Center"
 						        HorizontalContentAlignment="Center"
-						        Command="{Binding StartTimerCommand}" />
+						        Command="{Binding AddNewTaskCommand}" />
 						
 						<Button Content="Сохранить"
 						        HorizontalAlignment="Right"
@@ -83,6 +88,7 @@
 				</ScrollViewer>
 			</Border>
 		</DockPanel>
+
 
 		<!-- Правая панель: сохранённые записи -->
 		<DockPanel Grid.Column="2" Grid.Row="1" Background="DarkGray">
@@ -94,7 +100,7 @@
 						           Margin="5" 
 						           HorizontalAlignment="Center"/>
 						
-						<ItemsControl ItemsSource="{Binding FinishedEntries}">
+						<ItemsControl ItemsSource="{x:Static repository:FinishedEntriesRepository.FinishedEntries}">
 							<ItemsControl.ItemTemplate>
 								<DataTemplate x:DataType="models:JobEntry">
 									<Border BorderThickness="0,0,0,1" BorderBrush="Black" Margin="5,2">
