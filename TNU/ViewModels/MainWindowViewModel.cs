@@ -1,6 +1,4 @@
-﻿using Avalonia.Threading;
-using CommunityToolkit.Mvvm.Input;
-using System;
+﻿﻿using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Linq;
 using TNU.Models;
@@ -10,17 +8,10 @@ using TNU.Services.FinishedEntry;
 
 namespace TNU.ViewModels;
 
-delegate void ReDrowTimerStr(object? sender, EventArgs e);
 
 public partial class MainWindowViewModel : ViewModelBase
 {
 
-    /// <summary>
-    /// Переменная для обновления отображаемого времени
-    /// </summary>
-    private DispatcherTimer _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
-
-    ReDrowTimerStr dl;
 
     /// <summary>
     /// Коллекция для хранения текущих записей
@@ -35,15 +26,6 @@ public partial class MainWindowViewModel : ViewModelBase
         _entryExportService = entryExportService;
         _finishedEntryService = finishedEntryService;
 
-        //___________________________________________________
-        _timer.Tick += (_, __) =>
-        {
-            dl?.Invoke(_, __);
-
-            System.Diagnostics.Debug.WriteLine("Work!!!");
-        };
-        //___________________________________________________
-
     }
 
     /// <summary>
@@ -52,14 +34,13 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void AddNewTask()
     {
-        var a = new JobEntryViewModel(_finishedEntryService);
-        //___________________________________________________
-        if(!_timer.IsEnabled)
-            _timer.Start();
-        dl += a.Timer.ReDrowTimer;
-        //___________________________________________________
+        JobEntryViewModel model = new JobEntryViewModel(_finishedEntryService, this);
+        GeneralUpdateTimer.AddEvent(model);
 
-        TimerList.Add(a);
+        if(!GeneralUpdateTimer.IsEnabled)
+            GeneralUpdateTimer.StartTimer();
+
+        TimerList.Add(model);
     }
 
     /// <summary>
@@ -71,28 +52,31 @@ public partial class MainWindowViewModel : ViewModelBase
         _entryExportService.ExportEntry(FinishedEntriesRepository.FinishedEntries);
     }
 
+
+
+
+    //_____________________________________________________________________________
     /// <summary>
     /// Метод для сохранения завершенных задач
     /// </summary>
     [RelayCommand]
     private void SaveEntries()
     {
-        _finishedEntryService.SaveEntry(TimerList.Select(vm => vm.Entry));
+        //_finishedEntryService.SaveEntry(TimerList.Select(vm => vm.Entry));
 
-        var toRemove = TimerList.Where(vm => vm.Entry.RecordStatus == RecordStatusEnum.Finish).ToList();
-        foreach (var vm in toRemove)
-        {
-            TimerList.Remove(vm);
-        }
+        //var toRemove = TimerList.Where(vm => vm.Entry.RecordStatus == RecordStatusEnum.Finish).ToList();
+        //foreach (var vm in toRemove)
+        //{
+        //    TimerList.Remove(vm);
+        //}
 
-        //___________________________________________________
-
-        if (TimerList.Count <= 0)
-            _timer.Stop();
-        //___________________________________________________
-
+        //if (TimerList.Count <= 0) GeneralUpdateTimer.StopTimer();
     }
-    
+    //_____________________________________________________________________________
+
+
+
+
     /// <summary>
     /// Метод для сохранения завершенных задач
     /// </summary>
