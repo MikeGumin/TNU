@@ -1,6 +1,4 @@
-﻿using Avalonia.Threading;
-using CommunityToolkit.Mvvm.Input;
-using System;
+﻿using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Linq;
 using TNU.Models;
@@ -10,25 +8,13 @@ using TNU.Services.EntrySave;
 
 namespace TNU.ViewModels;
 
-delegate void ReDrowTimerStr(object? sender, EventArgs e);
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-
-    /// <summary>
-    /// Переменная для обновления отображаемого времени
-    /// </summary>
-    private DispatcherTimer _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
-
-    ReDrowTimerStr dl;
-
     /// <summary>
     /// Коллекция для хранения текущих записей
     /// </summary>
     public ObservableCollection<JobEntryViewModel> TimerList { get; private set; } = [];
-
-
-    
 
     private readonly IEntryExportService _entryExportService;
     private readonly IEntrySaveService _entrySaveService;
@@ -37,16 +23,6 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         _entryExportService = entryExportService;
         _entrySaveService = entrySaveService;
-
-        //___________________________________________________
-        _timer.Tick += (_, __) =>
-        {
-            dl?.Invoke(_, __);
-
-            System.Diagnostics.Debug.WriteLine("Work!!!");
-        };
-        //___________________________________________________
-
     }
 
     /// <summary>
@@ -55,14 +31,13 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void AddNewTask()
     {
-        var a = new JobEntryViewModel();
-        //___________________________________________________
-        if(!_timer.IsEnabled)
-            _timer.Start();
-        dl += a.Timer.ReDrowTimer;
-        //___________________________________________________
+        JobEntryViewModel model = new JobEntryViewModel();
+        GeneralUpdateTimer.AddEvent(model);
 
-        TimerList.Add(a);
+        if(!GeneralUpdateTimer.IsEnabled)
+            GeneralUpdateTimer.StartTimer();
+
+        TimerList.Add(model);
     }
 
     /// <summary>
@@ -88,12 +63,7 @@ public partial class MainWindowViewModel : ViewModelBase
             TimerList.Remove(vm);
         }
 
-        //___________________________________________________
-
-        if (TimerList.Count <= 0)
-            _timer.Stop();
-        //___________________________________________________
-
+        if (TimerList.Count <= 0) GeneralUpdateTimer.StopTimer();
     }
 
     /// <summary>

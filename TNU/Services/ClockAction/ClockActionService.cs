@@ -1,11 +1,10 @@
-﻿using Avalonia.Threading;
-using ReactiveUI;
+﻿using ReactiveUI;
 using System;
 using System.Diagnostics;
 
-namespace TNU.Models
+namespace TNU.Services.ClockAction
 {
-    public class Clock : ReactiveObject
+    public class ClockActionService : ReactiveObject, IClockActionService
     {
         /// <summary>
         /// Переменная для отсчета времени (таймер)
@@ -22,7 +21,7 @@ namespace TNU.Models
             private set => this.RaiseAndSetIfChanged(ref _strTimer, value);
         }
 
-        public Clock()
+        public ClockActionService()
         {
             StartTimer();
         }
@@ -37,7 +36,7 @@ namespace TNU.Models
             _stopwatch.Stop();
         }
 
-        public void ReDrowTimer(object? sender, EventArgs e) 
+        public void ReDrowTimer(object? sender, EventArgs e)
         {
             TimeSpan elapsed = _stopwatch.Elapsed;
             StrTimer = $"{elapsed.Minutes:00}:{elapsed.Seconds:00}:{elapsed.Milliseconds:000}";

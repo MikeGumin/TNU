@@ -1,9 +1,8 @@
 ﻿using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using ReactiveUI;
-using System;
-using System.Diagnostics;
 using TNU.Models;
+using TNU.Services.ClockAction;
 
 namespace TNU.ViewModels;
 
@@ -13,15 +12,7 @@ public partial class JobEntryViewModel : ReactiveObject
     /// <summary>
     /// Переменная для отсчета времени
     /// </summary>
-    public Clock Timer { get; } = new Clock();
-
-    /// <summary>
-    /// Переменная для обновления отображаемого времени
-    /// </summary>
-    //private DispatcherTimer _timer = new DispatcherTimer
-    //{
-    //    Interval = TimeSpan.FromMilliseconds(10)
-    //};
+    public ClockActionService Timer { get; } = new ClockActionService();
 
     /// <summary>
     /// Данные модели
@@ -31,8 +22,6 @@ public partial class JobEntryViewModel : ReactiveObject
     public JobEntryViewModel()
     {
         Entry.JobWorker = new Worker() { FullName = "test" };
-
-        //_timer.Tick += Timer.ReDrowTimer;
 
         StartTimer();
     }
@@ -56,10 +45,7 @@ public partial class JobEntryViewModel : ReactiveObject
         if(Entry.RecordStatus!= RecordStatusEnum.Stop)
             StopTimer();
 
-
         Entry.JobSample = Timer.StrTimer;
         Entry.RecordStatus = RecordStatusEnum.Finish;
-
-        //System.Diagnostics.Debug.WriteLine(Entry.JobSample);
     }
 }

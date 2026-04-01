@@ -104,7 +104,7 @@
 							<ItemsControl.ItemTemplate>
 								<DataTemplate x:DataType="models:JobEntry">
 									<Border BorderThickness="0,0,0,1" BorderBrush="Black" Margin="5,2">
-										<StackPanel>
+										<StackPanel >
 											<TextBlock Text="{Binding JobWorker.FullName}" FontWeight="Bold" Foreground="Black"/>
 											<TextBlock Text="{Binding JobName}" Foreground="Black"/>
 											<TextBlock Text="{Binding JobSample}" Foreground="Black"/>
