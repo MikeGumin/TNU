@@ -4,11 +4,13 @@ using ReactiveUI;
 using System;
 using System.Diagnostics;
 using TNU.Models;
+using TNU.Services.FinishedEntry;
 
 namespace TNU.ViewModels;
 
 public partial class JobEntryViewModel : ReactiveObject
 {
+    private readonly IFinishedEntryService _finishedEntryService;
 
     /// <summary>
     /// Переменная для отсчета времени
@@ -28,8 +30,14 @@ public partial class JobEntryViewModel : ReactiveObject
     /// </summary>
     public JobEntry Entry { get; set; } = new();
 
-    public JobEntryViewModel()
+    /// <summary>
+    /// ctor
+    /// </summary>
+    /// <param name="finishedEntryService">Сервис для работы с завершенными записями</param>
+    public JobEntryViewModel(
+        IFinishedEntryService finishedEntryService)
     {
+        _finishedEntryService = finishedEntryService;
         Entry.JobWorker = new Worker() { FullName = "test" };
 
         //_timer.Tick += Timer.ReDrowTimer;
@@ -61,5 +69,14 @@ public partial class JobEntryViewModel : ReactiveObject
         Entry.RecordStatus = RecordStatusEnum.Finish;
 
         //System.Diagnostics.Debug.WriteLine(Entry.JobSample);
+    }
+    
+    /// <summary>
+    /// Метод для сохранения завершенных задач
+    /// </summary>
+    [RelayCommand]
+    private void EditEntry()
+    {
+        Entry = _finishedEntryService.EditEntry(Entry);
     }
 }

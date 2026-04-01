@@ -6,7 +6,7 @@ using System.Linq;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using TNU.Services.EntryExport;
-using TNU.Services.EntrySave;
+using TNU.Services.FinishedEntry;
 using TNU.ViewModels;
 
 namespace TNU;
@@ -28,7 +28,7 @@ public partial class App : Application
         var collection = new ServiceCollection();
         collection.AddScoped<IEntryExportService, EntryExportService>();
         collection.AddSingleton<MainWindowViewModel>();
-        collection.AddScoped<IEntrySaveService, EntrySaveService>();
+        collection.AddScoped<IFinishedEntryService, FinishedEntryService>();
         Services = collection.BuildServiceProvider();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
