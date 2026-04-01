@@ -55,12 +55,21 @@ public partial class MainWindowViewModel : ViewModelBase
     }
     
     /// <summary>
-    /// Метод для сохранения завершенных задач
+    /// Метод для удаления всех завершенных задач
     /// </summary>
     [RelayCommand]
     private void DeleteEntries()
     {
-        _finishedEntryService.DeleteEntry();
+        _finishedEntryService.DeleteEntries();
+    }
+    
+    /// <summary>
+    /// Метод для удаления завершенной задачи
+    /// </summary>
+    [RelayCommand]
+    private void DeleteEntry(JobEntry entry)
+    {
+        _finishedEntryService.DeleteEntry(entry);
     }
     
     /// <summary>

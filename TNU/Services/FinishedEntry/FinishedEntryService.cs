@@ -20,9 +20,15 @@ public class FinishedEntryService : IFinishedEntryService
     }
 
     /// <inheritdoc />
-    public void DeleteEntry()
+    public void DeleteEntries()
     {
         FinishedEntriesRepository.FinishedEntries.Clear();
+    }
+    
+    /// <inheritdoc />
+    public void DeleteEntry(JobEntry entry)
+    {
+        FinishedEntriesRepository.FinishedEntries.Remove(entry);
     }
     
     /// <inheritdoc />
