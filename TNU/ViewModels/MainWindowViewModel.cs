@@ -1,23 +1,25 @@
-﻿﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Threading.Tasks;
+using Avalonia.Controls;
 using TNU.Models;
 using TNU.Repository;
 using TNU.Services.EntryExport;
 using TNU.Services.FinishedEntry;
+using TNU.Views;
 
 namespace TNU.ViewModels;
 
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-
-
     /// <summary>
     /// Коллекция для хранения текущих записей
     /// </summary>
     public ObservableCollection<JobEntryViewModel> TimerList { get; private set; } = [];
-
+    
+    public Window? MainWindow { get; set; }
+    
     private readonly IEntryExportService _entryExportService;
     private readonly IFinishedEntryService _finishedEntryService;
 
@@ -51,32 +53,7 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         _entryExportService.ExportEntry(FinishedEntriesRepository.FinishedEntries);
     }
-
-
-
-
-    //_____________________________________________________________________________
-    /// <summary>
-    /// Метод для сохранения завершенных задач
-    /// </summary>
-    [RelayCommand]
-    private void SaveEntries()
-    {
-        //_finishedEntryService.SaveEntry(TimerList.Select(vm => vm.Entry));
-
-        //var toRemove = TimerList.Where(vm => vm.Entry.RecordStatus == RecordStatusEnum.Finish).ToList();
-        //foreach (var vm in toRemove)
-        //{
-        //    TimerList.Remove(vm);
-        //}
-
-        //if (TimerList.Count <= 0) GeneralUpdateTimer.StopTimer();
-    }
-    //_____________________________________________________________________________
-
-
-
-
+    
     /// <summary>
     /// Метод для сохранения завершенных задач
     /// </summary>
@@ -84,6 +61,34 @@ public partial class MainWindowViewModel : ViewModelBase
     private void DeleteEntries()
     {
         _finishedEntryService.DeleteEntry();
+    }
+    
+    /// <summary>
+    /// Метод для редактирования завершенной записи
+    /// </summary>
+    /// <param name="entry">Запись для редактирования</param>
+    [RelayCommand]
+    private async Task EditEntry(JobEntry entry)
+    {
+        // Заносим данные из записи entry в наше окно для редактирования
+        var editWindow = new EditEntryWindow(entry);
+        
+        // Вызываем диалог, где владельцем является наше главное окно
+        // owner нужен, чтобы позиционировать наше всплывающее окно относительного главного
+        bool? result = await editWindow.ShowDialog<bool?>(MainWindow!);
+        
+        // result - это флаг указывающий на то, была ли нажата кнопка "ок" или нет
+        if (result == true)
+        {
+            var updatedEntry = _finishedEntryService.EditEntry(editWindow.ResultEntry, entry);
+            
+            var indexEditEntry = FinishedEntriesRepository.FinishedEntries.IndexOf(entry);
+            
+            if (indexEditEntry >= 0)
+            {
+                FinishedEntriesRepository.FinishedEntries[indexEditEntry] = updatedEntry;
+            }
+        }
     }
 
     /// <summary>

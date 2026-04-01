@@ -8,6 +8,11 @@ namespace TNU.Models;
 public partial class JobEntry
 {
     /// <summary>
+    /// Идентификатор
+    /// </summary>
+    public Guid Id { get; set; } =  Guid.NewGuid();
+    
+    /// <summary>
     /// Работник для которого делаеться запись
     /// </summary>
     public Worker JobWorker { get; set; }
