@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using ReactiveUI;
 using TNU.Models;
+using TNU.Services.ClockAction;
 using TNU.Services.FinishedEntry;
 
 namespace TNU.ViewModels;
@@ -24,8 +25,7 @@ public partial class JobEntryViewModel : ReactiveObject
     /// ctor
     /// </summary>
     /// <param name="finishedEntryService">Сервис для работы с завершенными записями</param>
-    public JobEntryViewModel(
-        IFinishedEntryService finishedEntryService)
+    public JobEntryViewModel(IFinishedEntryService finishedEntryService)
     {
         _finishedEntryService = finishedEntryService;
         Entry.JobWorker = new Worker() { FullName = "test" };

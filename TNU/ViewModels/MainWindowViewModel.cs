@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-﻿using CommunityToolkit.Mvvm.Input;
-=======
-﻿using Avalonia.Threading;
-using CommunityToolkit.Mvvm.Input;
-using System;
->>>>>>> 7dddf085bfba694189d281c5767f033f49c8b3ef
+﻿﻿using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Linq;
 using TNU.Models;
@@ -14,50 +8,23 @@ using TNU.Services.FinishedEntry;
 
 namespace TNU.ViewModels;
 
-<<<<<<< HEAD
-=======
-delegate void ReDrowTimerStr(object? sender, EventArgs e);
->>>>>>> 7dddf085bfba694189d281c5767f033f49c8b3ef
 
 public partial class MainWindowViewModel : ViewModelBase
 {
 
-    /// <summary>
-    /// Переменная для обновления отображаемого времени
-    /// </summary>
-    private DispatcherTimer _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
-
-    ReDrowTimerStr dl;
 
     /// <summary>
     /// Коллекция для хранения текущих записей
     /// </summary>
     public ObservableCollection<JobEntryViewModel> TimerList { get; private set; } = [];
-<<<<<<< HEAD
-
-    private readonly IEntryExportService _entryExportService;
-    private readonly IEntrySaveService _entrySaveService;
-
-    public MainWindowViewModel(IEntryExportService entryExportService, IEntrySaveService entrySaveService)
-=======
 
     private readonly IEntryExportService _entryExportService;
     private readonly IFinishedEntryService _finishedEntryService;
 
     public MainWindowViewModel(IEntryExportService entryExportService, IFinishedEntryService finishedEntryService)
->>>>>>> 7dddf085bfba694189d281c5767f033f49c8b3ef
     {
         _entryExportService = entryExportService;
         _finishedEntryService = finishedEntryService;
-
-        //___________________________________________________
-        _timer.Tick += (_, __) =>
-        {
-            dl?.Invoke(_, __);
-
-            System.Diagnostics.Debug.WriteLine("Work!!!");
-        };
-        //___________________________________________________
 
     }
 
@@ -67,24 +34,13 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void AddNewTask()
     {
-<<<<<<< HEAD
-        JobEntryViewModel model = new JobEntryViewModel();
+        JobEntryViewModel model = new JobEntryViewModel(_finishedEntryService);
         GeneralUpdateTimer.AddEvent(model);
 
         if(!GeneralUpdateTimer.IsEnabled)
             GeneralUpdateTimer.StartTimer();
 
         TimerList.Add(model);
-=======
-        var a = new JobEntryViewModel(_finishedEntryService);
-        //___________________________________________________
-        if(!_timer.IsEnabled)
-            _timer.Start();
-        dl += a.Timer.ReDrowTimer;
-        //___________________________________________________
-
-        TimerList.Add(a);
->>>>>>> 7dddf085bfba694189d281c5767f033f49c8b3ef
     }
 
     /// <summary>
@@ -102,11 +58,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void SaveEntries()
     {
-<<<<<<< HEAD
-        _entrySaveService.SaveEntry(TimerList.Select(vm => vm.Entry));
-=======
         _finishedEntryService.SaveEntry(TimerList.Select(vm => vm.Entry));
->>>>>>> 7dddf085bfba694189d281c5767f033f49c8b3ef
 
         var toRemove = TimerList.Where(vm => vm.Entry.RecordStatus == RecordStatusEnum.Finish).ToList();
         foreach (var vm in toRemove)
@@ -114,16 +66,7 @@ public partial class MainWindowViewModel : ViewModelBase
             TimerList.Remove(vm);
         }
 
-<<<<<<< HEAD
         if (TimerList.Count <= 0) GeneralUpdateTimer.StopTimer();
-=======
-        //___________________________________________________
-
-        if (TimerList.Count <= 0)
-            _timer.Stop();
-        //___________________________________________________
-
->>>>>>> 7dddf085bfba694189d281c5767f033f49c8b3ef
     }
 
     /// <summary>
