@@ -110,11 +110,20 @@
 												<TextBlock Text="{Binding JobName}" Foreground="Black"/>
 												<TextBlock Text="{Binding JobSample}" Foreground="Black"/>
 											</StackPanel>
-											<Button Content="Редактирование"
-											        HorizontalAlignment="Right"
-											        Margin="0,10,10,10"
-											        Command="{Binding DataContext.EditEntryCommand, ElementName=RootWindow}"
-											        CommandParameter="{Binding}" />
+											
+											<StackPanel 
+												HorizontalAlignment="Right"
+												Orientation="Horizontal">
+												<Button Content="Редактировать"
+												        Margin="0,10,10,10"
+												        Command="{Binding DataContext.EditEntryCommand, ElementName=RootWindow}"
+												        CommandParameter="{Binding}" />
+												
+												<Button Content="Удалить"
+												        Margin="10,10,10,10"
+												        Command="{Binding DataContext.DeleteEntryCommand, ElementName=RootWindow}"
+												        CommandParameter="{Binding}" />
+											</StackPanel >
 										</DockPanel>
 
 									</Border>

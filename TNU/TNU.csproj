@@ -27,4 +27,10 @@
         <PackageReference Include="ReactiveUI" Version="23.1.8" />
         
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\EditEntryWindow.axaml.cs">
+        <DependentUpon>EditEntryWindow.axaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
 </Project>
