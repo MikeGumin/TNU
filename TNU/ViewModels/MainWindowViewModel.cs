@@ -6,7 +6,7 @@ using System.Linq;
 using TNU.Models;
 using TNU.Repository;
 using TNU.Services.EntryExport;
-using TNU.Services.EntrySave;
+using TNU.Services.FinishedEntry;
 
 namespace TNU.ViewModels;
 
@@ -27,16 +27,13 @@ public partial class MainWindowViewModel : ViewModelBase
     /// </summary>
     public ObservableCollection<JobEntryViewModel> TimerList { get; private set; } = [];
 
-
-    
-
     private readonly IEntryExportService _entryExportService;
-    private readonly IEntrySaveService _entrySaveService;
+    private readonly IFinishedEntryService _finishedEntryService;
 
-    public MainWindowViewModel(IEntryExportService entryExportService, IEntrySaveService entrySaveService)
+    public MainWindowViewModel(IEntryExportService entryExportService, IFinishedEntryService finishedEntryService)
     {
         _entryExportService = entryExportService;
-        _entrySaveService = entrySaveService;
+        _finishedEntryService = finishedEntryService;
 
         //___________________________________________________
         _timer.Tick += (_, __) =>
@@ -55,7 +52,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void AddNewTask()
     {
-        var a = new JobEntryViewModel();
+        var a = new JobEntryViewModel(_finishedEntryService);
         //___________________________________________________
         if(!_timer.IsEnabled)
             _timer.Start();
@@ -80,7 +77,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void SaveEntries()
     {
-        _entrySaveService.SaveEntry(TimerList.Select(vm => vm.Entry));
+        _finishedEntryService.SaveEntry(TimerList.Select(vm => vm.Entry));
 
         var toRemove = TimerList.Where(vm => vm.Entry.RecordStatus == RecordStatusEnum.Finish).ToList();
         foreach (var vm in toRemove)
@@ -94,6 +91,15 @@ public partial class MainWindowViewModel : ViewModelBase
             _timer.Stop();
         //___________________________________________________
 
+    }
+    
+    /// <summary>
+    /// Метод для сохранения завершенных задач
+    /// </summary>
+    [RelayCommand]
+    private void DeleteEntries()
+    {
+        _finishedEntryService.DeleteEntry();
     }
 
     /// <summary>
