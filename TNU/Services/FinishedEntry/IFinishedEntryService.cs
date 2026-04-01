@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using TNU.Models;
 
-namespace TNU.Services.EntrySave;
+namespace TNU.Services.FinishedEntry;
 
 /// <summary>
 /// Методы для сахранения записей о работе
 /// </summary>
-public interface IEntrySaveService
+public interface IFinishedEntryService
 {
     // todo: Возможно стоит сделать асинхронным
     /// <summary>
@@ -14,4 +14,15 @@ public interface IEntrySaveService
     /// </summary>
     /// <param name="entryList">Массив записей о работе</param>
     public void SaveEntry(IEnumerable<JobEntry> entryList);
+    
+    /// <summary>
+    /// Метод удаления всех завершенных записей о работе
+    /// </summary>
+    public void DeleteEntry();
+    
+    /// <summary>
+    /// Метод редактирования завершенной записи о работе
+    /// </summary>
+    /// <param name="entry">Запись о работе</param>
+    public JobEntry EditEntry(JobEntry entry);
 }
