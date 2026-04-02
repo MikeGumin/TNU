@@ -3,9 +3,11 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using TNU.Services.EntryExport;
+using TNU.Services.FileDialog;
 using TNU.Services.FinishedEntry;
 using TNU.ViewModels;
 
@@ -24,15 +26,27 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        // Регистрация сервисов
-        var collection = new ServiceCollection();
-        collection.AddScoped<IEntryExportService, EntryExportService>();
-        collection.AddSingleton<MainWindowViewModel>();
-        collection.AddScoped<IFinishedEntryService, FinishedEntryService>();
-        Services = collection.BuildServiceProvider();
-
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            var collection = new ServiceCollection();
+            collection.AddScoped<IEntryExportService, EntryExportService>();
+            collection.AddSingleton<MainWindowViewModel>();
+            collection.AddScoped<IFinishedEntryService, FinishedEntryService>();
+        
+            // Передаём Func — TopLevel будет получен позже, в момент вызова
+            collection.AddSingleton<IFileDialogService>(_ =>
+                new FileDialogService(() =>
+                {
+                    if (Application.Current?.ApplicationLifetime
+                        is IClassicDesktopStyleApplicationLifetime d)
+                    {
+                        return TopLevel.GetTopLevel(d.MainWindow);
+                    }
+                    return null;
+                }));
+
+            Services = collection.BuildServiceProvider();
+
             desktop.MainWindow = new Views.MainWindow
             {
                 DataContext = Services.GetRequiredService<MainWindowViewModel>()

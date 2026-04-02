@@ -44,8 +44,17 @@ public partial class JobEntryViewModel : ReactiveObject
     [RelayCommand]
     public void StopTimer()
     {
-        Timer.StopTimer();
-        Entry.RecordStatus = RecordStatusEnum.Stop;
+        if (Entry.RecordStatus is RecordStatusEnum.Start)
+        {
+            Timer.StopTimer();
+            Entry.RecordStatus = RecordStatusEnum.Stop;
+        }
+        else
+        {
+            Timer.StartTimer();
+            Entry.RecordStatus = RecordStatusEnum.Start;
+        }
+        
     }
 
     [RelayCommand]
