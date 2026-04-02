@@ -1,20 +1,20 @@
-﻿<Window x:Name="RootWindow" 
-        xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:TNU.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="TNU.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
-        xmlns:models="using:TNU.Models"
-        xmlns:repository="clr-namespace:TNU.Repository"
-        xmlns:enum="clr-namespace:TNU.Models.Enum"
+﻿<Window x:Name="RootWindow"
+		xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:vm="using:TNU.ViewModels"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		x:Class="TNU.Views.MainWindow"
+		x:DataType="vm:MainWindowViewModel"
+		xmlns:models="using:TNU.Models"
+		xmlns:repository="clr-namespace:TNU.Repository"
+		xmlns:enum="clr-namespace:TNU.Models.Enum"
 
-        FontFamily="Segoe UI, Arial, sans-serif"
+		FontFamily="Segoe UI, Arial, sans-serif"
 
-        Icon="/Assets/avalonia-logo.ico"
-        Title="TNU">
+		Icon="/Assets/avalonia-logo.ico"
+		Title="TNU">
 
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
@@ -40,17 +40,12 @@
 			<Border>
 				<ScrollViewer>
 					<StackPanel>
-
-
 						<ItemsControl ItemsSource="{Binding TimerList}">
-
-
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
-									<Grid ColumnDefinitions="Auto, *, Auto, Auto,100">
-										<TextBlock Grid.Column="0" Text="{Binding Entry.JobWorker.FullName}"/>
+									<Grid ColumnDefinitions=" *, Auto, Auto, Auto,100">
 
-										<AutoCompleteBox Grid.Column="1"
+										<AutoCompleteBox Grid.Column="0"
 														 Text="{Binding Entry.JobName}"
 														 ItemsSource="{x:Static repository:JobNameRepository.JobNameList}"
 														 FilterMode="Contains"
@@ -64,7 +59,8 @@
 												</DataTemplate>
 											</AutoCompleteBox.ItemTemplate>
 										</AutoCompleteBox>
-
+										
+										<TextBlock Grid.Column="1" Text="{Binding Entry.StartTime}"/>
 										<Button Grid.Column="2" Content="Stop" Command="{Binding StopTimerCommand}"/>
 										<Button Grid.Column="3" Content="Сохранить" Margin="10 0" Command="{Binding EndTimerCommand}"/>
 										<TextBlock Grid.Column="4" Text="{Binding Timer.StrTimer}"/>
@@ -80,9 +76,9 @@
 								Command="{Binding AddNewTaskCommand}" />
 
 						<!--<Button Content="Сохранить"
-								HorizontalAlignment="Right"
-								Margin="0,10,10,10"
-								Command="{Binding SaveEntriesCommand}" />-->
+						HorizontalAlignment="Right"
+						Margin="0,10,10,10"
+						Command="{Binding SaveEntriesCommand}" />-->
 					</StackPanel>
 				</ScrollViewer>
 			</Border>
@@ -106,23 +102,25 @@
 										<DockPanel>
 
 											<StackPanel >
-												<TextBlock Text="{Binding JobWorker.FullName}" FontWeight="Bold" Foreground="Black"/>
+												<TextBlock FontWeight="Bold" Foreground="Black">
+													<Run Text="{Binding StartTime}"/> - <Run Text="{Binding EndTime}"/>
+												</TextBlock>
 												<TextBlock Text="{Binding JobName}" Foreground="Black"/>
 												<TextBlock Text="{Binding JobSample}" Foreground="Black"/>
 											</StackPanel>
-											
-											<StackPanel 
-												HorizontalAlignment="Right"
-												Orientation="Horizontal">
+
+											<StackPanel
+											HorizontalAlignment="Right"
+											Orientation="Horizontal">
 												<Button Content="Редактировать"
-												        Margin="0,10,10,10"
-												        Command="{Binding DataContext.EditEntryCommand, ElementName=RootWindow}"
-												        CommandParameter="{Binding}" />
-												
+														Margin="0,10,10,10"
+														Command="{Binding DataContext.EditEntryCommand, ElementName=RootWindow}"
+														CommandParameter="{Binding}" />
+
 												<Button Content="Удалить"
-												        Margin="10,10,10,10"
-												        Command="{Binding DataContext.DeleteEntryCommand, ElementName=RootWindow}"
-												        CommandParameter="{Binding}" />
+														Margin="10,10,10,10"
+														Command="{Binding DataContext.DeleteEntryCommand, ElementName=RootWindow}"
+														CommandParameter="{Binding}" />
 											</StackPanel >
 										</DockPanel>
 

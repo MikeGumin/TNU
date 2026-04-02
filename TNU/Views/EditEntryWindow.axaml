@@ -1,48 +1,53 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:repository="clr-namespace:TNU.Repository"
-        xmlns:enum="clr-namespace:TNU.Models.Enum"
-        xmlns:models="clr-namespace:TNU.Models"
-        x:Class="TNU.Views.EditEntryWindow"
-        x:DataType="models:JobEntry"
-        Title="Редактирование записи о работе"
-        Width="400"
-        Height="250"
-        WindowStartupLocation="CenterOwner"
-        CanResize="False"
-        Background="DarkGray">
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto"
-          Margin="20">
-        
-        <TextBlock Grid.Row="0" Text="ФИО сотрудника:" />
-        <TextBox Grid.Row="1" 
-                 Text="{Binding JobWorker.FullName}"
-                 Margin="0,5,0,15" />
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:repository="clr-namespace:TNU.Repository"
+		xmlns:enum="clr-namespace:TNU.Models.Enum"
+		xmlns:models="clr-namespace:TNU.Models"
+		x:Class="TNU.Views.EditEntryWindow"
+		x:DataType="models:JobEntry"
+		Title="Редактирование записи о работе"
+		Width="400"
+		Height="250"
+		WindowStartupLocation="CenterOwner"
+		CanResize="False"
+		Background="DarkGray">
+	<StackPanel
+	Margin="20">
 
-        <TextBlock Grid.Row="2" Text="Род деятельности:" />
-        <AutoCompleteBox Grid.Row="3"
-                         Text="{Binding JobName}"
-                         ItemsSource="{x:Static repository:JobNameRepository.JobNameList}"
-                         FilterMode="Contains"
-                         MinimumPrefixLength="1">
-            <AutoCompleteBox.ItemTemplate>
-                <DataTemplate x:DataType="enum:JobTitleEnum">
-                    <TextBlock Text="{Binding Name}" />
-                </DataTemplate>
-            </AutoCompleteBox.ItemTemplate>
-        </AutoCompleteBox>
+		<TextBlock Text="ФИО сотрудника:" />
+		<TextBox Text="{Binding JobWorker.FullName}"
+				 Margin="0,5,0,15" />
 
-        <StackPanel Grid.Row="4" 
-                    Orientation="Horizontal" 
-                    HorizontalAlignment="Right"
-                    Margin="0,40,0,0"
-                    Spacing="8">
-            <Button Content="OK" 
-                    Click="OkButton_Click"
-                    IsDefault="True" />
-            <Button Content="Отмена" 
-                    Click="CancelButton_Click"
-                    IsCancel="True" />
-        </StackPanel>
-    </Grid>
+		<TextBlock Text="Род деятельности:" />
+		<AutoCompleteBox Text="{Binding JobName}"
+						 ItemsSource="{x:Static repository:JobNameRepository.JobNameList}"
+						 FilterMode="Contains"
+						 MinimumPrefixLength="1">
+			<AutoCompleteBox.ItemTemplate>
+				<DataTemplate x:DataType="enum:JobTitleEnum">
+					<TextBlock Text="{Binding Name}" />
+				</DataTemplate>
+			</AutoCompleteBox.ItemTemplate>
+		</AutoCompleteBox>
+
+		<StackPanel Orientation="Horizontal"> 
+			<TextBlock Text="Время Начала:" VerticalAlignment="Center" />
+			<TextBox Text="{Binding StartTime}"/>
+			<TextBlock Text="Время Конца:" VerticalAlignment="Center" />
+			<TextBox Text="{Binding EndTime}" />
+		</StackPanel>
+
+		<StackPanel
+		Orientation="Horizontal"
+		HorizontalAlignment="Right"
+		Margin="0,40,0,0"
+		Spacing="8">
+			<Button Content="OK"
+					Click="OkButton_Click"
+					IsDefault="True" />
+			<Button Content="Отмена"
+					Click="CancelButton_Click"
+					IsCancel="True" />
+		</StackPanel>
+	</StackPanel>
 </Window>
