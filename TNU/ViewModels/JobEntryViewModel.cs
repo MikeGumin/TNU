@@ -30,7 +30,7 @@ public partial class JobEntryViewModel : ReactiveObject
     {
         _finishedEntryService = finishedEntryService;
         _parent = parent;
-        Entry.JobWorker = new Worker() { FullName = "test" };
+        Entry.JobWorker = new Respondent() { FullName = "test" };
 
         StartTimer();
     }
@@ -71,6 +71,5 @@ public partial class JobEntryViewModel : ReactiveObject
         _finishedEntryService.SaveEntry(new List<JobEntry>() { Entry });
         _parent.TimerList.Remove(this);
 
-        //System.Diagnostics.Debug.WriteLine(Entry.JobSample);
     }
 }

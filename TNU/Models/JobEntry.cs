@@ -16,7 +16,7 @@ public partial class JobEntry
     /// <summary>
     /// Работник для которого делаеться запись
     /// </summary>
-    public Worker JobWorker { get; set; }
+    public Respondent JobWorker { get; set; }
 
     /// <summary>
     /// Дата записи
@@ -67,4 +67,9 @@ public partial class JobEntry
     /// Статус записи
     /// </summary>
     public RecordStatusEnum RecordStatus { get; set; }
+
+    /// <summary>
+    /// Коэффициент сложности
+    /// </summary>
+    public double DifficultyFactor { get; set; }
 }
