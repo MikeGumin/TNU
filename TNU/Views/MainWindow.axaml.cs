@@ -1,4 +1,4 @@
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using TNU.ViewModels;
 
 namespace TNU.Views;
@@ -8,6 +8,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
         // Нужно для передачи в контекст родительского окна
         this.Loaded += (sender, e) =>
         {
@@ -16,5 +17,8 @@ public partial class MainWindow : Window
                 vm.MainWindow = this;
             }
         };
+
+        LoginWindow a = new LoginWindow();
+        a.Show();
     }
 }

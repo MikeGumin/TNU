@@ -6,6 +6,9 @@ namespace TNU.Repository
 {
     delegate void ReDrowTimerStr(object? sender, EventArgs e);
 
+    /// <summary>
+    /// Общий таймер для изменения отображения времени у часов
+    /// </summary>
     static internal class GeneralUpdateTimer
     {
         /// <summary>
