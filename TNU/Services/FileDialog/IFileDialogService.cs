@@ -12,6 +12,5 @@ public interface IFileDialogService
     /// Сохранение файла в выбранную папку
     /// </summary>
     /// <param name="fileName">Название файла</param>
-    /// <returns></returns>
     Task<Stream?> SaveFileAsync(string fileName);
 }

@@ -14,7 +14,7 @@ public class FileDialogService : IFileDialogService
     /// <summary>
     /// ctor
     /// </summary>
-    /// <param name="getTopLevel">Функция получения роута проводника</param>
+    /// <param name="getTopLevel">Функция получения корневого UI у окна</param>
     public FileDialogService(Func<TopLevel?> getTopLevel)
     {
         _getTopLevel = getTopLevel;
