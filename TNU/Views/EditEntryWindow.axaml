@@ -14,10 +14,6 @@
 	<StackPanel
 	Margin="20">
 
-		<TextBlock Text="ФИО сотрудника:" />
-		<TextBox Text="{Binding JobWorker.FullName}"
-				 Margin="0,5,0,15" />
-
 		<TextBlock Text="Род деятельности:" />
 		<AutoCompleteBox Text="{Binding JobName}"
 						 ItemsSource="{x:Static repository:JobNameRepository.JobNameList}"

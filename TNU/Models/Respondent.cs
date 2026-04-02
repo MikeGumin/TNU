@@ -8,16 +8,8 @@ namespace TNU.Models;
 public class Respondent
 {
     /// <summary>
-    /// Номер респондента 
+    /// Идентификатор респондента 
     /// </summary>
     public int Id { get; set; }
-    /// <summary>
-    /// ФИО респондента
-    /// </summary>
-    public string FullName { get; set; }
 
-    /// <summary>
-    /// Должность респондента
-    /// </summary>
-    JobPositionEnum JobPosition { get; set; }
 }

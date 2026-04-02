@@ -28,14 +28,14 @@
 			</StackPanel>
 
 			<StackPanel>
-				<TextBlock Text="Введите id респондента"/>
+				<TextBlock MaxWidth="250" TextWrapping="Wrap" Text="Введите номер респондента"/>
 				<TextBox Text="{Binding ObservationElement.Worker.Id}"/>
 			</StackPanel>
 
 			<StackPanel>
-				<TextBlock Text="Введите город замера"/>
+				<TextBlock Text="Введите город проведения замера"/>
 				<TextBox Text="{Binding ObservationElement.City}"/>
-				<TextBlock TextWrapping="Wrap" Text="Введите предприятие замера"/>
+				<TextBlock TextWrapping="Wrap" MaxWidth="250" Text="Введите предприятие проведения замера"/>
 				<TextBox Text="{Binding ObservationElement.Enterprise}"/>
 			</StackPanel>
 		</StackPanel>
