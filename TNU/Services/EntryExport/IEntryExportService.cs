@@ -1,5 +1,7 @@
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using TNU.Models;
+using TNU.Services.FileDialog;
 
 namespace TNU.Services.EntryExport;
 
@@ -12,5 +14,6 @@ public interface IEntryExportService
     /// Метод для экспорта записей
     /// </summary>
     /// <param name="entryList">Массив записей</param>
-    public void ExportEntry(ObservableCollection<JobEntry> entryList);
+    /// <param name="fileDialogService"></param>
+    public Task ExportEntryAsync(ObservableCollection<JobEntry> entryList, IFileDialogService fileDialogService);
 }

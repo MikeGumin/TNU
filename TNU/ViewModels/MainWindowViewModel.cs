@@ -5,6 +5,7 @@ using Avalonia.Controls;
 using TNU.Models;
 using TNU.Repository;
 using TNU.Services.EntryExport;
+using TNU.Services.FileDialog;
 using TNU.Services.FinishedEntry;
 using TNU.Views;
 
@@ -22,11 +23,16 @@ public partial class MainWindowViewModel : ViewModelBase
     
     private readonly IEntryExportService _entryExportService;
     private readonly IFinishedEntryService _finishedEntryService;
+    private readonly IFileDialogService _fileDialogService;
 
-    public MainWindowViewModel(IEntryExportService entryExportService, IFinishedEntryService finishedEntryService)
+    public MainWindowViewModel(
+        IEntryExportService entryExportService,
+        IFinishedEntryService finishedEntryService,
+        IFileDialogService fileDialogService)
     {
         _entryExportService = entryExportService;
         _finishedEntryService = finishedEntryService;
+        _fileDialogService = fileDialogService;
 
     }
 
@@ -49,9 +55,12 @@ public partial class MainWindowViewModel : ViewModelBase
     /// Метод для экспорта завершенных задач
     /// </summary>
     [RelayCommand(CanExecute = nameof(CanExport))]
-    private void ExportEntries()
+    private async Task ExportEntries()
     {
-        _entryExportService.ExportEntry(FinishedEntriesRepository.FinishedEntries);
+        await _entryExportService.ExportEntryAsync(
+            FinishedEntriesRepository.FinishedEntries,
+            _fileDialogService
+        );
     }
     
     /// <summary>
