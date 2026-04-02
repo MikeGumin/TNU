@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using MiniExcelLibs.Attributes;
 
 namespace TNU.Services.EntryExport.Model;
@@ -8,11 +8,11 @@ namespace TNU.Services.EntryExport.Model;
 /// </summary>
 public class EntryExportResponse
 {
-    /// <summary>
-    /// ФИО сотрудника
-    /// </summary>
-    [ExcelColumnName("ФИО сотрудника")]
-    public required string FullName { get; set; }
+    ///// <summary>
+    ///// ФИО сотрудника
+    ///// </summary>
+    //[ExcelColumnName("ФИО сотрудника")]
+    //public required string FullName { get; set; }
     
     /// <summary>
     /// Дата, когда проводилась работа

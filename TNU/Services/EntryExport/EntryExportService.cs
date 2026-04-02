@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -34,7 +34,6 @@ public class EntryExportService: IEntryExportService
             {
                 exportList.Add(new EntryExportResponse()
                 {
-                    FullName = entry.JobWorker.FullName,
                     JobTitle = entry.JobName,
                     JobTime = entry.JobSample,
                     JobDate =  entry.JobDate,
