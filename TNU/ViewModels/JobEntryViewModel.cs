@@ -30,7 +30,6 @@ public partial class JobEntryViewModel : ReactiveObject
     {
         _finishedEntryService = finishedEntryService;
         _parent = parent;
-        Entry.JobWorker = new Respondent() { FullName = "test" };
 
         StartTimer();
     }
