@@ -10,7 +10,7 @@ namespace TNU.Models
     /// <summary>
     /// Модель наблюдателя
     /// </summary>
-    internal class Inspector
+    public class Inspector
     {
         /// <summary>
         /// Номер Наблюдателя 
@@ -20,7 +20,7 @@ namespace TNU.Models
         /// <summary>
         /// ФИО Наблюдателя
         /// </summary>
-        public string FullName { get; set; }
+        public string FullName { get; set; } = "";
 
         /// <summary>
         /// Должность Наблюдателя

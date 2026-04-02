@@ -1,0 +1,46 @@
+﻿<Window Name="LoginW"
+	xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:vm="using:TNU.ViewModels"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		x:Class="TNU.LoginWindow"
+		x:DataType="vm:LoginWindowViewModel"
+		Title="LoginWindow">
+
+	<Design.DataContext>
+		<vm:LoginWindowViewModel/>
+	</Design.DataContext>
+
+	<Window.DataContext>
+		<vm:LoginWindowViewModel/>
+	</Window.DataContext>
+
+	<Grid ColumnDefinitions="Auto,*,Auto">
+
+		<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<StackPanel>
+				<TextBlock Text="Введите ФИО Наблюдателя"/>
+				<TextBox Text="{Binding ObservationElement.Inspector.FullName}"/>
+				<TextBlock Text="Выбирите должность наблюдателя"/>
+				<ComboBox/>
+			</StackPanel>
+
+			<StackPanel>
+				<TextBlock Text="Введите id респондента"/>
+				<TextBox Text="{Binding ObservationElement.Worker.Id}"/>
+			</StackPanel>
+
+			<StackPanel>
+				<TextBlock Text="Введите город замера"/>
+				<TextBox Text="{Binding ObservationElement.City}"/>
+				<TextBlock TextWrapping="Wrap" Text="Введите предприятие замера"/>
+				<TextBox Text="{Binding ObservationElement.Enterprise}"/>
+			</StackPanel>
+		</StackPanel>
+
+		<Button Grid.Column="2" Command="{Binding LoginCommand}" CommandParameter="{Binding #LoginW}" Content="Зарегестрировать"/>
+	</Grid>
+
+</Window>

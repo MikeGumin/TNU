@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TNU.Models
 {
     /// <summary>
     /// Модель Наблюдения
     /// </summary>
-    internal class Observation
+    public class Observation
     {
         /// <summary>
         /// Инспектор который делает запись
@@ -30,14 +26,16 @@ namespace TNU.Models
         /// <summary>
         /// Город в котором проводиться наблюдение
         /// </summary>
-        public string City { get; set; }
+        public string City { get; set; } = "";
 
         /// <summary>
         /// Предприятие в котором проводиться наблюдение
         /// </summary>
         public string Enterprise { get; set; }
 
-
-        ObservableCollection<JobEntry> JobEntries { get; set; }
+        /// <summary>
+        /// События которые входят в наблюдения
+        /// </summary>
+        ObservableCollection<JobEntryClock> JobEntries { get; set; }
     }
 }
