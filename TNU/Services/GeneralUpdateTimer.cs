@@ -1,8 +1,8 @@
-﻿using Avalonia.Threading;
-using System;
+﻿using System;
+using Avalonia.Threading;
 using TNU.ViewModels;
 
-namespace TNU.Repository
+namespace TNU.Services
 {
     delegate void ReDrowTimerStr(object? sender, EventArgs e);
 
