@@ -15,17 +15,21 @@ namespace TNU.Services.EntryExport;
 public class EntryExportService: IEntryExportService
 {
     /// <inheritdoc />
-    public async Task ExportEntryAsync(
+    public async Task<string?> ExportEntryAsync(
         ObservableCollection<JobEntry> entryList,
         IFileDialogService fileDialogService)
     {
         if (!entryList.Any())
         {
-            return; // todo: Нужно придумать какую-то систему уведомлений. Например - "У вас нет завершенных записей"
+            return "У вас нет завершенных записей.";
         }
         
         var stream = await fileDialogService.SaveFileAsync($"output{DateTime.Now:yyyy-MM-dd_HH-mm-ss}");
-        if (stream is null) return;
+        
+        if (stream is null)
+        {
+            return "Ошибка при сохранение файла. Попробуйте еще раз.";
+        }
         
         var exportList = new List<EntryExportResponse>();
 
@@ -46,6 +50,8 @@ public class EntryExportService: IEntryExportService
         {
             MiniExcel.SaveAs(stream, exportList);
         }
+
+        return null;
     }
 
     /// <inheritdoc />
@@ -105,8 +111,10 @@ public class EntryExportService: IEntryExportService
             int colEnd = ParseToMinutes(entry.EndTime) - startMin + SystemConst.TimelineStartColumn;
 
             for (int col = colStart; col <= colEnd; col++)
-                ws.Cell(row, col).Value = 1;
-
+            {
+                ws.Cell(row, col).Value = entry.DifficultyFactor;
+            }
+            
             row++;
         }
     }

@@ -27,15 +27,18 @@ public partial class MainWindowViewModel : ViewModelBase
     private readonly IEntryExportService _entryExportService;
     private readonly IFinishedEntryService _finishedEntryService;
     private readonly IFileDialogService _fileDialogService;
+    private readonly ErrorMessageHelper _errorMessageHelper;
 
     public MainWindowViewModel(
         IEntryExportService entryExportService,
         IFinishedEntryService finishedEntryService,
-        IFileDialogService fileDialogService)
+        IFileDialogService fileDialogService,
+        ErrorMessageHelper errorMessageHelper)
     {
         _entryExportService = entryExportService;
         _finishedEntryService = finishedEntryService;
         _fileDialogService = fileDialogService;
+        _errorMessageHelper = errorMessageHelper;
     }
 
     /// <summary>
@@ -59,10 +62,15 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanExport))]
     private async Task ExportEntries()
     {
-        await _entryExportService.ExportEntryAsync(
+        var errorMessage = await _entryExportService.ExportEntryAsync(
             FinishedEntriesRepository.FinishedEntries,
             _fileDialogService
         );
+
+        if (errorMessage is not null)
+        {
+            await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", errorMessage, MainWindow!);
+        }
     }
     
     /// <summary>
