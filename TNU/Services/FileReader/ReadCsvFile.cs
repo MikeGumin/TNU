@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using TNU.Repository;
 
 namespace TNU.Services
 {
     static public class ReadCsvFile
     {
-        static public string FilePath { get; private set; } = "ActivityList.csv";
+        static public string FilePath { get; private set; } = ConstansRepository.JOB_NAME_FILE_PATH;
         static public List<string> Read()
         {
             string[] lines = File.ReadAllLines(FilePath);
