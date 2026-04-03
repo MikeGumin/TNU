@@ -33,6 +33,7 @@ public partial class App : Application
             collection.AddScoped<IEntryExportService, EntryExportService>();
             collection.AddSingleton<MainWindowViewModel>();
             collection.AddSingleton<LoginWindowViewModel>();
+            collection.AddSingleton<ErrorMessageHelper>();
             collection.AddScoped<IFinishedEntryService, FinishedEntryService>();
 
             // Передаём Func — TopLevel будет получен позже, в момент вызова

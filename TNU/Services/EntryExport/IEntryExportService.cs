@@ -15,7 +15,7 @@ public interface IEntryExportService
     /// </summary>
     /// <param name="entryList">Массив записей</param>
     /// <param name="fileDialogService"></param>
-    public Task ExportEntryAsync(ObservableCollection<JobEntry> entryList, IFileDialogService fileDialogService);
+    public Task<string?> ExportEntryAsync(ObservableCollection<JobEntry> entryList, IFileDialogService fileDialogService);
 
     /// <summary>
     /// 
