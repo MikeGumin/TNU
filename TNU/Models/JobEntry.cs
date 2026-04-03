@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Avalonia;
+using ReactiveUI;
+using System;
 using System.Linq;
 
 namespace TNU.Models;
@@ -6,7 +8,7 @@ namespace TNU.Models;
 /// <summary>
 /// Модель записи работы
 /// </summary>
-public partial class JobEntry
+public partial class JobEntry : ReactiveObject
 {
     /// <summary>
     /// Идентификатор
@@ -31,30 +33,44 @@ public partial class JobEntry
     /// <summary>
     /// Время выполнения задачи
     /// </summary>
-    public string JobSample { get; set; }
+    private string jobSample;
+    public string JobSample
+    {
+        get => jobSample;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref jobSample, value);
+
+            int[] a = (JobSample.Split(':').Select(s => int.Parse(s))).ToArray();
+            TimeSpan duration = new TimeSpan(a[0], a[1], a[2]);
+            TimeSpan strtTimer = TimeSpan.Parse(StartTime);
+            endTime = (strtTimer + duration).ToString();
+        }
+    }
 
     /// <summary>
     /// Время начала задачи
     /// </summary>
-    public string StartTime { get; set; } = DateTime.Now.ToString("HH:mm:ss");
+    private string startTime = DateTime.Now.ToString("HH:mm:ss");
+    public string StartTime
+    {
+        get => startTime;
+        set
+        {
+            
+        }
+    }
 
     /// <summary>
     /// Время конца задачи
     /// </summary>
+    private string endTime;
     public string EndTime
     {
-        get
+        get => endTime;
+        set
         {
-            if (JobSample != null)
-            {
-                int[] a = (JobSample.Split(':').Select(s => int.Parse(s))).ToArray();
-                TimeSpan duration = new TimeSpan(0, a[0], a[1]);
-                TimeSpan strtTime = TimeSpan.Parse(StartTime);
-
-                return (strtTime+ duration).ToString();
-            }
-
-            return "";
+           
         }
     }
 
@@ -71,5 +87,27 @@ public partial class JobEntry
     /// <summary>
     /// Коэффициент сложности
     /// </summary>
-    public double DifficultyFactor { get; set; }
+    public double DifficultyFactor { get; set; } = 1;
+
+    public void ChangeStartTime(string value)
+    {
+        this.RaiseAndSetIfChanged(ref startTime, value);
+
+        TimeSpan strtTimer = TimeSpan.Parse(StartTime);
+        TimeSpan endTimer = TimeSpan.Parse(EndTime);
+
+        JobSample = (endTimer - strtTimer).ToString();
+    }
+
+    public void ChangeEndTime(string value)
+    {
+        this.RaiseAndSetIfChanged(ref endTime, value);
+
+        TimeSpan strtTimer = TimeSpan.Parse(StartTime);
+        TimeSpan endTimer = TimeSpan.Parse(EndTime);
+
+        this.RaiseAndSetIfChanged(ref jobSample, (endTimer - strtTimer).ToString());
+
+        JobSample = (endTimer - strtTimer).ToString();
+    }
 }

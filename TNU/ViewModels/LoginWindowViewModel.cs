@@ -15,9 +15,9 @@ namespace TNU.ViewModels
         }
 
         [RelayCommand]
-        public void Login(Window w)
+        public void Login(Window thisWin)
         {
-            w.Close();
+            thisWin.Close();
         }
     }
 }
