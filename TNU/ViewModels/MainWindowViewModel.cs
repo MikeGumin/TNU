@@ -66,6 +66,15 @@ public partial class MainWindowViewModel : ViewModelBase
     }
     
     /// <summary>
+    /// Метод для экспорта завершенных задач в формате Диаграммы Ганта
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanExport))]
+    private void ExportEntriesInGanta()
+    {
+        _entryExportService.ExportDiagrammaGanta(FinishedEntriesRepository.FinishedEntries);
+    }
+    
+    /// <summary>
     /// Метод для удаления всех завершенных задач
     /// </summary>
     [RelayCommand]

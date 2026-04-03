@@ -8,7 +8,7 @@ namespace TNU.Services
 {
     static public class ReadCsvFile
     {
-        static public string FilePath { get; private set; } = ConstansRepository.JOB_NAME_FILE_PATH;
+        static public string FilePath { get; private set; } = SystemConst.JobNameFilePath;
         static public List<string> Read()
         {
             string[] lines = File.ReadAllLines(FilePath);
