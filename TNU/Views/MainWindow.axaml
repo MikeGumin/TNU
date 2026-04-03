@@ -133,11 +133,18 @@
 								HorizontalAlignment="Left"
 								Margin="0,10,10,10"
 								Command="{Binding DeleteEntriesCommand}" />
+						
+						<StackPanel
+							HorizontalAlignment="Right"
+							Orientation="Horizontal">
+							<Button Content="Экспорт в формате Диаграммы Ганта"
+							        Margin="0,10,10,10"
+							        Command="{Binding ExportEntriesInGantaCommand}" />
 
-						<Button Content="Экспорт"
-								HorizontalAlignment="Right"
-								Margin="0,10,10,10"
-								Command="{Binding ExportEntriesCommand}" />
+							<Button Content="Экспорт"
+									Margin="0,10,10,10"
+									Command="{Binding ExportEntriesCommand}" />
+						</StackPanel >
 					</StackPanel>
 				</ScrollViewer>
 			</Border>

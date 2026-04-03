@@ -39,7 +39,7 @@ namespace TNU.Services.ClockAction
         public void ReDrowTimer(object? sender, EventArgs e)
         {
             TimeSpan elapsed = _stopwatch.Elapsed;
-            StrTimer = $"{elapsed.Hours:00}{elapsed.Minutes:00}:{elapsed.Seconds:00}:{elapsed.Milliseconds:000}";
+            StrTimer = $"{elapsed.Hours:00}:{elapsed.Minutes:00}:{elapsed.Seconds:00}:{elapsed.Milliseconds:000}";
         }
     }
 }

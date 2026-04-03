@@ -103,11 +103,11 @@ public partial class JobEntry : ReactiveObject
     {
         this.RaiseAndSetIfChanged(ref endTime, value);
 
-        TimeSpan strtTimer = TimeSpan.Parse(StartTime);
+        TimeSpan startTimer = TimeSpan.Parse(StartTime);
         TimeSpan endTimer = TimeSpan.Parse(EndTime);
 
-        this.RaiseAndSetIfChanged(ref jobSample, (endTimer - strtTimer).ToString());
+        this.RaiseAndSetIfChanged(ref jobSample, (endTimer - startTimer).ToString());
 
-        JobSample = (endTimer - strtTimer).ToString();
+        JobSample = (endTimer - startTimer).ToString();
     }
 }
