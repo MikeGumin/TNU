@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using TNU.Models;
 using TNU.Repository;
+using TNU.Services;
 using TNU.Services.EntryExport;
 using TNU.Services.FileDialog;
 using TNU.Services.FinishedEntry;

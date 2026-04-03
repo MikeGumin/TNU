@@ -17,8 +17,5 @@ public partial class MainWindow : Window
                 vm.MainWindow = this;
             }
         };
-
-        LoginWindow a = new LoginWindow();
-        a.Show();
     }
 }

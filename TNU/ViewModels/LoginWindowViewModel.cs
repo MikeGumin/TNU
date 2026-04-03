@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using System;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using TNU.Models;
 
@@ -8,6 +9,7 @@ namespace TNU.ViewModels
     {
         
         public Observation ObservationElement { get; set; } = new Observation();
+        public event Action? LoginSuccess;
 
         public LoginWindowViewModel()
         {
@@ -15,9 +17,9 @@ namespace TNU.ViewModels
         }
 
         [RelayCommand]
-        public void Login(Window thisWin)
+        public void Login()
         {
-            thisWin.Close();
+            LoginSuccess?.Invoke();
         }
     }
 }

@@ -32,6 +32,7 @@ public partial class App : Application
             var collection = new ServiceCollection();
             collection.AddScoped<IEntryExportService, EntryExportService>();
             collection.AddSingleton<MainWindowViewModel>();
+            collection.AddSingleton<LoginWindowViewModel>();
             collection.AddScoped<IFinishedEntryService, FinishedEntryService>();
 
             // Передаём Func — TopLevel будет получен позже, в момент вызова
@@ -48,9 +49,9 @@ public partial class App : Application
 
             Services = collection.BuildServiceProvider();
 
-            desktop.MainWindow = new Views.MainWindow
+            desktop.MainWindow = new Views.LoginWindow()
             {
-                DataContext = Services.GetRequiredService<MainWindowViewModel>()
+                DataContext = Services.GetRequiredService<LoginWindowViewModel>(),
             };
         }
 
