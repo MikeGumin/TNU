@@ -30,5 +30,5 @@ public interface IFinishedEntryService
     /// </summary>
     /// <param name="editEntry">Отредактированная запись</param>
     /// <param name="entry">Запись о работе</param>
-    public JobEntry EditEntry(JobEntry editEntry, JobEntry entry);
+    public void EditEntry(JobEntry editEntry, JobEntry entry);
 }

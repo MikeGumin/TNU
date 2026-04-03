@@ -32,16 +32,19 @@ public class FinishedEntryService : IFinishedEntryService
     }
     
     /// <inheritdoc />
-    public JobEntry EditEntry(JobEntry editEntry, JobEntry entry)
+    public void EditEntry(JobEntry editEntry, JobEntry entry)
     {
-        return new  JobEntry()
-        {
-            Id =  entry.Id,
-            JobDate = entry.JobDate,
-            JobName = editEntry.JobName,
-            JobWorker =  editEntry.JobWorker,
-            RecordStatus =  entry.RecordStatus,
-            JobSample =  entry.JobSample,
-        };
+        entry.JobWorker = editEntry.JobWorker;
+        entry.ChangeEndTime(editEntry.EndTime);
+        entry.ChangeStartTime(editEntry.StartTime);
+        //return new  JobEntry()
+        //{
+        //    Id =  entry.Id,
+        //    JobDate = entry.JobDate,
+        //    JobName = editEntry.JobName,
+        //    JobWorker =  editEntry.JobWorker,
+        //    RecordStatus =  entry.RecordStatus,
+        //    JobSample =  entry.JobSample,
+        //};
     }
 }

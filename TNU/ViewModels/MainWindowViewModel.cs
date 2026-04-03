@@ -18,7 +18,9 @@ public partial class MainWindowViewModel : ViewModelBase
     /// Коллекция для хранения текущих записей
     /// </summary>
     public ObservableCollection<JobEntryViewModel> TimerList { get; private set; } = [];
-    
+
+    public Observation observation { get; private set; } = new();
+
     public Window? MainWindow { get; set; }
     
     private readonly IEntryExportService _entryExportService;
@@ -33,7 +35,6 @@ public partial class MainWindowViewModel : ViewModelBase
         _entryExportService = entryExportService;
         _finishedEntryService = finishedEntryService;
         _fileDialogService = fileDialogService;
-
     }
 
     /// <summary>
@@ -89,8 +90,8 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task EditEntry(JobEntry entry)
     {
         // Заносим данные из записи entry в наше окно для редактирования
-        var editWindow = new EditEntryWindow(entry);
-        
+        EditEntryWindow editWindow = new EditEntryWindow(entry);
+
         // Вызываем диалог, где владельцем является наше главное окно
         // owner нужен, чтобы позиционировать наше всплывающее окно относительного главного
         bool? result = await editWindow.ShowDialog<bool?>(MainWindow!);
@@ -98,14 +99,14 @@ public partial class MainWindowViewModel : ViewModelBase
         // result - это флаг указывающий на то, была ли нажата кнопка "ок" или нет
         if (result == true)
         {
-            var updatedEntry = _finishedEntryService.EditEntry(editWindow.ResultEntry, entry);
+             _finishedEntryService.EditEntry(editWindow.ResultEntry, entry);
+
+            //int indexEditEntry = FinishedEntriesRepository.FinishedEntries.IndexOf(entry);
             
-            var indexEditEntry = FinishedEntriesRepository.FinishedEntries.IndexOf(entry);
-            
-            if (indexEditEntry >= 0)
-            {
-                FinishedEntriesRepository.FinishedEntries[indexEditEntry] = updatedEntry;
-            }
+            //if (indexEditEntry >= 0)
+            //{
+            //    FinishedEntriesRepository.FinishedEntries[indexEditEntry] = updatedEntry;
+            //}
         }
     }
 

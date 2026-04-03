@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using DynamicData;
+using System.Collections.ObjectModel;
 using TNU.Models.Enum;
+using TNU.Services;
 
 namespace TNU.Repository
 {
@@ -15,8 +17,10 @@ namespace TNU.Repository
 
         static JobNameRepository()
         {
-            AddJob(new JobTitleEnum("Тестовое задание"));
-            AddJob(new JobTitleEnum("Совершенно другое дело"));
+            foreach (string str in ReadCsvFile.Read())
+            {
+                AddJob(new JobTitleEnum(str));
+            }
         }
 
         /// <summary>

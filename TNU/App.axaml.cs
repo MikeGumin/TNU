@@ -1,15 +1,16 @@
-using System;
-using Avalonia;
+﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
-using System.Linq;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Linq;
 using TNU.Services.EntryExport;
 using TNU.Services.FileDialog;
 using TNU.Services.FinishedEntry;
 using TNU.ViewModels;
+using TNU.Views;
 
 namespace TNU;
 
@@ -32,7 +33,7 @@ public partial class App : Application
             collection.AddScoped<IEntryExportService, EntryExportService>();
             collection.AddSingleton<MainWindowViewModel>();
             collection.AddScoped<IFinishedEntryService, FinishedEntryService>();
-        
+
             // Передаём Func — TopLevel будет получен позже, в момент вызова
             collection.AddSingleton<IFileDialogService>(_ =>
                 new FileDialogService(() =>
