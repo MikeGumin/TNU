@@ -15,11 +15,11 @@ public interface IEntryExportService
     /// </summary>
     /// <param name="entryList">Массив записей</param>
     /// <param name="fileDialogService"></param>
-    public Task<string?> ExportEntryAsync(ObservableCollection<JobEntry> entryList, IFileDialogService fileDialogService);
+    public Task<OperationResult<string>> ExportEntryAsync(ObservableCollection<JobEntry> entryList, IFileDialogService fileDialogService);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="entryList"></param>
-    public void ExportDiagrammaGanta(ObservableCollection<JobEntry> entryList);
+    public OperationResult ExportDiagrammaGanta(ObservableCollection<JobEntry> entryList);
 }

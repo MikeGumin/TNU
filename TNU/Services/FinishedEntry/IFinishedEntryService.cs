@@ -18,12 +18,12 @@ public interface IFinishedEntryService
     /// <summary>
     /// Метод удаления всех завершенных записей о работе
     /// </summary>
-    public void DeleteEntries();
+    public OperationResult DeleteEntries();
     
     /// <summary>
     /// Метод удаления завершенной записи о работе
     /// </summary>
-    public void DeleteEntry(JobEntry entry);
+    public OperationResult DeleteEntry(JobEntry entry);
 
     /// <summary>
     /// Метод редактирования завершенной записи о работе

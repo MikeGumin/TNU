@@ -62,14 +62,14 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanExport))]
     private async Task ExportEntries()
     {
-        var errorMessage = await _entryExportService.ExportEntryAsync(
+        var exportResult = await _entryExportService.ExportEntryAsync(
             FinishedEntriesRepository.FinishedEntries,
             _fileDialogService
         );
 
-        if (errorMessage is not null)
+        if (exportResult.IsFailed)
         {
-            await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", errorMessage, MainWindow!);
+            await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, MainWindow!);
         }
     }
     
@@ -77,27 +77,42 @@ public partial class MainWindowViewModel : ViewModelBase
     /// Метод для экспорта завершенных задач в формате Диаграммы Ганта
     /// </summary>
     [RelayCommand(CanExecute = nameof(CanExport))]
-    private void ExportEntriesInGanta()
+    private async Task ExportEntriesInGanta()
     {
-        _entryExportService.ExportDiagrammaGanta(FinishedEntriesRepository.FinishedEntries);
+        var exportResult = _entryExportService.ExportDiagrammaGanta(FinishedEntriesRepository.FinishedEntries);
+        
+        if (exportResult.IsFailed)
+        {
+            await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, MainWindow!);
+        }
     }
     
     /// <summary>
     /// Метод для удаления всех завершенных задач
     /// </summary>
     [RelayCommand]
-    private void DeleteEntries()
+    private async Task DeleteEntries()
     {
-        _finishedEntryService.DeleteEntries();
+        var deleteResult = _finishedEntryService.DeleteEntries();
+
+        if (deleteResult.IsFailed)
+        {
+            await _errorMessageHelper.ShowErrorMessage("Ошибка при удалении записей", deleteResult.ErrorMessage, MainWindow!);
+        }
     }
     
     /// <summary>
     /// Метод для удаления завершенной задачи
     /// </summary>
     [RelayCommand]
-    private void DeleteEntry(JobEntry entry)
+    private async Task DeleteEntry(JobEntry entry)
     {
-        _finishedEntryService.DeleteEntry(entry);
+        var deleteResult = _finishedEntryService.DeleteEntry(entry);
+
+        if (deleteResult.IsFailed)
+        {
+            await _errorMessageHelper.ShowErrorMessage("Ошибка при удалении записи", deleteResult.ErrorMessage, MainWindow!);
+        }
     }
     
     /// <summary>
