@@ -45,15 +45,22 @@ public partial class MainWindowViewModel : ViewModelBase
     /// Метод создания новой записи
     /// </summary>
     [RelayCommand]
-    private void AddNewTask()
+    private async Task AddNewTask()
     {
-        JobEntryViewModel model = new JobEntryViewModel(_finishedEntryService, this);
-        GeneralUpdateTimer.AddEvent(model);
+        AddEntryWindow addEntryWindow = new AddEntryWindow();
+        
+        bool? result = await addEntryWindow.ShowDialog<bool?>(MainWindow!);
+        
+        if (result == true)
+        {
+            JobEntryViewModel model = new JobEntryViewModel(_finishedEntryService, this);
+            GeneralUpdateTimer.AddEvent(model);
 
-        if(!GeneralUpdateTimer.IsEnabled)
-            GeneralUpdateTimer.StartTimer();
+            if(!GeneralUpdateTimer.IsEnabled)
+                GeneralUpdateTimer.StartTimer();
 
-        TimerList.Add(model);
+            TimerList.Add(model);
+        }
     }
 
     /// <summary>
