@@ -34,6 +34,7 @@ public partial class App : Application
             collection.AddSingleton<MainWindowViewModel>();
             collection.AddSingleton<LoginWindowViewModel>();
             collection.AddSingleton<ErrorMessageHelper>();
+            collection.AddSingleton<OperationResult>();
             collection.AddScoped<IFinishedEntryService, FinishedEntryService>();
 
             // Передаём Func — TopLevel будет получен позже, в момент вызова

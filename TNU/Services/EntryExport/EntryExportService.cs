@@ -15,20 +15,20 @@ namespace TNU.Services.EntryExport;
 public class EntryExportService: IEntryExportService
 {
     /// <inheritdoc />
-    public async Task<string?> ExportEntryAsync(
+    public async Task<OperationResult<string>> ExportEntryAsync(
         ObservableCollection<JobEntry> entryList,
         IFileDialogService fileDialogService)
     {
         if (!entryList.Any())
         {
-            return "У вас нет завершенных записей.";
+            return OperationResult<string>.Fail("У вас нет завершенных записей.");
         }
         
         var stream = await fileDialogService.SaveFileAsync($"output{DateTime.Now:yyyy-MM-dd_HH-mm-ss}");
         
         if (stream is null)
         {
-            return "Ошибка при сохранение файла. Попробуйте еще раз.";
+            return OperationResult<string>.Fail("Ошибка при сохранение файла. Попробуйте еще раз.");
         }
         
         var exportList = new List<EntryExportResponse>();
@@ -51,15 +51,15 @@ public class EntryExportService: IEntryExportService
             MiniExcel.SaveAs(stream, exportList);
         }
 
-        return null;
+        return OperationResult<string>.Ok();
     }
 
     /// <inheritdoc />
-    public void ExportDiagrammaGanta(ObservableCollection<JobEntry> entryList)
+    public OperationResult ExportDiagrammaGanta(ObservableCollection<JobEntry> entryList)
     {
         if (!entryList.Any())
         {
-            return; // todo: система уведомлений — "У вас нет завершённых записей"
+            return OperationResult.Fail("У вас нет завершённых записей");
         }
 
         var startMin = entryList.Min(e => ParseToMinutes(e.StartTime));
@@ -74,6 +74,8 @@ public class EntryExportService: IEntryExportService
         ApplyFormatting(ws, duration);
 
         wb.SaveAs($"gantt-{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.xlsx");
+
+        return OperationResult.Ok();
     }
 
     /// <summary>

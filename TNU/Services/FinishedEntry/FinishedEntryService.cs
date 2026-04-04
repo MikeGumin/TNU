@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TNU.Models;
 using TNU.Repository;
 
@@ -20,15 +21,33 @@ public class FinishedEntryService : IFinishedEntryService
     }
 
     /// <inheritdoc />
-    public void DeleteEntries()
+    public OperationResult DeleteEntries()
     {
-        FinishedEntriesRepository.FinishedEntries.Clear();
+        try
+        {
+            FinishedEntriesRepository.FinishedEntries.Clear();
+
+            return OperationResult.Ok();
+        }
+        catch (Exception ex)
+        {
+            return OperationResult.Fail(ex.Message);
+        }
     }
     
     /// <inheritdoc />
-    public void DeleteEntry(JobEntry entry)
+    public OperationResult DeleteEntry(JobEntry entry)
     {
-        FinishedEntriesRepository.FinishedEntries.Remove(entry);
+        try
+        {
+            FinishedEntriesRepository.FinishedEntries.Remove(entry);
+            
+            return OperationResult.Ok();
+        }
+        catch (Exception ex)
+        {
+            return OperationResult.Fail(ex.Message);
+        }
     }
     
     /// <inheritdoc />
