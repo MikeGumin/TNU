@@ -117,6 +117,7 @@ public partial class MainWindowViewModel : ViewModelBase
         // result - это флаг указывающий на то, была ли нажата кнопка "ок" или нет
         if (result == true)
         {
+            //JobEntry updatedEntry =
              _finishedEntryService.EditEntry(editWindow.ResultEntry, entry);
 
             //int indexEditEntry = FinishedEntriesRepository.FinishedEntries.IndexOf(entry);

@@ -1,14 +1,14 @@
-﻿using Avalonia;
-using ReactiveUI;
-using System;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace TNU.Models;
 
 /// <summary>
 /// Модель записи работы
 /// </summary>
-public partial class JobEntry : ReactiveObject
+public partial class JobEntry : INotifyPropertyChanged
 {
     /// <summary>
     /// Идентификатор
@@ -28,7 +28,16 @@ public partial class JobEntry : ReactiveObject
     /// <summary>
     /// Наименование выполняемой работы
     /// </summary>
-    public string JobName { get; set; }
+    private string jobName;
+    public string JobName
+    {
+        get => jobName;
+        set
+        {
+            jobName = value;
+            OnPropertyChanged();
+        }
+    }
 
     /// <summary>
     /// Время выполнения задачи
@@ -39,12 +48,14 @@ public partial class JobEntry : ReactiveObject
         get => jobSample;
         set
         {
-            this.RaiseAndSetIfChanged(ref jobSample, value);
+            jobSample = value;
 
             int[] a = (JobSample.Split(':').Select(s => int.Parse(s))).ToArray();
             TimeSpan duration = new TimeSpan(a[0], a[1], a[2]);
             TimeSpan strtTimer = TimeSpan.Parse(StartTime);
             endTime = (strtTimer + duration).ToString();
+
+            OnPropertyChanged();
         }
     }
 
@@ -57,7 +68,8 @@ public partial class JobEntry : ReactiveObject
         get => startTime;
         set
         {
-            
+            startTime = value;
+            OnPropertyChanged();
         }
     }
 
@@ -65,12 +77,14 @@ public partial class JobEntry : ReactiveObject
     /// Время конца задачи
     /// </summary>
     private string endTime;
+
     public string EndTime
     {
         get => endTime;
         set
         {
-           
+            endTime = value;
+            OnPropertyChanged();
         }
     }
 
@@ -91,7 +105,7 @@ public partial class JobEntry : ReactiveObject
 
     public void ChangeStartTime(string value)
     {
-        this.RaiseAndSetIfChanged(ref startTime, value);
+        StartTime = value;
 
         TimeSpan strtTimer = TimeSpan.Parse(StartTime);
         TimeSpan endTimer = TimeSpan.Parse(EndTime);
@@ -101,13 +115,19 @@ public partial class JobEntry : ReactiveObject
 
     public void ChangeEndTime(string value)
     {
-        this.RaiseAndSetIfChanged(ref endTime, value);
+        EndTime = value;
 
         TimeSpan startTimer = TimeSpan.Parse(StartTime);
         TimeSpan endTimer = TimeSpan.Parse(EndTime);
 
-        this.RaiseAndSetIfChanged(ref jobSample, (endTimer - startTimer).ToString());
+        //this.RaiseAndSetIfChanged(ref jobSample, (endTimer - startTimer).ToString());
 
         JobSample = (endTimer - startTimer).ToString();
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
