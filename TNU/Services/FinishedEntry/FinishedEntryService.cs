@@ -53,9 +53,10 @@ public class FinishedEntryService : IFinishedEntryService
     /// <inheritdoc />
     public void EditEntry(JobEntry editEntry, JobEntry entry)
     {
-        entry.JobWorker = editEntry.JobWorker;
+        entry.JobName = editEntry.JobName;
         entry.ChangeEndTime(editEntry.EndTime);
         entry.ChangeStartTime(editEntry.StartTime);
+
         //return new  JobEntry()
         //{
         //    Id =  entry.Id,

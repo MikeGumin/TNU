@@ -12,7 +12,14 @@ public partial class EditEntryWindow : Window
     public EditEntryWindow(JobEntry entryToEdit)
     {
         InitializeComponent();
-        DataContext = entryToEdit;
+        JobEntry entry = new JobEntry() 
+        { 
+            JobName = entryToEdit.JobName,
+            StartTime= entryToEdit.StartTime,
+            EndTime= entryToEdit.EndTime
+        };
+
+        DataContext = entry;
     }
 
     private void OkButton_Click(object? sender, RoutedEventArgs e)
