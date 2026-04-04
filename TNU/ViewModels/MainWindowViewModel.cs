@@ -124,7 +124,7 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         // Заносим данные из записи entry в наше окно для редактирования
         EditEntryWindow editWindow = new EditEntryWindow(entry);
-
+        
         // Вызываем диалог, где владельцем является наше главное окно
         // owner нужен, чтобы позиционировать наше всплывающее окно относительного главного
         bool? result = await editWindow.ShowDialog<bool?>(MainWindow!);
@@ -132,14 +132,14 @@ public partial class MainWindowViewModel : ViewModelBase
         // result - это флаг указывающий на то, была ли нажата кнопка "ок" или нет
         if (result == true)
         {
-             _finishedEntryService.EditEntry(editWindow.ResultEntry, entry);
-
-            //int indexEditEntry = FinishedEntriesRepository.FinishedEntries.IndexOf(entry);
+            int indexEditEntry = FinishedEntriesRepository.FinishedEntries.IndexOf(entry);
             
-            //if (indexEditEntry >= 0)
-            //{
-            //    FinishedEntriesRepository.FinishedEntries[indexEditEntry] = updatedEntry;
-            //}
+             _finishedEntryService.EditEntry(editWindow.ResultEntry, entry);
+            
+            if (indexEditEntry >= 0)
+            {
+                FinishedEntriesRepository.FinishedEntries[indexEditEntry] = entry;
+            }
         }
     }
 

@@ -44,35 +44,20 @@ public partial class JobEntry : ReactiveObject
             int[] a = (JobSample.Split(':').Select(s => int.Parse(s))).ToArray();
             TimeSpan duration = new TimeSpan(a[0], a[1], a[2]);
             TimeSpan strtTimer = TimeSpan.Parse(StartTime);
-            endTime = (strtTimer + duration).ToString();
+            EndTime = (strtTimer + duration).ToString();
         }
     }
 
     /// <summary>
     /// Время начала задачи
     /// </summary>
-    private string startTime = DateTime.Now.ToString("HH:mm:ss");
-    public string StartTime
-    {
-        get => startTime;
-        set
-        {
-            
-        }
-    }
+    public string StartTime { get; set; } = DateTime.Now.ToString("HH:mm:ss");
+
 
     /// <summary>
     /// Время конца задачи
     /// </summary>
-    private string endTime;
-    public string EndTime
-    {
-        get => endTime;
-        set
-        {
-           
-        }
-    }
+    public string? EndTime { get; set; }
 
     /// <summary>
     /// Описание выполняемой работы
@@ -91,20 +76,22 @@ public partial class JobEntry : ReactiveObject
 
     public void ChangeStartTime(string value)
     {
-        this.RaiseAndSetIfChanged(ref startTime, value);
-
-        TimeSpan strtTimer = TimeSpan.Parse(StartTime);
+        StartTime = value;
+        
+        TimeSpan startTimer = TimeSpan.Parse(value);
         TimeSpan endTimer = TimeSpan.Parse(EndTime);
+        
+        this.RaiseAndSetIfChanged(ref jobSample, (endTimer - startTimer).ToString());
 
-        JobSample = (endTimer - strtTimer).ToString();
+        JobSample = (endTimer - startTimer).ToString();
     }
 
     public void ChangeEndTime(string value)
     {
-        this.RaiseAndSetIfChanged(ref endTime, value);
-
+        EndTime = value;
+        
         TimeSpan startTimer = TimeSpan.Parse(StartTime);
-        TimeSpan endTimer = TimeSpan.Parse(EndTime);
+        TimeSpan endTimer = TimeSpan.Parse(value);
 
         this.RaiseAndSetIfChanged(ref jobSample, (endTimer - startTimer).ToString());
 

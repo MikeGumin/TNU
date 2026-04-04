@@ -7,11 +7,12 @@ namespace TNU.Views;
 
 public partial class EditEntryWindow : Window
 {
-    public JobEntry ResultEntry { get; private set; }
+    public JobEntry? ResultEntry { get; private set; }
 
     public EditEntryWindow(JobEntry entryToEdit)
     {
         InitializeComponent();
+        // ошибка -- вызов из не валидного потока call from invalid thread
         DataContext = entryToEdit;
     }
 
