@@ -27,7 +27,10 @@
         </AutoCompleteBox>
         
             <TextBlock Text="Время Начала:" VerticalAlignment="Center" />
-            <TextBox Text="{Binding StartTime}"/>
+            <TextBox 
+                x:Name="StartTimeTextBox"
+                GotFocus="StartTimeDefault_OnGotFocus"
+                Text="{Binding StartTime}"/>
         
         <StackPanel
             Orientation="Horizontal"
