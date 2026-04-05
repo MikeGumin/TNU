@@ -1,0 +1,48 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models1="clr-namespace:TNU.Core.Models"
+        xmlns:repository="clr-namespace:TNU.Core.Repository"
+        xmlns:enum="clr-namespace:TNU.Core.Models.Enum"
+        x:Class="TNU.Core.Views.AddEntryWindow"
+        x:DataType="models1:JobEntry"
+        Title="Добавление записи о работе"
+        Width="400"
+        Height="250"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        Background="DarkGray">
+    <StackPanel
+        Margin="20">
+
+        <TextBlock Text="Род деятельности:" />
+        <AutoCompleteBox Text="{Binding JobName}"
+                         ItemsSource="{x:Static repository:JobNameRepository.JobNameList}"
+                         FilterMode="Contains"
+                         MinimumPrefixLength="1">
+            <AutoCompleteBox.ItemTemplate>
+                <DataTemplate x:DataType="enum:JobTitleEnum">
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </AutoCompleteBox.ItemTemplate>
+        </AutoCompleteBox>
+        
+            <TextBlock Text="Время Начала:" VerticalAlignment="Center" />
+            <TextBox 
+                x:Name="StartTimeTextBox"
+                GotFocus="StartTimeDefault_OnGotFocus"
+                Text="{Binding StartTime}"/>
+        
+        <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Right"
+            Margin="0,40,0,0"
+            Spacing="8">
+            <Button Content="OK"
+                    Click="OkButton_Click"
+                    IsDefault="True" />
+            <Button Content="Отмена"
+                    Click="CancelButton_Click"
+                    IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
+</Window>
