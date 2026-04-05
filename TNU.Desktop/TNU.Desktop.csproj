@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFrameworks>net9.0-windows;net9.0</TargetFrameworks>
+        <Nullable>enable</Nullable>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia.Desktop" Version="11.3.12" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../TNU.Core/TNU.Core.csproj" />
+    </ItemGroup>
+</Project>
