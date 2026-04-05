@@ -13,14 +13,18 @@ namespace TNU.Repository
         /// <summary>
         /// Лист с перечислениями возможных работ
         /// </summary>
-        static public ObservableCollection<JobTitleEnum> JobNameList { get;private set; } = [];
+        static public ObservableCollection<JobTitleEnum> JobNameList { get; private set; } = [];
 
         static JobNameRepository()
         {
-            foreach (string str in ReadCsvFile.Read())
+            try
             {
-                AddJob(new JobTitleEnum(str));
+                foreach (string str in ReadCsvFile.Read())
+                {
+                    AddJob(new JobTitleEnum(str));
+                }
             }
+            catch { }
         }
 
         /// <summary>

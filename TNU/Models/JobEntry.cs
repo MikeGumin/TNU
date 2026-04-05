@@ -50,9 +50,11 @@ public partial class JobEntry : INotifyPropertyChanged
         {
             jobSample = value;
 
-            int[] a = (JobSample.Split(':').Select(s => int.Parse(s))).ToArray();
-            TimeSpan duration = new TimeSpan(a[0], a[1], a[2]);
+            int[] timePath = (JobSample.Split(':').Select(s => int.Parse(s))).ToArray();
+
+            TimeSpan duration = new TimeSpan(timePath[0], timePath[1], timePath[2]);
             TimeSpan strtTimer = TimeSpan.Parse(StartTime);
+
             endTime = (strtTimer + duration).ToString();
 
             OnPropertyChanged();

@@ -1,8 +1,12 @@
-﻿using System.Collections;
+﻿using DocumentFormat.OpenXml.Drawing;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Text;
+using Tmds.DBus.Protocol;
 using TNU.Repository;
+using TNU.Views;
 
 namespace TNU.Services
 {
@@ -11,18 +15,24 @@ namespace TNU.Services
         static public string FilePath { get; private set; } = SystemConst.JobNameFilePath;
         static public List<string> Read()
         {
-            string[] lines = File.ReadAllLines(FilePath);
-
             List<string> result = new List<string>();
 
-            foreach (string line in lines)
+            try
             {
-                result.AddRange(line.Split(','));
-            }
+                string[] lines = File.ReadAllLines(FilePath);
 
+                foreach (string line in lines)
+                {
+                    result.AddRange(line.Split(','));
+                }
+
+            }
+            catch(System.Exception ex)
+            {
+            }
             return result;
         }
-        static public void Write(ICollection s) 
+        static public void Write(ICollection s)
         {
             StringBuilder csvContent = new StringBuilder();
 
