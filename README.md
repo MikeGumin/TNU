@@ -78,3 +78,6 @@ TNU/                                   # корень проекта
    - Реализовать общий дизайн приложения
    - Дизайн основного окна приложения
    - Дизайн окна редактирования 
+
+user story:
+https://drive.google.com/drive/folders/1hh6ptWckH_cKOrreyNpyx1EHiQdv_ywo?usp=drive_link
