@@ -92,7 +92,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanExport))]
     private async Task ExportEntriesInGanta()
     {
-        var exportResult = _entryExportService.ExportDiagrammaGanta(FinishedEntriesRepository.FinishedEntries);
+        var exportResult = await _entryExportService.ExportDiagrammaGanta(FinishedEntriesRepository.FinishedEntries, _fileDialogService);
         
         if (exportResult.IsFailed)
         {

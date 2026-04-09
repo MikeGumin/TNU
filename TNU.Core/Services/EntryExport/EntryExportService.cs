@@ -56,11 +56,20 @@ public class EntryExportService: IEntryExportService
     }
 
     /// <inheritdoc />
-    public OperationResult ExportDiagrammaGanta(ObservableCollection<JobEntry> entryList)
+    public async Task<OperationResult<string>> ExportDiagrammaGanta(
+        ObservableCollection<JobEntry> entryList,
+        IFileDialogService fileDialogService)
     {
         if (!entryList.Any())
         {
-            return OperationResult.Fail("У вас нет завершённых записей");
+            return OperationResult<string>.Fail("У вас нет завершённых записей");
+        }
+        
+        var stream = await fileDialogService.SaveFileAsync($"gantt-{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.xlsx");
+        
+        if (stream is null)
+        {
+            return OperationResult<string>.Fail("Ошибка при сохранение файла. Попробуйте еще раз.");
         }
 
         var startMin = entryList.Min(e => ParseToMinutes(e.StartTime));
@@ -73,10 +82,15 @@ public class EntryExportService: IEntryExportService
         FillTimelineHeader(ws, startMin, duration);
         FillJobRows(ws, entryList, startMin);
         ApplyFormatting(ws, duration);
+        
+        await using (stream)
+        {
+            wb.SaveAs(stream);
+        }
+        
+       
 
-        wb.SaveAs($"gantt-{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.xlsx");
-
-        return OperationResult.Ok();
+        return OperationResult<string>.Ok();
     }
 
     /// <summary>
