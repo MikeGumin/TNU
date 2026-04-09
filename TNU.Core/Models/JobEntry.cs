@@ -104,26 +104,44 @@ public partial class JobEntry : INotifyPropertyChanged
     /// </summary>
     public double DifficultyFactor { get; set; } = 1;
 
-    public void ChangeStartTime(string value)
+    public OperationResult ChangeStartTime(string value)
     {
-        StartTime = value;
-
-        TimeSpan strtTimer = TimeSpan.Parse(StartTime);
-        TimeSpan endTimer = TimeSpan.Parse(EndTime);
-
-        JobSample = (endTimer - strtTimer).ToString();
+        try
+        {
+            TimeSpan strtTimer = TimeSpan.Parse(value);
+            TimeSpan endTimer = TimeSpan.Parse(EndTime);
+            
+            JobSample = (endTimer - strtTimer).ToString();
+            
+            StartTime = value;
+            
+            return OperationResult.Ok();
+        }
+        catch (Exception e)
+        {
+            return OperationResult.Fail($"Ошибка перевода времени старта, некоректное значение - {value}");
+        }
     }
 
-    public void ChangeEndTime(string value)
+    public OperationResult ChangeEndTime(string value)
     {
-        EndTime = value;
+        try
+        {
+            TimeSpan startTimer = TimeSpan.Parse(StartTime);
+            TimeSpan endTimer = TimeSpan.Parse(value);
+            
+            //this.RaiseAndSetIfChanged(ref jobSample, (endTimer - startTimer).ToString());
 
-        TimeSpan startTimer = TimeSpan.Parse(StartTime);
-        TimeSpan endTimer = TimeSpan.Parse(EndTime);
+            JobSample = (endTimer - startTimer).ToString();
+            
+            EndTime = value;
 
-        //this.RaiseAndSetIfChanged(ref jobSample, (endTimer - startTimer).ToString());
-
-        JobSample = (endTimer - startTimer).ToString();
+            return OperationResult.Ok();
+        }
+        catch (Exception e)
+        {
+            return OperationResult.Fail($"Ошибка перевода времени окончания, некоректное значение - {value}");
+        }
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

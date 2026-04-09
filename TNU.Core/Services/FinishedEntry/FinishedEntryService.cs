@@ -52,12 +52,31 @@ public class FinishedEntryService : IFinishedEntryService
     }
     
     /// <inheritdoc />
-    public void EditEntry(JobEntry editEntry, JobEntry entry)
+    public OperationResult EditEntry(JobEntry editEntry, JobEntry entry)
     {
-        entry.JobName = editEntry.JobName;
-        entry.ChangeEndTime(editEntry.EndTime);
-        entry.ChangeStartTime(editEntry.StartTime);
+        try
+        {
+            entry.JobName = editEntry.JobName;
+            var changeResult = entry.ChangeEndTime(editEntry.EndTime);
 
+            if (changeResult.IsFailed)
+            {
+                return OperationResult.Fail(changeResult.ErrorMessage);
+            }
+            
+            changeResult = entry.ChangeStartTime(editEntry.StartTime);
+            
+            if (changeResult.IsFailed)
+            {
+                return OperationResult.Fail(changeResult.ErrorMessage);
+            }
+            
+            return  OperationResult.Ok();
+        }
+        catch (Exception ex)
+        {
+            return OperationResult.Fail(ex.Message);
+        }
         //return new  JobEntry()
         //{
         //    Id =  entry.Id,
