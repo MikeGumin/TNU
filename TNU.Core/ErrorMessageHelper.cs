@@ -1,5 +1,8 @@
 ﻿using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Layout;
+using Avalonia.Media;
 
 namespace TNU.Core;
 
@@ -21,14 +24,42 @@ public class ErrorMessageHelper
     {
         if (errorMessage is not null)
         {
+            var closeButton = new Button
+            {
+                Content = "Понятно",
+                HorizontalAlignment = HorizontalAlignment.Right,
+                Padding = new Thickness(20, 8),
+                Background = new SolidColorBrush(Color.Parse("#FF6B6B")),
+                Foreground = Brushes.White,
+                CornerRadius = new CornerRadius(6)
+            };
+            
             var dialog = new Window
             {
-                Title = errorField,
-                Content = new TextBlock { Text = errorMessage },
-                Width = 300, Height = 150,
+                Title = "Ошибка",
+                Width = 440,
+                Height = 280,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 CanResize = false,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
+                Background = new SolidColorBrush(Color.Parse("#1E1E2E")),
+                Content = new Border
+                {
+                    Padding = new Thickness(24),
+                    Child = new StackPanel
+                    {
+                        Spacing = 16,
+                        Children =
+                        {
+                            new TextBlock { Text = $"⚠ {errorField}", FontSize = 16 },
+                            new TextBlock { Text = errorMessage, TextWrapping = TextWrapping.Wrap },
+                            closeButton
+                        }
+                    }
+                }
             };
+            
+            closeButton.Click += (s, e) => dialog.Close();
+
             await dialog.ShowDialog(mainWindow);
         }
     }

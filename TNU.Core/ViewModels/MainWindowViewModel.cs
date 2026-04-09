@@ -60,8 +60,10 @@ public partial class MainWindowViewModel : ViewModelBase
             
             GeneralUpdateTimer.AddEvent(model);
 
-            if(!GeneralUpdateTimer.IsEnabled)
+            if (!GeneralUpdateTimer.IsEnabled)
+            {
                 GeneralUpdateTimer.StartTimer();
+            }
 
             TimerList.Add(model);
         }
@@ -144,7 +146,13 @@ public partial class MainWindowViewModel : ViewModelBase
         if (result == true)
         {
             //JobEntry updatedEntry =
-             _finishedEntryService.EditEntry(editWindow.ResultEntry, entry);
+             var editResult = _finishedEntryService.EditEntry(editWindow.ResultEntry, entry);
+
+             if (editResult.IsFailed)
+             {
+                 await _errorMessageHelper.ShowErrorMessage("Ошибка при редактировании записи", editResult.ErrorMessage, MainWindow!);
+                 editWindow.Close();
+             }
 
             //int indexEditEntry = FinishedEntriesRepository.FinishedEntries.IndexOf(entry);
             
