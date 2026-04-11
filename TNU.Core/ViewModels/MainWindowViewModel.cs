@@ -20,6 +20,8 @@ public partial class MainWindowViewModel : ViewModelBase
     /// </summary>
     public ObservableCollection<Core.ViewModels.JobEntryViewModel> TimerList { get; private set; } = [];
 
+    private int _numberTask = 1;
+
     public Observation observation { get; private set; } = new();
 
     public Window? MainWindow { get; set; }
@@ -49,7 +51,10 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         Core.ViewModels.JobEntryViewModel model = new Core.ViewModels.JobEntryViewModel(_finishedEntryService, this);
 
-        model.Entry = new JobEntry();
+        model.Entry = new JobEntry()
+        {
+            Id = _numberTask++
+        };
         
         GeneralUpdateTimer.AddEvent(model);
 

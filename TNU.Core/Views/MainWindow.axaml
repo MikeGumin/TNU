@@ -48,9 +48,14 @@
 						<ItemsControl ItemsSource="{Binding TimerList}">
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
-									<Grid ColumnDefinitions="*, Auto, Auto, Auto,100">
-
-										<AutoCompleteBox Grid.Column="0"
+									<Grid ColumnDefinitions="30, *, Auto, Auto, Auto,100">
+										<TextBlock 
+											Grid.Column="0" 
+											VerticalAlignment="Center"
+											HorizontalAlignment="Center" 
+											Text="{Binding Entry.Id}"/>
+										
+										<AutoCompleteBox Grid.Column="1"
 														 Text="{Binding Entry.JobName}"
 														 ItemsSource="{x:Static repository1:JobNameRepository.JobNameList}"
 														 FilterMode="Contains"
@@ -65,10 +70,10 @@
 											</AutoCompleteBox.ItemTemplate>
 										</AutoCompleteBox>
 										
-										<TextBlock Grid.Column="1" Text="{Binding Entry.StartTime}"/>
-										<Button Grid.Column="2" Content="Stop" Command="{Binding StopTimerCommand}"/>
-										<Button Grid.Column="3" Content="Сохранить" Margin="10 0" Command="{Binding EndTimerCommand}"/>
-										<TextBlock Grid.Column="4" Text="{Binding Timer.StrTimer}"/>
+										<TextBlock Grid.Column="2" Text="{Binding Entry.StartTime}"/>
+										<Button Grid.Column="3" Content="Stop" Command="{Binding StopTimerCommand}"/>
+										<Button Grid.Column="4" Content="Сохранить" Margin="10 0" Command="{Binding EndTimerCommand}"/>
+										<TextBlock Grid.Column="5" Text="{Binding Timer.StrTimer}"/>
 									</Grid>
 								</DataTemplate>
 							</ItemsControl.ItemTemplate>
@@ -103,6 +108,7 @@
 										<DockPanel>
 
 											<StackPanel >
+												<TextBlock Text="{Binding Id}" Foreground="Black"/>
 												<TextBlock FontWeight="Bold" Foreground="Black">
 													<Run Text="{Binding StartTime}"/> - <Run Text="{Binding EndTime}"/>
 												</TextBlock>
