@@ -10,6 +10,10 @@
 		xmlns:repository1="clr-namespace:TNU.Core.Repository"
 		xmlns:viewModels="clr-namespace:TNU.Core.ViewModels"
 		xmlns:enum="clr-namespace:TNU.Core.Models.Enum"
+		xmlns:visualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
+		xmlns:behaviors="clr-namespace:TNU.Core.Behaviors"
+		xmlns:i="using:Avalonia.Xaml.Interactivity"
+		
 
 		FontFamily="Segoe UI, Arial, sans-serif"
 
@@ -49,7 +53,7 @@
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
 										<StackPanel>
-											<Grid ColumnDefinitions="30, *, Auto, Auto, Auto,100">
+											<Grid ColumnDefinitions="30, *, 60, Auto, Auto, Auto,100">
 
 												<TextBlock
 												Grid.Column="0"
@@ -58,10 +62,15 @@
 												Text="{Binding Entry.Id}"/>
 
 												<AutoCompleteBox Grid.Column="1"
-																 Text="{Binding Entry.JobName}"
-																 ItemsSource="{x:Static repository1:JobNameRepository.JobNameList}"
-																 FilterMode="Contains"
-																 MinimumPrefixLength="1">
+												                 x:Name="JobNameTextBox"
+												                 Text="{Binding Entry.JobName}"
+												                 ItemsSource="{x:Static repository1:JobNameRepository.JobNameList}"
+												                 FilterMode="Contains"
+												                 MinimumPrefixLength="1"
+												                 IsTextCompletionEnabled="True">
+													<i:Interaction.Behaviors>
+														<behaviors:AddNewJobBehavior />
+													</i:Interaction.Behaviors>
 
 													<AutoCompleteBox.ItemTemplate>
 														<DataTemplate x:DataType="enum:JobTitleEnum">
@@ -71,11 +80,19 @@
 														</DataTemplate>
 													</AutoCompleteBox.ItemTemplate>
 												</AutoCompleteBox>
+												
+												<TextBox 
+													Grid.Column="2" 
+													Background="Black"
+													x:Name="JobCodeTextBox"
+													GotFocus="JobCodeTextBox_OnGotFocus"
+													LostFocus="JobCodeTextBox_OnLostFocus"
+													Text="{Binding Entry.JobCode, UpdateSourceTrigger=PropertyChanged}"/>
 
-												<TextBlock Grid.Column="2" Text="{Binding Entry.StartTime}"/>
-												<Button Grid.Column="3" Content="Stop" Command="{Binding StopTimerCommand}"/>
-												<Button Grid.Column="4" Content="Сохранить" Margin="10 0" Command="{Binding EndTimerCommand}"/>
-												<TextBlock Grid.Column="5" Text="{Binding Timer.StrTimer}"/>
+												<TextBlock Grid.Column="3" Text="{Binding Entry.StartTime}"/>
+												<Button Grid.Column="4" Content="Stop" Command="{Binding StopTimerCommand}"/>
+												<Button Grid.Column="5" Content="Сохранить" Margin="10 0" Command="{Binding EndTimerCommand}"/>
+												<TextBlock Grid.Column="6" Text="{Binding Timer.StrTimer}"/>
 
 											</Grid>
 											<DockPanel>
@@ -124,6 +141,7 @@
 												</TextBlock>
 												<TextBlock Text="{Binding JobName}" Foreground="Black"/>
 												<TextBlock Text="{Binding JobSample}" Foreground="Black"/>
+												<TextBlock Text="{Binding JobCode}" Foreground="Black"/>
 											</StackPanel>
 
 											<StackPanel
