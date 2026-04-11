@@ -8,7 +8,6 @@ using TNU.Core.Services;
 using TNU.Core.Services.EntryExport;
 using TNU.Core.Services.FileDialog;
 using TNU.Core.Services.FinishedEntry;
-using AddEntryWindow = TNU.Core.Views.AddEntryWindow;
 using EditEntryWindow = TNU.Core.Views.EditEntryWindow;
 
 namespace TNU.Core.ViewModels;
@@ -20,6 +19,8 @@ public partial class MainWindowViewModel : ViewModelBase
     /// Коллекция для хранения текущих записей
     /// </summary>
     public ObservableCollection<Core.ViewModels.JobEntryViewModel> TimerList { get; private set; } = [];
+
+    private int _numberTask = 1;
 
     public Observation observation { get; private set; } = new();
 
@@ -48,25 +49,22 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private async Task AddNewTask()
     {
-        AddEntryWindow addEntryWindow = new AddEntryWindow();
-        
-        bool? result = await addEntryWindow.ShowDialog<bool?>(MainWindow!);
-        
-        if (result == true)
+        Core.ViewModels.JobEntryViewModel model = new Core.ViewModels.JobEntryViewModel(_finishedEntryService, this);
+
+        model.Entry = new JobEntry()
         {
-            Core.ViewModels.JobEntryViewModel model = new Core.ViewModels.JobEntryViewModel(_finishedEntryService, this);
-            
-            model.Entry = addEntryWindow.ResultEntry;
-            
-            GeneralUpdateTimer.AddEvent(model);
+            Id = _numberTask++
+        };
+        
+        GeneralUpdateTimer.AddEvent(model);
 
-            if (!GeneralUpdateTimer.IsEnabled)
-            {
-                GeneralUpdateTimer.StartTimer();
-            }
-
-            TimerList.Add(model);
+        if (!GeneralUpdateTimer.IsEnabled)
+        {
+            GeneralUpdateTimer.StartTimer();
         }
+
+        TimerList.Add(model);
+        
     }
 
     /// <summary>
@@ -75,7 +73,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanExport))]
     private async Task ExportEntries()
     {
-        var exportResult = await _entryExportService.ExportEntryAsync(
+        var exportResult = await _entryExportService.CsvEntryAsync(
             FinishedEntriesRepository.FinishedEntries,
             _fileDialogService
         );
@@ -92,12 +90,12 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanExport))]
     private async Task ExportEntriesInGanta()
     {
-        var exportResult = await _entryExportService.ExportDiagrammaGanta(FinishedEntriesRepository.FinishedEntries, _fileDialogService);
-        
-        if (exportResult.IsFailed)
-        {
-            await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, MainWindow!);
-        }
+        // var exportResult = await _entryExportService.ExportDiagrammaGanta(FinishedEntriesRepository.FinishedEntries, _fileDialogService);
+        //
+        // if (exportResult.IsFailed)
+        // {
+        //     await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, MainWindow!);
+        // }
     }
     
     /// <summary>
@@ -120,12 +118,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private async Task DeleteEntry(JobEntry entry)
     {
-        var deleteResult = _finishedEntryService.DeleteEntry(entry);
-
-        if (deleteResult.IsFailed)
-        {
-            await _errorMessageHelper.ShowErrorMessage("Ошибка при удалении записи", deleteResult.ErrorMessage, MainWindow!);
-        }
+        
     }
     
     /// <summary>
@@ -136,7 +129,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task EditEntry(JobEntry entry)
     {
         // Заносим данные из записи entry в наше окно для редактирования
-        EditEntryWindow editWindow = new EditEntryWindow(entry);
+        EditEntryWindow editWindow = new EditEntryWindow(entry, _finishedEntryService, _errorMessageHelper);
 
         // Вызываем диалог, где владельцем является наше главное окно
         // owner нужен, чтобы позиционировать наше всплывающее окно относительного главного

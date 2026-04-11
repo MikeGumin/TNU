@@ -14,7 +14,7 @@ public partial class JobEntry : INotifyPropertyChanged
     /// <summary>
     /// Идентификатор
     /// </summary>
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public int Id { get; set; }
 
     /// <summary>
     /// Работник для которого делаеться запись
@@ -63,7 +63,7 @@ public partial class JobEntry : INotifyPropertyChanged
     /// <summary>
     /// Время начала задачи
     /// </summary>
-    private string startTime; /// = DateTime.Now.ToString("HH:mm:ss");
+    private string startTime = DateTime.Now.ToString("HH:mm:ss");
     public string StartTime
     {
         get => startTime;

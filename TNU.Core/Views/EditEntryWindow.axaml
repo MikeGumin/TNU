@@ -39,9 +39,14 @@
 		HorizontalAlignment="Right"
 		Margin="0,40,0,0"
 		Spacing="8">
+			<Button Content="Удалить"
+			        Margin="10,10,10,10"
+			        Click="DeleteButton_Click"
+			        CommandParameter="{Binding}" />
+			
 			<Button Content="OK"
-					Click="OkButton_Click"
-					IsDefault="True" />
+			        Click="OkButton_Click"
+			        IsDefault="True" />
 			<Button Content="Отмена"
 					Click="CancelButton_Click"
 					IsCancel="True" />

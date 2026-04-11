@@ -15,12 +15,12 @@ public interface IEntryExportService
     /// </summary>
     /// <param name="entryList">Массив записей</param>
     /// <param name="fileDialogService">Сервис для работы с файловой системой</param>
-    public Task<OperationResult<string>> ExportEntryAsync(ObservableCollection<JobEntry> entryList, IFileDialogService fileDialogService);
+    public Task<OperationResult<string>> CsvEntryAsync(ObservableCollection<JobEntry> entryList, IFileDialogService fileDialogService);
 
     /// <summary>
     /// Метод для экспорта записей в виде диаграммы ганта
     /// </summary>
     /// <param name="entryList">Массив записей</param>
     /// <param name="fileDialogService">Сервис для работы с файловой системой</param>
-    public Task<OperationResult<string>> ExportDiagrammaGanta(ObservableCollection<JobEntry> entryList, IFileDialogService fileDialogService);
+    // public Task<OperationResult<string>> ExportDiagrammaGanta(ObservableCollection<JobEntry> entryList, IFileDialogService fileDialogService);
 }

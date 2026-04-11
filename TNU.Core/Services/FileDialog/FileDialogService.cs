@@ -30,10 +30,10 @@ public class FileDialogService : IFileDialogService
         {
             Title = "Сохранить отчёт",
             SuggestedFileName = fileName,
-            DefaultExtension = "xlsx",
+            DefaultExtension = "csv",
             FileTypeChoices = new[]
             {
-                new FilePickerFileType("Excel файл") { Patterns = new[] { "*.xlsx" } }
+                new FilePickerFileType("CSV файл") { Patterns = new[] { "*.csv" } }
             }
         });
 
