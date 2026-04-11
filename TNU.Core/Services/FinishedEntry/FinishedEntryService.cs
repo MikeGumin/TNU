@@ -41,7 +41,14 @@ public class FinishedEntryService : IFinishedEntryService
     {
         try
         {
-            FinishedEntriesRepository.FinishedEntries.Remove(entry);
+
+            for (int i = 0; i < FinishedEntriesRepository.FinishedEntries.Count; i++)
+            {
+                if (FinishedEntriesRepository.FinishedEntries[i].Id == entry.Id)
+                {
+                    FinishedEntriesRepository.FinishedEntries.RemoveAt(i);
+                }
+            }
             
             return OperationResult.Ok();
         }

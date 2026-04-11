@@ -8,7 +8,6 @@ using TNU.Core.Services;
 using TNU.Core.Services.EntryExport;
 using TNU.Core.Services.FileDialog;
 using TNU.Core.Services.FinishedEntry;
-using AddEntryWindow = TNU.Core.Views.AddEntryWindow;
 using EditEntryWindow = TNU.Core.Views.EditEntryWindow;
 
 namespace TNU.Core.ViewModels;
@@ -48,25 +47,19 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private async Task AddNewTask()
     {
-        AddEntryWindow addEntryWindow = new AddEntryWindow();
+        Core.ViewModels.JobEntryViewModel model = new Core.ViewModels.JobEntryViewModel(_finishedEntryService, this);
+
+        model.Entry = new JobEntry();
         
-        bool? result = await addEntryWindow.ShowDialog<bool?>(MainWindow!);
-        
-        if (result == true)
+        GeneralUpdateTimer.AddEvent(model);
+
+        if (!GeneralUpdateTimer.IsEnabled)
         {
-            Core.ViewModels.JobEntryViewModel model = new Core.ViewModels.JobEntryViewModel(_finishedEntryService, this);
-            
-            model.Entry = addEntryWindow.ResultEntry;
-            
-            GeneralUpdateTimer.AddEvent(model);
-
-            if (!GeneralUpdateTimer.IsEnabled)
-            {
-                GeneralUpdateTimer.StartTimer();
-            }
-
-            TimerList.Add(model);
+            GeneralUpdateTimer.StartTimer();
         }
+
+        TimerList.Add(model);
+        
     }
 
     /// <summary>
@@ -120,12 +113,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private async Task DeleteEntry(JobEntry entry)
     {
-        var deleteResult = _finishedEntryService.DeleteEntry(entry);
-
-        if (deleteResult.IsFailed)
-        {
-            await _errorMessageHelper.ShowErrorMessage("Ошибка при удалении записи", deleteResult.ErrorMessage, MainWindow!);
-        }
+        
     }
     
     /// <summary>
@@ -136,7 +124,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task EditEntry(JobEntry entry)
     {
         // Заносим данные из записи entry в наше окно для редактирования
-        EditEntryWindow editWindow = new EditEntryWindow(entry);
+        EditEntryWindow editWindow = new EditEntryWindow(entry, _finishedEntryService, _errorMessageHelper);
 
         // Вызываем диалог, где владельцем является наше главное окно
         // owner нужен, чтобы позиционировать наше всплывающее окно относительного главного
