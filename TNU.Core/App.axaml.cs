@@ -6,6 +6,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
+using TNU.Core.Services.CsvFile;
 using TNU.Core.Services.EntryExport;
 using TNU.Core.Services.FileDialog;
 using TNU.Core.Services.FinishedEntry;
@@ -31,11 +32,12 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             var collection = new ServiceCollection();
-            collection.AddScoped<IEntryExportService, EntryExportService>();
             collection.AddSingleton<MainWindowViewModel>();
             collection.AddSingleton<LoginWindowViewModel>();
             collection.AddSingleton<ErrorMessageHelper>();
             collection.AddSingleton<OperationResult>();
+            
+            collection.AddScoped<IEntryExportService, EntryExportService>();
             collection.AddScoped<IFinishedEntryService, FinishedEntryService>();
 
             // Передаём Func — TopLevel будет получен позже, в момент вызова
