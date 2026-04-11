@@ -92,7 +92,7 @@ public partial class JobEntry : INotifyPropertyChanged
     /// <summary>
     /// Описание выполняемой работы
     /// </summary>
-    public string JobDescription { get; set; } = string.Empty;
+    public string Description { get; set; } = "";
 
     /// <summary>
     /// Статус записи

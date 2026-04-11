@@ -43,6 +43,12 @@ public partial class MainWindowViewModel : ViewModelBase
         _errorMessageHelper = errorMessageHelper;
     }
 
+    [RelayCommand]
+    private void AddComment()
+    {
+
+    }
+
     /// <summary>
     /// Метод создания новой записи
     /// </summary>
@@ -60,6 +66,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
         if (!GeneralUpdateTimer.IsEnabled)
         {
+            SystemConst.GeneralStopwatch.Start();
             GeneralUpdateTimer.StartTimer();
         }
 

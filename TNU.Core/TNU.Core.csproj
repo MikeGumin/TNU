@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Views\EditEntryWindow.axaml.cs">
+        <Compile Update="Views\DialogViews\EditEntryWindow.axaml.cs">
             <DependentUpon>EditEntryWindow.axaml</DependentUpon>
         </Compile>
     </ItemGroup>
