@@ -68,7 +68,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanExport))]
     private async Task ExportEntries()
     {
-        var exportResult = await _entryExportService.ExportEntryAsync(
+        var exportResult = await _entryExportService.CsvEntryAsync(
             FinishedEntriesRepository.FinishedEntries,
             _fileDialogService
         );
@@ -85,12 +85,12 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanExport))]
     private async Task ExportEntriesInGanta()
     {
-        var exportResult = await _entryExportService.ExportDiagrammaGanta(FinishedEntriesRepository.FinishedEntries, _fileDialogService);
-        
-        if (exportResult.IsFailed)
-        {
-            await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, MainWindow!);
-        }
+        // var exportResult = await _entryExportService.ExportDiagrammaGanta(FinishedEntriesRepository.FinishedEntries, _fileDialogService);
+        //
+        // if (exportResult.IsFailed)
+        // {
+        //     await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, MainWindow!);
+        // }
     }
     
     /// <summary>
