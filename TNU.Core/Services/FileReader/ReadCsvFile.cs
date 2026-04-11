@@ -16,7 +16,7 @@ namespace TNU.Core.Services.FileReader
 
             foreach (string line in lines)
             {
-                result.AddRange(line.Split(','));
+                result.AddRange(line.Split('\n'));
             }
 
             return result;

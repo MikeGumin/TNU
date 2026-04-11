@@ -32,7 +32,8 @@ public partial class JobEntryViewModel : ReactiveObject
         _finishedEntryService = finishedEntryService;
         _parent = parent;
 
-        StartTimer();
+        //StartTimer();
+        StopTimer();
     }
 
     public void StartTimer()
@@ -44,7 +45,7 @@ public partial class JobEntryViewModel : ReactiveObject
     [RelayCommand]
     public void StopTimer()
     {
-        if (Entry.RecordStatus is RecordStatusEnum.Start)
+        if (Entry.RecordStatus == RecordStatusEnum.Start)
         {
             Timer.StopTimer();
             Entry.RecordStatus = RecordStatusEnum.Stop;

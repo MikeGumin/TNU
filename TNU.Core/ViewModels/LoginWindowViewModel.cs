@@ -1,6 +1,10 @@
-﻿using System;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Runtime.InteropServices;
 using TNU.Core.Models;
+using TNU.Core.Services.FileOpener;
 
 namespace TNU.Core.ViewModels
 {
@@ -20,5 +24,16 @@ namespace TNU.Core.ViewModels
         {
             LoginSuccess?.Invoke();
         }
+
+        [RelayCommand]
+        public void OpenFile()
+        {
+            FileOpenerServise a = new FileOpenerServise();
+            a.OpenFile();
+        }
+
+
+        
+
     }
 }

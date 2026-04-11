@@ -16,10 +16,15 @@ namespace TNU.Core.Repository
 
         static JobNameRepository()
         {
+            try
+            {
+
             foreach (string str in ReadCsvFile.Read())
             {
                 AddJob(new JobTitleEnum(str));
             }
+            }
+            catch { }
         }
 
         /// <summary>

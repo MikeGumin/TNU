@@ -26,7 +26,7 @@ namespace TNU.Core.Services
             {
                 dl?.Invoke(_, __);
 
-                System.Diagnostics.Debug.WriteLine("Work!!!");
+                //System.Diagnostics.Debug.WriteLine("Work!!!");
             };
         }
 
@@ -34,14 +34,12 @@ namespace TNU.Core.Services
         {
             _timer.Start();
         }
+
         static public void StopTimer()
         {
             _timer.Stop();
         }
-        //static public bool IsEnabled()
-        //{
-        //    return _timer.IsEnabled;
-        //}
+
         static public void AddEvent(JobEntryViewModel model)
         {
             if (!_timer.IsEnabled)
