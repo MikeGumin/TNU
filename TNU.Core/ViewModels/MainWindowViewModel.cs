@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
@@ -55,18 +57,20 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private async Task AddNewTask()
     {
-        Core.ViewModels.JobEntryViewModel model = new Core.ViewModels.JobEntryViewModel(_finishedEntryService, this);
+        JobEntryViewModel model = new JobEntryViewModel(_finishedEntryService, this);
 
         model.Entry = new JobEntry()
         {
             Id = _numberTask++
         };
         
+        File.AppendAllLines(SystemStatic.EntryFilePath, new []{ model.Entry.Id.ToString() });
+        
         GeneralUpdateTimer.AddEvent(model);
 
         if (!GeneralUpdateTimer.IsEnabled)
         {
-            SystemConst.GeneralStopwatch.Start();
+            SystemStatic.GeneralStopwatch.Start();
             GeneralUpdateTimer.StartTimer();
         }
 

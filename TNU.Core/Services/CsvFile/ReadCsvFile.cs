@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using TNU.Core.Models;
 using TNU.Core.Models.Enum;
 using TNU.Core.Repository;
 
@@ -41,16 +42,28 @@ namespace TNU.Core.Services.CsvFile
             
             if (!JobNameRepository.JobNameList.Contains(jobTitle))
             {
-                File.AppendAllText(FilePath, Environment.NewLine + jobName, Encoding.UTF8);
+                File.AppendAllText(FilePath, jobName + Environment.NewLine, Encoding.UTF8);
             }
         }
-
-        public static void DeleteEntry(string jobName)
+        
+        public static void WriteJobInFile(JobEntry entry, string filePath)
         {
-            var newEntryList = File.ReadAllLines(FilePath)
-                .Where(line => line != jobName);
+            var sb = new StringBuilder();
             
-            File.WriteAllLines(FilePath, newEntryList);
+            sb.Append(entry.Id + "; ");
+            sb.Append(entry.JobName + "; ");
+            sb.Append(entry.JobCode + "; ");
+            sb.Append(entry.JobSample);
+            
+            File.AppendAllText(filePath, Environment.NewLine + sb, Encoding.UTF8);
+        }
+
+        public static void DeleteEntry(string jobName, string filePath)
+        {
+            var newEntryList = File.ReadAllLines(filePath)
+                .Where(line => line.Split(":")[0] != jobName && line != string.Empty);
+            
+            File.WriteAllLines(filePath, newEntryList);
         }
     }
 }

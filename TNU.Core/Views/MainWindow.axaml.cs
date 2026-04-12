@@ -35,7 +35,7 @@ public partial class MainWindow : Window
             if (!string.IsNullOrWhiteSpace(entry.JobName) && !string.IsNullOrWhiteSpace(entry.JobCode))
             {
                 JobNameRepository.JobNameCodeList[entry.JobName] = entry.JobCode;
-                ReadCsvFile.DeleteEntry(entry.JobName);
+                ReadCsvFile.DeleteEntry(entry.JobName, SystemConst.JobNameFilePath);
                 ReadCsvFile.Write($"{entry.JobName}:{entry.JobCode}");
             } 
         } 

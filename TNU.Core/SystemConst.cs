@@ -1,12 +1,9 @@
-﻿using System.Diagnostics;
-
+﻿
 namespace TNU.Core
 {
     static public class SystemConst
     {
         public const string JobNameFilePath = "ActivityList.csv";
-
-        static public Stopwatch GeneralStopwatch { get; set; } = new Stopwatch();
 
         /// <summary>
         /// Индекс верхней строки дата

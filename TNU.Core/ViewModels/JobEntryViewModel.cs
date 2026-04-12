@@ -4,6 +4,7 @@ using ReactiveUI;
 using TNU.Core.Models;
 using TNU.Core.Models.Enum;
 using TNU.Core.Services.ClockAction;
+using TNU.Core.Services.CsvFile;
 using TNU.Core.Services.FinishedEntry;
 
 namespace TNU.Core.ViewModels;
@@ -71,6 +72,9 @@ public partial class JobEntryViewModel : ReactiveObject
         
         _finishedEntryService.SaveEntry(new List<JobEntry>() { Entry });
         _parent.TimerList.Remove(this);
-
+        
+        ReadCsvFile.DeleteEntry(Entry.Id.ToString(), SystemStatic.EntryFilePath);
+        
+        ReadCsvFile.WriteJobInFile(Entry, SystemStatic.EntryFilePath);
     }
 }
