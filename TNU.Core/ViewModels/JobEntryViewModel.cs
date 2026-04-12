@@ -33,8 +33,8 @@ public partial class JobEntryViewModel : ReactiveObject
         _finishedEntryService = finishedEntryService;
         _parent = parent;
 
-        //StartTimer();
-        StopTimer();
+        StartTimer();
+        // StopTimer();
     }
 
     public void StartTimer()
