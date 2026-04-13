@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using TNU.Core.Models;
 
 namespace TNU.Core.Services.FinishedEntry;
@@ -8,6 +9,7 @@ namespace TNU.Core.Services.FinishedEntry;
 /// </summary>
 public interface IFinishedEntryService
 {
+
     // todo: Возможно стоит сделать асинхронным
     /// <summary>
     /// Метод сохранения всех завершенных записей о работе

@@ -2,7 +2,6 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using TNU.Core.Models;
 using TNU.Core.Repository;
 using TNU.Core.Services.CsvFile;
 using TNU.Core.ViewModels;

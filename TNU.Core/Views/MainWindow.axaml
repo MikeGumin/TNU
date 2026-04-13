@@ -13,7 +13,7 @@
 		xmlns:visualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
 		xmlns:behaviors="clr-namespace:TNU.Core.Behaviors"
 		xmlns:i="using:Avalonia.Xaml.Interactivity"
-		
+
 
 		FontFamily="Segoe UI, Arial, sans-serif"
 
@@ -62,12 +62,12 @@
 												Text="{Binding Entry.Id}"/>
 
 												<AutoCompleteBox Grid.Column="1"
-												                 x:Name="JobNameTextBox"
-												                 Text="{Binding Entry.JobName}"
-												                 ItemsSource="{x:Static repository1:JobNameRepository.JobNameList}"
-												                 FilterMode="Contains"
-												                 MinimumPrefixLength="1"
-												                 IsTextCompletionEnabled="True">
+																 x:Name="JobNameTextBox"
+																 Text="{Binding Entry.JobName}"
+																 ItemsSource="{x:Static repository1:JobNameRepository.JobNameList}"
+																 FilterMode="Contains"
+																 MinimumPrefixLength="1"
+																 IsTextCompletionEnabled="True">
 													<i:Interaction.Behaviors>
 														<behaviors:AddNewJobBehavior />
 													</i:Interaction.Behaviors>
@@ -80,14 +80,14 @@
 														</DataTemplate>
 													</AutoCompleteBox.ItemTemplate>
 												</AutoCompleteBox>
-												
-												<TextBox 
-													Grid.Column="2" 
-													Background="Black"
-													x:Name="JobCodeTextBox"
-													GotFocus="JobCodeTextBox_OnGotFocus"
-													LostFocus="JobCodeTextBox_OnLostFocus"
-													Text="{Binding Entry.JobCode, UpdateSourceTrigger=PropertyChanged}"/>
+
+												<TextBox
+												Grid.Column="2"
+												Background="Black"
+												x:Name="JobCodeTextBox"
+												GotFocus="JobCodeTextBox_OnGotFocus"
+												LostFocus="JobCodeTextBox_OnLostFocus"
+												Text="{Binding Entry.JobCode, UpdateSourceTrigger=PropertyChanged}"/>
 
 												<TextBlock Grid.Column="3" Text="{Binding Entry.StartTime}"/>
 												<Button Grid.Column="4" Content="Stop" Command="{Binding StopTimerCommand}"/>
@@ -128,36 +128,48 @@
 								   Margin="5"
 								   HorizontalAlignment="Center"/>
 
-						<ItemsControl ItemsSource="{x:Static repository1:FinishedEntriesRepository.FinishedEntries}">
-							<ItemsControl.ItemTemplate>
-								<DataTemplate x:DataType="models1:JobEntry">
-									<Border BorderThickness="0,0,0,1" BorderBrush="Black" Margin="5,2">
-										<DockPanel>
+						<DataGrid ItemsSource="{x:Static repository1:FinishedEntriesRepository.FinishedEntries}"
+								  AutoGenerateColumns="False" 
+								  GridLinesVisibility="All"
+								  BorderThickness="1" BorderBrush="Gray">
 
-											<StackPanel >
-												<TextBlock Text="{Binding Id}" Foreground="Black"/>
-												<TextBlock FontWeight="Bold" Foreground="Black">
-													<Run Text="{Binding StartTime}"/> - <Run Text="{Binding EndTime}"/>
-												</TextBlock>
-												<TextBlock Text="{Binding JobName}" Foreground="Black"/>
-												<TextBlock Text="{Binding JobSample}" Foreground="Black"/>
-												<TextBlock Text="{Binding JobCode}" Foreground="Black"/>
-											</StackPanel>
+							<DataGrid.Columns>
+								<DataGridTextColumn Header="ID"  Binding="{Binding Path=Id}"/>
+								<DataGridTextColumn Header="Работа" Binding="{Binding JobName}" />
+							</DataGrid.Columns>
 
-											<StackPanel
-											HorizontalAlignment="Right"
-											Orientation="Horizontal">
-												<Button Content="Редактировать"
-														Margin="0,10,10,10"
-														Command="{Binding DataContext.EditEntryCommand, ElementName=RootWindow}"
-														CommandParameter="{Binding}" />
-											</StackPanel >
-										</DockPanel>
+						</DataGrid>
+						<!--<ItemsControl
+						ItemsSource="{x:Static repository1:FinishedEntriesRepository.FinishedEntries}">
+						<ItemsControl.ItemTemplate>
+						<DataTemplate x:DataType="models1:JobEntry">
+						<Border BorderThickness="0,0,0,1" BorderBrush="Black" Margin="5,2">
+						<DockPanel>
 
-									</Border>
-								</DataTemplate>
-							</ItemsControl.ItemTemplate>
-						</ItemsControl>
+						<StackPanel >
+						<TextBlock Text="{Binding Id}" Foreground="Black"/>
+						<TextBlock FontWeight="Bold" Foreground="Black">
+						<Run Text="{Binding StartTime}"/> - <Run Text="{Binding EndTime}"/>
+						</TextBlock>
+						<TextBlock Text="{Binding JobName}" Foreground="Black"/>
+						<TextBlock Text="{Binding JobSample}" Foreground="Black"/>
+						<TextBlock Text="{Binding JobCode}" Foreground="Black"/>
+						</StackPanel>
+
+						<StackPanel
+						HorizontalAlignment="Right"
+						Orientation="Horizontal">
+						<Button Content="Редактировать"
+						Margin="0,10,10,10"
+						Command="{Binding DataContext.EditEntryCommand, ElementName=RootWindow}"
+						CommandParameter="{Binding}" />
+						</StackPanel >
+						</DockPanel>
+
+						</Border>
+						</DataTemplate>
+						</ItemsControl.ItemTemplate>
+						</ItemsControl>-->
 
 						<!--<Button Content="Очистка"
 						HorizontalAlignment="Left"
