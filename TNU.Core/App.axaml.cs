@@ -1,11 +1,13 @@
-﻿using System;
-using System.Linq;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Linq;
+using TNU.Core.Services;
+using TNU.Core.Services.CloseWindow;
 using TNU.Core.Services.CsvFile;
 using TNU.Core.Services.EntryExport;
 using TNU.Core.Services.FileDialog;
@@ -36,7 +38,10 @@ public partial class App : Application
             collection.AddSingleton<LoginWindowViewModel>();
             collection.AddSingleton<ErrorMessageHelper>();
             collection.AddSingleton<OperationResult>();
-            
+
+            // что-то делает, теперь окана можн озакрыть из ViewModel
+            collection.AddSingleton<IWindowService, WindowService>();
+
             collection.AddScoped<IEntryExportService, EntryExportService>();
             collection.AddScoped<IFinishedEntryService, FinishedEntryService>();
 

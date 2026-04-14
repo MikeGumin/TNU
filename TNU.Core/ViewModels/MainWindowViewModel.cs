@@ -1,15 +1,17 @@
-﻿using System;
+﻿using Avalonia.Controls;
+using CommunityToolkit.Mvvm.Input;
+using ReactiveUI;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
-using Avalonia.Controls;
-using CommunityToolkit.Mvvm.Input;
 using TNU.Core.Models;
 using TNU.Core.Repository;
 using TNU.Core.Services;
 using TNU.Core.Services.EntryExport;
 using TNU.Core.Services.FileDialog;
 using TNU.Core.Services.FinishedEntry;
+using TNU.Core.Views;
 using EditEntryWindow = TNU.Core.Views.EditEntryWindow;
 
 namespace TNU.Core.ViewModels;
@@ -24,10 +26,22 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private int _numberTask = 1;
 
-    public Observation observation { get; private set; } = new();
+    private Observation _mainObservation;
+    public Observation MainObservation
+    {
+        get => _mainObservation;
+        set
+        {
+            if (_mainObservation == null)
+            {
+                _mainObservation = value;
+                //_finishedEntryService.FinishedEntries = value.FinishedEntries;
+            }
+        }
+    }
 
     public Window? MainWindow { get; set; }
-    
+
     private readonly IEntryExportService _entryExportService;
     private readonly IFinishedEntryService _finishedEntryService;
     private readonly IFileDialogService _fileDialogService;
@@ -43,11 +57,6 @@ public partial class MainWindowViewModel : ViewModelBase
         _finishedEntryService = finishedEntryService;
         _fileDialogService = fileDialogService;
         _errorMessageHelper = errorMessageHelper;
-    }
-
-    [RelayCommand]
-    private void AddComment()
-    {
 
     }
 
@@ -63,9 +72,9 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             Id = _numberTask++
         };
-        
-        File.AppendAllLines(SystemStatic.EntryFilePath, new []{ model.Entry.Id.ToString() });
-        
+
+        File.AppendAllLines(SystemStatic.EntryFilePath, new[] { model.Entry.Id.ToString() });
+
         GeneralUpdateTimer.AddEvent(model);
 
         if (!GeneralUpdateTimer.IsEnabled)
@@ -73,9 +82,7 @@ public partial class MainWindowViewModel : ViewModelBase
             SystemStatic.GeneralStopwatch.Start();
             GeneralUpdateTimer.StartTimer();
         }
-
         TimerList.Add(model);
-        
     }
 
     /// <summary>
@@ -94,7 +101,7 @@ public partial class MainWindowViewModel : ViewModelBase
             await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, MainWindow!);
         }
     }
-    
+
     /// <summary>
     /// Метод для экспорта завершенных задач в формате Диаграммы Ганта
     /// </summary>
@@ -108,7 +115,7 @@ public partial class MainWindowViewModel : ViewModelBase
         //     await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, MainWindow!);
         // }
     }
-    
+
     /// <summary>
     /// Метод для удаления всех завершенных задач
     /// </summary>
@@ -122,16 +129,16 @@ public partial class MainWindowViewModel : ViewModelBase
             await _errorMessageHelper.ShowErrorMessage("Ошибка при удалении записей", deleteResult.ErrorMessage, MainWindow!);
         }
     }
-    
+
     /// <summary>
     /// Метод для удаления завершенной задачи
     /// </summary>
     [RelayCommand]
     private async Task DeleteEntry(JobEntry entry)
     {
-        
+
     }
-    
+
     /// <summary>
     /// Метод для редактирования завершенной записи
     /// </summary>
@@ -145,21 +152,21 @@ public partial class MainWindowViewModel : ViewModelBase
         // Вызываем диалог, где владельцем является наше главное окно
         // owner нужен, чтобы позиционировать наше всплывающее окно относительного главного
         bool? result = await editWindow.ShowDialog<bool?>(MainWindow!);
-        
+
         // result - это флаг указывающий на то, была ли нажата кнопка "ок" или нет
         if (result == true)
         {
             //JobEntry updatedEntry =
-             var editResult = _finishedEntryService.EditEntry(editWindow.ResultEntry, entry);
+            var editResult = _finishedEntryService.EditEntry(editWindow.ResultEntry, entry);
 
-             if (editResult.IsFailed)
-             {
-                 await _errorMessageHelper.ShowErrorMessage("Ошибка при редактировании записи", editResult.ErrorMessage, MainWindow!);
-                 editWindow.Close();
-             }
+            if (editResult.IsFailed)
+            {
+                await _errorMessageHelper.ShowErrorMessage("Ошибка при редактировании записи", editResult.ErrorMessage, MainWindow!);
+                editWindow.Close();
+            }
 
             //int indexEditEntry = FinishedEntriesRepository.FinishedEntries.IndexOf(entry);
-            
+
             //if (indexEditEntry >= 0)
             //{
             //    FinishedEntriesRepository.FinishedEntries[indexEditEntry] = updatedEntry;

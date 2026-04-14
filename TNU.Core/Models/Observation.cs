@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReactiveUI;
+using System;
 using System.Collections.ObjectModel;
 
 namespace TNU.Core.Models
@@ -6,7 +7,7 @@ namespace TNU.Core.Models
     /// <summary>
     /// Модель Наблюдения
     /// </summary>
-    public class Observation
+    public class Observation :ReactiveObject
     {
         /// <summary>
         /// Инспектор который делает запись
@@ -37,5 +38,10 @@ namespace TNU.Core.Models
         /// События которые входят в наблюдения
         /// </summary>
         ObservableCollection<JobEntryClock> JobEntries { get; set; }
+
+        /// <summary>
+        /// Коллекция для хранения завершенных записей
+        /// </summary>
+        public ObservableCollection<JobEntry> FinishedEntries1 { get; set; } = new();
     }
 }
