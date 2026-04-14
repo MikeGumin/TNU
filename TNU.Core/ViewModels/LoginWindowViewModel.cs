@@ -29,7 +29,9 @@ namespace TNU.Core.ViewModels
         [RelayCommand]
         public void Login()
         {
-            OnLoginSuccess();
+            // Проверка введены ли данные в окна. Работает, но пока убрал 
+            //if (ObservationElement.IsCompleted())
+                OnLoginSuccess();
         }
 
         [RelayCommand]
@@ -47,7 +49,7 @@ namespace TNU.Core.ViewModels
             };
             mainWindow.Show();
 
-            if(mainWindow.DataContext is MainWindowViewModel a)
+            if (mainWindow.DataContext is MainWindowViewModel a)
             {
                 a.MainObservation = ObservationElement;
             }

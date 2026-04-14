@@ -26,9 +26,9 @@
 
 			<StackPanel>
 				<TextBlock Text="Введите ФИО Наблюдателя"/>
-				<TextBox Text="{Binding ObservationElement.Inspector.FullName}"/>
+				<TextBox Text="{Binding ObservationElement.InspectorName}"/>
 				<TextBlock MaxWidth="250" TextWrapping="Wrap" Text="Введите номер респондента"/>
-				<TextBox Text="{Binding ObservationElement.Worker.Id}"/>
+				<TextBox Text="{Binding ObservationElement.RespondentId}"/>
 				<TextBlock Text="Введите город проведения замера"/>
 				<TextBox Text="{Binding ObservationElement.City}"/>
 			</StackPanel>

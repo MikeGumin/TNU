@@ -9,7 +9,8 @@ namespace TNU.Core.Services.FileOpener
     {
         public void OpenFile()
         {
-            string relativePath = SystemConst.JobNameFilePath;// твой относительный путь
+            // длаем из относительного пути полный 
+            string relativePath = SystemConst.JobNameFilePath;
             string fullPath = Path.Combine(AppContext.BaseDirectory, relativePath);
 
             if (File.Exists(fullPath))
