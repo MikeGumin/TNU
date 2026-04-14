@@ -1,5 +1,4 @@
-﻿using System.Xml.Serialization;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using TNU.Core.Repository;

@@ -1,23 +1,25 @@
 ﻿using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace TNU.Core.Models
 {
     /// <summary>
     /// Модель Наблюдения
     /// </summary>
-    public class Observation :ReactiveObject
+    public class Observation : INotifyPropertyChanged
     {
         /// <summary>
         /// Инспектор который делает запись
         /// </summary>
-        public Inspector Inspector { get; set; }
+        public string InspectorName { get; set; }
 
         /// <summary>
         /// Наблюдаемый за кем ведется наблюдение 
         /// </summary>
-        public Respondent Worker { get; set; }
+        public int RespondentId { get; set; }
 
         /// <summary>
         /// Дата записи
@@ -30,18 +32,31 @@ namespace TNU.Core.Models
         public string City { get; set; } = "";
 
         /// <summary>
-        /// Предприятие в котором проводиться наблюдение
-        /// </summary>
-        public string Enterprise { get; set; }
-
-        /// <summary>
         /// События которые входят в наблюдения
         /// </summary>
         ObservableCollection<JobEntryClock> JobEntries { get; set; }
 
+        private ObservableCollection<JobEntry> finishedEntries = new();
         /// <summary>
         /// Коллекция для хранения завершенных записей
         /// </summary>
-        public ObservableCollection<JobEntry> FinishedEntries1 { get; set; } = new();
+        public ObservableCollection<JobEntry> FinishedEntries { get=> finishedEntries; 
+            set 
+            {
+                finishedEntries = value;
+                OnPropertyChanged("FinishedEntries");
+            }
+        } 
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public bool IsCompleted() 
+        {
+            return City != "" && RespondentId != null && InspectorName != null;
+        }
     }
 }

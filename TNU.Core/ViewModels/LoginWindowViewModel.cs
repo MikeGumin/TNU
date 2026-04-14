@@ -29,7 +29,9 @@ namespace TNU.Core.ViewModels
         [RelayCommand]
         public void Login()
         {
-            OnLoginSuccess();
+            // Проверка введены ли данные в окна. Работает, но пока убрал 
+            //if (ObservationElement.IsCompleted())
+                OnLoginSuccess();
         }
 
         [RelayCommand]
@@ -38,6 +40,23 @@ namespace TNU.Core.ViewModels
             FileOpenerServise file = new FileOpenerServise();
             file.OpenFile();
         }
+
+        private void OnLoginSuccess()
+        {
+            var mainWindow = new Core.Views.MainWindow
+            {
+                DataContext = App.Services.GetRequiredService<MainWindowViewModel>()
+            };
+            mainWindow.Show();
+
+            if (mainWindow.DataContext is MainWindowViewModel a)
+            {
+                a.MainObservation = ObservationElement;
+            }
+            _windowService.CloseCurrentWindow();
+        }
+        //if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+
 
         private void OnLoginSuccess()
         {

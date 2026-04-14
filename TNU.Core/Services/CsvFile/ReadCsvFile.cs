@@ -14,6 +14,10 @@ namespace TNU.Core.Services.CsvFile
         private static readonly string FilePath = SystemConst.JobNameFilePath;
         public static List<string[]> Read()
         {
+            if (!File.Exists(FilePath))
+                using (File.Create(FilePath)) { } ;
+
+            
             string[] lines = File.ReadAllLines(FilePath);
 
             List<string[]> result = new List<string[]>();
@@ -25,7 +29,7 @@ namespace TNU.Core.Services.CsvFile
                 {
                     entry = new string[2] { entry[0], string.Empty };
                 }
-                
+
                 result.AddRange(entry);
             }
 
@@ -37,24 +41,24 @@ namespace TNU.Core.Services.CsvFile
             {
                 return;
             }
-            
+
             var jobTitle = new JobTitleEnum(jobName);
-            
+
             if (!JobNameRepository.JobNameList.Contains(jobTitle))
             {
                 File.AppendAllText(FilePath, jobName + Environment.NewLine, Encoding.UTF8);
             }
         }
-        
+
         public static void WriteJobInFile(JobEntry entry, string filePath)
         {
             var sb = new StringBuilder();
-            
+
             sb.Append(entry.Id + "; ");
             sb.Append(entry.JobName + "; ");
             sb.Append(entry.JobCode + "; ");
             sb.Append(entry.JobSample);
-            
+
             File.AppendAllText(filePath, Environment.NewLine + sb, Encoding.UTF8);
         }
 
@@ -62,7 +66,7 @@ namespace TNU.Core.Services.CsvFile
         {
             var newEntryList = File.ReadAllLines(filePath)
                 .Where(line => line.Split(":")[0] != jobName && line != string.Empty);
-            
+
             File.WriteAllLines(filePath, newEntryList);
         }
     }
