@@ -104,16 +104,26 @@
 									</DataTemplate>
 								</ItemsControl.ItemTemplate>
 							</ItemsControl>
+							
 						</StackPanel>
 					</ScrollViewer>
 				</Border>
 
-				<Button Grid.Row="1"
+				<Grid ColumnDefinitions=" *, *">
+				<Button 
 						Content="Добавить новую запись"
 						HorizontalAlignment="Stretch"
 						VerticalAlignment="Bottom"
 						HorizontalContentAlignment="Center"
 						Command="{Binding AddNewTaskCommand}" />
+				
+				<Button 
+				        Content="Добавить новую запись"
+				        HorizontalAlignment="Stretch"
+				        VerticalAlignment="Bottom"
+				        HorizontalContentAlignment="Center"
+				        Command="{Binding AddNewTaskCommand}" />
+				</Grid>
 			</Grid>
 		</DockPanel>
 
@@ -134,8 +144,11 @@
 								  BorderThickness="1" BorderBrush="Gray">
 
 							<DataGrid.Columns>
-								<DataGridTextColumn Header="ID"  Binding="{Binding Path=Id}"/>
-								<DataGridTextColumn Header="Работа" Binding="{Binding JobName}" />
+								<DataGridTextColumn Header="№"  Binding="{Binding Path=Id}"/>
+								<DataGridTextColumn Header="Что наблюдается" Binding="{Binding JobName}" />
+								<DataGridTextColumn Header="Текущее время" Binding="{Binding EndTime}" />
+								<DataGridTextColumn Header="Продолжительность мин" Binding="{Binding JobSample}" />
+								<DataGridTextColumn Header="Индекс или код" Binding="{Binding JobCode}" />
 							</DataGrid.Columns>
 
 						</DataGrid>
