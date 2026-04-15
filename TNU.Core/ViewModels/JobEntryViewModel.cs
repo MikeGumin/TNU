@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Reactive;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ReactiveUI;
 using TNU.Core.Models;
@@ -25,6 +27,16 @@ public partial class JobEntryViewModel : ReactiveObject
     public JobEntry Entry { get; set; } = new();
 
     /// <summary>
+    /// Поле определяющее видимость комментария
+    /// </summary>
+    private bool _isVisible = false;
+    public bool IsVisible
+    {
+        get => _isVisible;
+        set => this.RaiseAndSetIfChanged(ref _isVisible, value);
+    }
+    
+    /// <summary>
     /// ctor
     /// </summary>
     /// <param name="finishedEntryService">Сервис для работы с завершенными записями</param>
@@ -43,6 +55,8 @@ public partial class JobEntryViewModel : ReactiveObject
         Entry.RecordStatus = RecordStatusEnum.Start;
     }
 
+    
+
     [RelayCommand]
     public void StopTimer()
     {
@@ -57,6 +71,15 @@ public partial class JobEntryViewModel : ReactiveObject
             Entry.RecordStatus = RecordStatusEnum.Start;
         }
         
+    }
+    
+    /// <summary>
+    /// Метод для смены видимости комментария у записи
+    /// </summary>
+    [RelayCommand]
+    public void CommentVisibility()
+    {
+        IsVisible = !IsVisible;
     }
 
     [RelayCommand]

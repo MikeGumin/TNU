@@ -67,7 +67,8 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         _finishedEntryService = finishedEntryService;
         _fileDialogService = fileDialogService;
         _errorMessageHelper = errorMessageHelper;
-
+        
+        SystemStatic.GeneralStopwatch.Start();
     }
 
     /// <summary>
@@ -89,7 +90,6 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
         if (!GeneralUpdateTimer.IsEnabled)
         {
-            SystemStatic.GeneralStopwatch.Start();
             GeneralUpdateTimer.StartTimer();
         }
         TimerList.Add(model);

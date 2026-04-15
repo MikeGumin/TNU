@@ -31,6 +31,7 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="10"/>
 			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="8"/>
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="10"/>
 		</Grid.ColumnDefinitions>
@@ -62,8 +63,9 @@
 							<ItemsControl ItemsSource="{Binding TimerList}">
 								<ItemsControl.ItemTemplate>
 									<DataTemplate>
-										<StackPanel>
-											<Grid ColumnDefinitions="30, *, 60, Auto, Auto, Auto,100">
+										<StackPanel
+											x:Name="JobEntryStackPanel">
+											<Grid ColumnDefinitions="30, *, 60, Auto, Auto, Auto, 100, Auto">
 
 												<TextBlock
 												Grid.Column="0"
@@ -103,10 +105,13 @@
 												<Button Grid.Column="4" Content="Stop" Command="{Binding StopTimerCommand}"/>
 												<Button Grid.Column="5" Content="Сохранить" Margin="10 0" Command="{Binding EndTimerCommand}"/>
 												<TextBlock Grid.Column="6" Text="{Binding Timer.StrTimer}"/>
+												<Button Grid.Column="7" Content="🖊️" Margin="10 0" Command="{Binding CommentVisibilityCommand}"/>
 
 											</Grid>
-											<DockPanel>
-												<TextBlock Text="Коммиентарий: "/>
+											<DockPanel
+												x:Name="JobEntryDockPanel" 
+												IsVisible="{Binding IsVisible}">
+												<TextBlock Text="Комментарий: "/>
 												<TextBox Text="{Binding Entry.Description}"/>
 											</DockPanel>
 										</StackPanel>
@@ -137,9 +142,15 @@
 			</Grid>
 		</DockPanel>
 
-
+		<GridSplitter 
+			Grid.Row="0"
+			Grid.RowSpan="2"
+			Grid.Column="2"
+			Background="DarkGray"
+			ResizeDirection="Columns" />
+		
 		<!-- Правая панель: сохранённые записи -->
-		<DockPanel Grid.Column="2" Grid.Row="1" Background="DarkGray">
+		<DockPanel Grid.Column="3" Grid.Row="1" Background="DarkGray">
 			<Border>
 				<ScrollViewer>
 					<StackPanel>

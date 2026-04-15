@@ -51,4 +51,12 @@ public partial class MainWindow : Window
             } 
         } 
     }
+
+    private void Button_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is Button button && button.DataContext is JobEntryViewModel vm)
+        {
+            
+        }
+    }
 }
