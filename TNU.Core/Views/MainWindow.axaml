@@ -39,9 +39,19 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
+		<!--Статчные поля-->
+		<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2">
+			<TextBlock Text="Дата: "/>
+			<TextBlock Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}' }"/>
+			<TextBlock Margin="10 0 0 0" Text="Идентификатор респондента: "/>
+			<TextBlock Text="{Binding MainObservation.RespondentId}"/>
+			<TextBlock Margin="10 0 0 0" Text="Предприятие: "/>
+			<TextBlock Text="{Binding MainObservation.City}"/>
+		</StackPanel>
+
 		<!-- Левая панель: активные записи -->
 		<DockPanel Grid.Column="1" Grid.Row="1" Background="DarkGray">
-			<Grid Column="1" Row="2">
+			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="30"/>
@@ -104,25 +114,25 @@
 									</DataTemplate>
 								</ItemsControl.ItemTemplate>
 							</ItemsControl>
-							
+
 						</StackPanel>
 					</ScrollViewer>
 				</Border>
 
-				<Grid ColumnDefinitions=" *, *">
-				<Button 
-						Content="Добавить новую запись"
-						HorizontalAlignment="Stretch"
-						VerticalAlignment="Bottom"
-						HorizontalContentAlignment="Center"
-						Command="{Binding AddNewTaskCommand}" />
-				
-				<Button 
-				        Content="Добавить новую запись"
-				        HorizontalAlignment="Stretch"
-				        VerticalAlignment="Bottom"
-				        HorizontalContentAlignment="Center"
-				        Command="{Binding AddNewTaskCommand}" />
+				<Grid Grid.Row="1" ColumnDefinitions=" *, *">
+					<Button
+					Content="Добавить новую запись"
+					HorizontalAlignment="Stretch"
+					VerticalAlignment="Bottom"
+					HorizontalContentAlignment="Center"
+					Command="{Binding AddNewTaskCommand}" />
+
+					<Button Grid.Column="1"
+							Content="Добавить новую запись"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Bottom"
+							HorizontalContentAlignment="Center"
+							Command="{Binding AddNewTaskCommand}" />
 				</Grid>
 			</Grid>
 		</DockPanel>
@@ -139,7 +149,7 @@
 								   HorizontalAlignment="Center"/>
 
 						<DataGrid ItemsSource="{x:Static repository1:FinishedEntriesRepository.FinishedEntries}"
-								  AutoGenerateColumns="False" 
+								  AutoGenerateColumns="False"
 								  GridLinesVisibility="All"
 								  BorderThickness="1" BorderBrush="Gray">
 

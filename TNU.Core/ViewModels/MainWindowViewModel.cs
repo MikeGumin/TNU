@@ -3,7 +3,9 @@ using CommunityToolkit.Mvvm.Input;
 using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using TNU.Core.Models;
 using TNU.Core.Repository;
@@ -17,8 +19,15 @@ using EditEntryWindow = TNU.Core.Views.EditEntryWindow;
 namespace TNU.Core.ViewModels;
 
 
-public partial class MainWindowViewModel : ViewModelBase
+public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 {
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
     /// <summary>
     /// Коллекция для хранения текущих записей
     /// </summary>
@@ -35,6 +44,7 @@ public partial class MainWindowViewModel : ViewModelBase
             if (_mainObservation == null)
             {
                 _mainObservation = value;
+                OnPropertyChanged();
                 //_finishedEntryService.FinishedEntries = value.FinishedEntries;
             }
         }

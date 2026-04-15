@@ -31,7 +31,7 @@ namespace TNU.Core.ViewModels
         {
             // Проверка введены ли данные в окна. Работает, но пока убрал 
             //if (ObservationElement.IsCompleted())
-                OnLoginSuccess();
+            OnLoginSuccess();
         }
 
         [RelayCommand]
@@ -47,35 +47,16 @@ namespace TNU.Core.ViewModels
             {
                 DataContext = App.Services.GetRequiredService<MainWindowViewModel>()
             };
-            mainWindow.Show();
 
             if (mainWindow.DataContext is MainWindowViewModel a)
             {
                 a.MainObservation = ObservationElement;
             }
-            _windowService.CloseCurrentWindow();
-        }
-        //if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
 
-
-        private void OnLoginSuccess()
-        {
-            var mainWindow = new Core.Views.MainWindow
-            {
-                DataContext = App.Services.GetRequiredService<MainWindowViewModel>()
-            };
             mainWindow.Show();
 
-            if(mainWindow.DataContext is MainWindowViewModel a)
-            {
-                a.MainObservation = ObservationElement;
-            }
             _windowService.CloseCurrentWindow();
         }
         //if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-
-
-
-
     }
 }

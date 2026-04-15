@@ -44,7 +44,7 @@ namespace TNU.Core.Models
             set 
             {
                 finishedEntries = value;
-                OnPropertyChanged("FinishedEntries");
+                OnPropertyChanged();
             }
         } 
 
