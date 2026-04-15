@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.JavaScript;
 using TNU.Core.Models.Enum;
 
 namespace TNU.Core.Models;
@@ -63,10 +64,10 @@ public partial class JobEntry : INotifyPropertyChanged
     /// <summary>
     /// Время начала задачи
     /// </summary>
-    private string startTime = DateTime.Now.ToString("HH:mm:ss");
+    private string startTime;
     public string StartTime
     {
-        get => startTime;
+        get => SystemStatic.GeneralStopwatch.Elapsed.ToString(@"hh\:mm\:ss");
         set
         {
             startTime = value;
