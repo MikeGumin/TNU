@@ -9,7 +9,7 @@ namespace TNU.Core.Models
     /// <summary>
     /// Модель Наблюдения
     /// </summary>
-    public class Observation : INotifyPropertyChanged
+    public class Observation : NotifyChangedModel
     {
         /// <summary>
         /// Инспектор который делает запись
@@ -60,11 +60,7 @@ namespace TNU.Core.Models
             }
         } 
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
 
 
     }

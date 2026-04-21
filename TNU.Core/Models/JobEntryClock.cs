@@ -7,7 +7,7 @@ using TNU.Core.Services.ClockAction;
 
 namespace TNU.Core.Models
 {
-    public partial class JobEntryClock : INotifyPropertyChanged
+    public partial class JobEntryClock : NotifyChangedModel
     {
         public string BtnText { get; private set; } = "Stop";
         public JobEntry Entry { get; set; } = new JobEntry();
@@ -21,12 +21,6 @@ namespace TNU.Core.Models
                 BtnText = "Stop";
 
             OnPropertyChanged("BtnText");
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

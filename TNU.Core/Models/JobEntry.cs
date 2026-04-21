@@ -10,7 +10,7 @@ namespace TNU.Core.Models;
 /// <summary>
 /// Модель записи работы
 /// </summary>
-public partial class JobEntry : INotifyPropertyChanged
+public partial class JobEntry : NotifyChangedModel
 {
     /// <summary>
     /// Идентификатор
@@ -149,11 +149,5 @@ public partial class JobEntry : INotifyPropertyChanged
         {
             return OperationResult.Fail($"Ошибка перевода времени окончания, некоректное значение - {value}");
         }
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
