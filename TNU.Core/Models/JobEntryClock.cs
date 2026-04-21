@@ -1,10 +1,40 @@
-﻿using TNU.Core.Services.ClockAction;
+﻿using CommunityToolkit.Mvvm.Input;
+using TNU.Core.Models.Enum;
+using TNU.Core.Services.ClockAction;
 
 namespace TNU.Core.Models
 {
-    internal class JobEntryClock
+    public partial class JobEntryClock
     {
-        JobEntry JobEntry { get; set; } = new JobEntry();
-        ClockActionService clockActionService { get; set; } = new ClockActionService();
+        public JobEntry Entry { get; set; } = new JobEntry();
+        public ClockActionService Timer { get; set; } = new ClockActionService();
+
+        //public void StartTimer()
+        //{
+        //    Timer.StartTimer();
+        //    Entry.RecordStatus = RecordStatusEnum.Start;
+        //}
+
+
+        //[RelayCommand]
+        //public void StopTimer()
+        //{
+        //    Timer.StopTimer();
+        //    Entry.RecordStatus = RecordStatusEnum.Stop;
+        //}
+
+        //public void ChangeTimerStatus()
+        //{
+        //    if (Entry.RecordStatus == RecordStatusEnum.Start)
+        //        StopTimer();
+        //    else
+        //        StartTimer();
+        //}
+
+        //public void EndTimer()
+        //{
+        //    if (Entry.RecordStatus != RecordStatusEnum.Stop)
+        //        StopTimer();
+        //}
     }
 }

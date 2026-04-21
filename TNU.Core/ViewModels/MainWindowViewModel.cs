@@ -21,19 +21,20 @@ namespace TNU.Core.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 {
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
     /// <summary>
     /// Коллекция для хранения текущих записей
     /// </summary>
     public ObservableCollection<Core.ViewModels.JobEntryViewModel> TimerList { get; private set; } = [];
 
-    private int _numberTask = 1;
+    /// <summary>
+    /// массив для заготовок
+    /// </summary>
+    public ObservableCollection<JobEntryViewModel> ListPreparation { get; private set; } = [];
+
+    public int NumberTask = 1;
+
+
+    public JobControlServise MainControlServise { get; set; }
 
     private Observation _mainObservation;
     public Observation MainObservation
@@ -45,10 +46,13 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             {
                 _mainObservation = value;
                 OnPropertyChanged();
+                MainControlServise = new JobControlServise(_mainObservation, _finishedEntryService);
                 //_finishedEntryService.FinishedEntries = value.FinishedEntries;
             }
         }
     }
+
+    #region Readonly поля и кнструктор
 
     public Window? MainWindow { get; set; }
 
@@ -67,9 +71,11 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         _finishedEntryService = finishedEntryService;
         _fileDialogService = fileDialogService;
         _errorMessageHelper = errorMessageHelper;
-        
-        SystemStatic.GeneralStopwatch.Start();
+
+        SystemStatic.GeneralStopwatch.Stop();
     }
+
+    #endregion
 
     /// <summary>
     /// Метод создания новой записи
@@ -77,11 +83,12 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     [RelayCommand]
     private async Task AddNewTask()
     {
+
         JobEntryViewModel model = new JobEntryViewModel(_finishedEntryService, this);
 
         model.Entry = new JobEntry()
         {
-            Id = _numberTask++
+            Id = NumberTask++
         };
 
         File.AppendAllLines(SystemStatic.EntryFilePath, new[] { model.Entry.Id.ToString() });
@@ -90,10 +97,26 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
         if (!GeneralUpdateTimer.IsEnabled)
         {
+            SystemStatic.GeneralStopwatch.Start();
             GeneralUpdateTimer.StartTimer();
         }
         TimerList.Add(model);
     }
+
+
+    //----------------------------------------------------------------------------------------------------------------------
+    [RelayCommand]
+    private async Task AddNewTaskForListPreparation()
+    {
+        JobEntryViewModel model = new JobEntryViewModel(_finishedEntryService, this);
+
+        model.Entry = new JobEntry();
+
+        ListPreparation.Add(model);
+    }
+    //----------------------------------------------------------------------------------------------------------------------
+
+
 
     /// <summary>
     /// Метод для экспорта завершенных задач
@@ -184,6 +207,8 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
+    #region Проверка на возможность экспорта
+
     /// <summary>
     /// Флаг для указания возможности экспорта записей
     /// </summary>
@@ -203,4 +228,13 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     /// </summary>
     /// <returns></returns>
     private bool CanExport() => !_isExporting;
+
+    #endregion
+
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 }

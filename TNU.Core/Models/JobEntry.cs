@@ -64,13 +64,14 @@ public partial class JobEntry : INotifyPropertyChanged
     /// <summary>
     /// Время начала задачи
     /// </summary>
-    private string startTime;
+    private string startTime = SystemStatic.GeneralStopwatch.Elapsed.ToString(@"hh\:mm\:ss");
     public string StartTime
     {
-        get => SystemStatic.GeneralStopwatch.Elapsed.ToString(@"hh\:mm\:ss");
+        get => startTime; //SystemStatic.GeneralStopwatch.Elapsed.ToString(@"hh\:mm\:ss");
         set
         {
             startTime = value;
+
             OnPropertyChanged();
         }
     }
@@ -95,7 +96,7 @@ public partial class JobEntry : INotifyPropertyChanged
     /// </summary>
     public string Description { get; set; } = "";
     /// <summary>
-    
+
     /// Код работы
     /// </summary>
     public string JobCode { get; set; } = string.Empty;
@@ -116,11 +117,11 @@ public partial class JobEntry : INotifyPropertyChanged
         {
             TimeSpan strtTimer = TimeSpan.Parse(value);
             TimeSpan endTimer = TimeSpan.Parse(EndTime);
-            
+
             JobSample = (endTimer - strtTimer).ToString();
-            
+
             StartTime = value;
-            
+
             return OperationResult.Ok();
         }
         catch (Exception e)
@@ -135,11 +136,11 @@ public partial class JobEntry : INotifyPropertyChanged
         {
             TimeSpan startTimer = TimeSpan.Parse(StartTime);
             TimeSpan endTimer = TimeSpan.Parse(value);
-            
+
             //this.RaiseAndSetIfChanged(ref jobSample, (endTimer - startTimer).ToString());
 
             JobSample = (endTimer - startTimer).ToString();
-            
+
             EndTime = value;
 
             return OperationResult.Ok();

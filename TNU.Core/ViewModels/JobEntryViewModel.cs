@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Reactive;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ReactiveUI;
+using System.Collections.Generic;
+using System.Reactive;
 using TNU.Core.Models;
 using TNU.Core.Models.Enum;
+using TNU.Core.Services;
 using TNU.Core.Services.ClockAction;
 using TNU.Core.Services.CsvFile;
 using TNU.Core.Services.FinishedEntry;
@@ -99,5 +100,31 @@ public partial class JobEntryViewModel : ReactiveObject
         ReadCsvFile.DeleteEntry(Entry.Id.ToString(), SystemStatic.EntryFilePath);
         
         ReadCsvFile.WriteJobInFile(Entry, SystemStatic.EntryFilePath);
+    }
+
+    [RelayCommand]
+    public void AdTaskForPrarairList()
+    {
+
+        JobEntryViewModel g = new JobEntryViewModel(_finishedEntryService,_parent);
+        g.Entry.JobName=this.Entry.JobName;
+        g.Entry.JobCode=this.Entry.JobCode;
+
+            //(this.MemberwiseClone())as JobEntryViewModel;
+
+
+        _parent.TimerList.Add(g);
+
+        g.Entry.Id = _parent.NumberTask++;
+
+        GeneralUpdateTimer.AddEvent(g);
+
+        if (!GeneralUpdateTimer.IsEnabled)
+        {
+            SystemStatic.GeneralStopwatch.Start();
+            GeneralUpdateTimer.StartTimer();
+        }
+
+        StartTimer();
     }
 }

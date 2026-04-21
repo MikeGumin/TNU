@@ -43,7 +43,7 @@
 		<!--Статчные поля-->
 		<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2">
 			<TextBlock Text="Дата: "/>
-			<TextBlock Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}' }"/>
+			<TextBlock Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}'}"/>
 			<TextBlock Margin="10 0 0 0" Text="Идентификатор респондента: "/>
 			<TextBlock Text="{Binding MainObservation.RespondentId}"/>
 			<TextBlock Margin="10 0 0 0" Text="Предприятие: "/>
@@ -58,79 +58,134 @@
 					<RowDefinition Height="30"/>
 				</Grid.RowDefinitions>
 				<Border Grid.Row="0">
-					<ScrollViewer>
-						<StackPanel>
-							<ItemsControl ItemsSource="{Binding TimerList}">
-								<ItemsControl.ItemTemplate>
-									<DataTemplate>
-										<StackPanel
+					<Grid RowDefinitions="*,*">
+						<ScrollViewer Grid.Row="0">
+							<StackPanel>
+								<ItemsControl ItemsSource="{Binding TimerList}">
+									<ItemsControl.ItemTemplate>
+										<DataTemplate>
+											<StackPanel
 											x:Name="JobEntryStackPanel">
-											<Grid ColumnDefinitions="30, *, 60, Auto, Auto, Auto, 100, Auto">
+												<Grid ColumnDefinitions="30, *, 60, Auto, Auto, Auto, 100, Auto">
 
-												<TextBlock
-												Grid.Column="0"
-												VerticalAlignment="Center"
-												HorizontalAlignment="Center"
-												Text="{Binding Entry.Id}"/>
+													<TextBlock
+													Grid.Column="0"
+													VerticalAlignment="Center"
+													HorizontalAlignment="Center"
+													Text="{Binding Entry.Id}"/>
 
-												<AutoCompleteBox Grid.Column="1"
-																 x:Name="JobNameTextBox"
-																 Text="{Binding Entry.JobName}"
-																 ItemsSource="{x:Static repository1:JobNameRepository.JobNameList}"
-																 FilterMode="Contains"
-																 MinimumPrefixLength="1"
-																 IsTextCompletionEnabled="True">
-													<i:Interaction.Behaviors>
-														<behaviors:AddNewJobBehavior />
-													</i:Interaction.Behaviors>
+													<AutoCompleteBox Grid.Column="1"
+																	 x:Name="JobNameTextBox"
+																	 Text="{Binding Entry.JobName}"
+																	 ItemsSource="{x:Static repository1:JobNameRepository.JobNameList}"
+																	 FilterMode="Contains"
+																	 MinimumPrefixLength="1"
+																	 IsTextCompletionEnabled="True">
+														<i:Interaction.Behaviors>
+															<behaviors:AddNewJobBehavior />
+														</i:Interaction.Behaviors>
 
-													<AutoCompleteBox.ItemTemplate>
-														<DataTemplate x:DataType="enum:JobTitleEnum">
-															<TextBlock Text="{Binding Name}"
-																	   FontSize="14"
-																	   Padding="4"/>
-														</DataTemplate>
-													</AutoCompleteBox.ItemTemplate>
-												</AutoCompleteBox>
+														<AutoCompleteBox.ItemTemplate>
+															<DataTemplate x:DataType="enum:JobTitleEnum">
+																<TextBlock Text="{Binding Name}"
+																		   FontSize="14"
+																		   Padding="4"/>
+															</DataTemplate>
+														</AutoCompleteBox.ItemTemplate>
+													</AutoCompleteBox>
 
-												<TextBox
-												Grid.Column="2"
-												Background="Black"
-												x:Name="JobCodeTextBox"
-												GotFocus="JobCodeTextBox_OnGotFocus"
-												LostFocus="JobCodeTextBox_OnLostFocus"
-												Text="{Binding Entry.JobCode, UpdateSourceTrigger=PropertyChanged}"/>
+													<TextBox
+													Grid.Column="2"
+													Background="Black"
+													x:Name="JobCodeTextBox"
+													GotFocus="JobCodeTextBox_OnGotFocus"
+													LostFocus="JobCodeTextBox_OnLostFocus"
+													Text="{Binding Entry.JobCode, UpdateSourceTrigger=PropertyChanged}"/>
 
-												<TextBlock Grid.Column="3" Text="{Binding Entry.StartTime}"/>
-												<Button Grid.Column="4" Content="Stop" Command="{Binding StopTimerCommand}"/>
-												<Button Grid.Column="5" Content="Сохранить" Margin="10 0" Command="{Binding EndTimerCommand}"/>
-												<TextBlock Grid.Column="6" Text="{Binding Timer.StrTimer}"/>
-												<Button Grid.Column="7" Content="🖊️" Margin="10 0" Command="{Binding CommentVisibilityCommand}"/>
+													<TextBlock Grid.Column="3" Text="{Binding Entry.StartTime}"/>
+													<Button Grid.Column="4" Content="Stop" Command="{Binding StopTimerCommand}"/>
+													<Button Grid.Column="5" Content="Сохранить" Margin="10 0" Command="{Binding EndTimerCommand}"/>
+													<TextBlock Grid.Column="6" Text="{Binding Timer.StrTimer}"/>
+													<Button Grid.Column="7" Content="🖊️" Margin="10 0" Command="{Binding CommentVisibilityCommand}"/>
 
-											</Grid>
-											<DockPanel
-												x:Name="JobEntryDockPanel" 
+												</Grid>
+												<DockPanel
+												x:Name="JobEntryDockPanel"
 												IsVisible="{Binding IsVisible}">
-												<TextBlock Text="Комментарий: "/>
-												<TextBox Text="{Binding Entry.Description}"/>
-											</DockPanel>
-										</StackPanel>
+													<TextBlock Text="Комментарий: "/>
+													<TextBox Text="{Binding Entry.Description}"/>
+												</DockPanel>
+											</StackPanel>
 
-									</DataTemplate>
-								</ItemsControl.ItemTemplate>
-							</ItemsControl>
+										</DataTemplate>
+									</ItemsControl.ItemTemplate>
+								</ItemsControl>
 
-						</StackPanel>
-					</ScrollViewer>
+							</StackPanel>
+						</ScrollViewer>
+
+						<!--Заготовка для задач-->
+						<ScrollViewer Grid.Row="1">
+							<StackPanel>
+								<ItemsControl ItemsSource="{Binding ListPreparation}">
+									<ItemsControl.ItemTemplate>
+										<DataTemplate>
+											<StackPanel>
+												<Grid ColumnDefinitions="*, 60, Auto, Auto">
+
+													<AutoCompleteBox Grid.Column="0"
+																	 x:Name="JobNameTextBox"
+																	 Text="{Binding Entry.JobName}"
+																	 ItemsSource="{x:Static repository1:JobNameRepository.JobNameList}"
+																	 FilterMode="Contains"
+																	 MinimumPrefixLength="1"
+																	 IsTextCompletionEnabled="True">
+														<i:Interaction.Behaviors>
+															<behaviors:AddNewJobBehavior />
+														</i:Interaction.Behaviors>
+
+														<AutoCompleteBox.ItemTemplate>
+															<DataTemplate x:DataType="enum:JobTitleEnum">
+																<TextBlock Text="{Binding Name}"
+																		   FontSize="14"
+																		   Padding="4"/>
+															</DataTemplate>
+														</AutoCompleteBox.ItemTemplate>
+													</AutoCompleteBox>
+
+													<TextBox
+													Grid.Column="1"
+													Background="Black"
+													x:Name="JobCodeTextBox"
+													GotFocus="JobCodeTextBox_OnGotFocus"
+													LostFocus="JobCodeTextBox_OnLostFocus"
+													Text="{Binding Entry.JobCode, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+													<Button Grid.Column="2" Content="Добавить" Command="{Binding AdTaskForPrarairListCommand}"/>
+													<Button Grid.Column="3" Content="Удалить" Command="{Binding AdTaskForPrarairListCommand}"/>
+
+
+												</Grid>
+
+											</StackPanel>
+
+										</DataTemplate>
+									</ItemsControl.ItemTemplate>
+								</ItemsControl>
+
+							</StackPanel>
+						</ScrollViewer>
+					</Grid>
 				</Border>
 
 				<Grid Grid.Row="1" ColumnDefinitions=" *, *">
 					<Button
-					Content="Добавить новую запись"
+					Content="Добавить заготовку для запись"
 					HorizontalAlignment="Stretch"
 					VerticalAlignment="Bottom"
 					HorizontalContentAlignment="Center"
-					Command="{Binding AddNewTaskCommand}" />
+					Command="{Binding AddNewTaskForListPreparationCommand}" />
 
 					<Button Grid.Column="1"
 							Content="Добавить новую запись"
@@ -142,13 +197,13 @@
 			</Grid>
 		</DockPanel>
 
-		<GridSplitter 
-			Grid.Row="0"
-			Grid.RowSpan="2"
-			Grid.Column="2"
-			Background="DarkGray"
-			ResizeDirection="Columns" />
-		
+		<GridSplitter
+		Grid.Row="0"
+		Grid.RowSpan="2"
+		Grid.Column="2"
+		Background="DarkGray"
+		ResizeDirection="Columns" />
+
 		<!-- Правая панель: сохранённые записи -->
 		<DockPanel Grid.Column="3" Grid.Row="1" Background="DarkGray">
 			<Border>

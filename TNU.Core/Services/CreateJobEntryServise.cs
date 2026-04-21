@@ -5,12 +5,16 @@ namespace TNU.Core.Services
 {
     internal class CreateJobEntryServise
     {
-        static int JobId;
-        public JobEntry CreateJobEntry()
+        static int JobId = 1;
+        static public JobEntryClock CreateJobEntry(string jobName)
         {
-            var obj = new JobEntry();
-            obj.Id = JobId++;
-            obj.JobDate = DateTime.Now;
+            var obj = new JobEntryClock();
+            obj.Entry.Id = JobId++;
+            obj.Entry.JobDate = DateTime.Now;
+            obj.Entry.StartTime = SystemStatic.GeneralStopwatch.Elapsed.ToString(@"hh\:mm\:ss");
+            obj.Entry.JobName = jobName;
+
+            GeneralUpdateTimer.AddEvent(obj);
 
             return obj;
         }
