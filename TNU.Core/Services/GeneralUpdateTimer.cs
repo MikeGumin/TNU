@@ -1,6 +1,6 @@
-﻿using System;
-using Avalonia.Threading;
-using JobEntryViewModel = TNU.Core.ViewModels.JobEntryViewModel;
+﻿using Avalonia.Threading;
+using System;
+using TNU.Core.Models;
 
 namespace TNU.Core.Services
 {
@@ -25,9 +25,8 @@ namespace TNU.Core.Services
             _timer.Tick += (_, __) =>
             {
                 dl?.Invoke(_, __);
-
-                //System.Diagnostics.Debug.WriteLine("Work!!!");
             };
+
         }
 
         static public void StartTimer()
@@ -40,10 +39,8 @@ namespace TNU.Core.Services
             _timer.Stop();
         }
 
-        static public void AddEvent(JobEntryViewModel model)
+        static public void AddEvent(JobEntryClock model)
         {
-            if (!_timer.IsEnabled)
-                _timer.Start();
             dl += model.Timer.ReDrowTimer;
         }
     }

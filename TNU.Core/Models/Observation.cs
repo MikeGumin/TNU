@@ -1,15 +1,15 @@
-﻿using ReactiveUI;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using TNU.Core.Services;
 
 namespace TNU.Core.Models
 {
     /// <summary>
     /// Модель Наблюдения
     /// </summary>
-    public class Observation : INotifyPropertyChanged
+    public class Observation : NotifyChangedModel
     {
         /// <summary>
         /// Инспектор который делает запись
@@ -34,13 +34,25 @@ namespace TNU.Core.Models
         /// <summary>
         /// События которые входят в наблюдения
         /// </summary>
-        ObservableCollection<JobEntryClock> JobEntries { get; set; }
+        public ObservableCollection<JobEntryClock> JobEntriesActiv { get; private set; } = [];
 
-        private ObservableCollection<JobEntry> finishedEntries = new();
+        public void AddToActivList(string jobName="") 
+        {
+            JobEntriesActiv.Add(CreateJobEntryServise.CreateJobEntry(jobName));
+        }
+        public JobEntryClock AddToActivListR(string jobName="") 
+        {
+            JobEntryClock jobEntryClock = CreateJobEntryServise.CreateJobEntry(jobName);
+            JobEntriesActiv.Add(jobEntryClock);
+            return jobEntryClock;
+        }
+
+        private ObservableCollection<JobEntryClock> finishedEntries = new();
+
         /// <summary>
         /// Коллекция для хранения завершенных записей
         /// </summary>
-        public ObservableCollection<JobEntry> FinishedEntries { get=> finishedEntries; 
+        public ObservableCollection<JobEntryClock> FinishedEntries { get=> finishedEntries; 
             set 
             {
                 finishedEntries = value;
@@ -48,15 +60,8 @@ namespace TNU.Core.Models
             }
         } 
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
 
-        public bool IsCompleted() 
-        {
-            return City != "" && RespondentId != null && InspectorName != null;
-        }
+
     }
 }

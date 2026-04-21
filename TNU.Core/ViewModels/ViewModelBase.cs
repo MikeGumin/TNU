@@ -2,6 +2,6 @@
 
 namespace TNU.Core.ViewModels;
 
-public abstract class ViewModelBase :  ReactiveObject //ObservableObject
+public abstract class ViewModelBase :  ReactiveObject
 {
 }

@@ -30,7 +30,7 @@ namespace TNU.Core.ViewModels
         public void Login()
         {
             // Проверка введены ли данные в окна. Работает, но пока убрал 
-            //if (ObservationElement.IsCompleted())
+            //if (IsCompleted())
             OnLoginSuccess();
         }
 
@@ -57,6 +57,9 @@ namespace TNU.Core.ViewModels
 
             _windowService.CloseCurrentWindow();
         }
-        //if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        private bool IsCompleted()
+        {
+            return ObservationElement.City != "" && ObservationElement.RespondentId != null && ObservationElement.InspectorName != null;
+        }
     }
 }

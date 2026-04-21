@@ -1,15 +1,16 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
-using ReactiveUI;
-using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using TNU.Core.Models;
+using TNU.Core.Models.Enum;
 using TNU.Core.Repository;
 using TNU.Core.Services;
+using TNU.Core.Services.CsvFile;
 using TNU.Core.Services.EntryExport;
 using TNU.Core.Services.FileDialog;
 using TNU.Core.Services.FinishedEntry;
@@ -21,19 +22,26 @@ namespace TNU.Core.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 {
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    /// <summary>
+    /// Пааметр видимости комментария
+    /// </summary>
+    private bool _isVisible = false;
+    public bool IsVisible
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        get => _isVisible;
+        set
+        {
+            _isVisible = value;
+            OnPropertyChanged();
+            //this.RaiseAndSetIfChanged(ref _isVisible, value);
+        }
     }
 
-    /// <summary>
-    /// Коллекция для хранения текущих записей
-    /// </summary>
-    public ObservableCollection<Core.ViewModels.JobEntryViewModel> TimerList { get; private set; } = [];
 
-    private int _numberTask = 1;
+    /// <summary>
+    /// массив для заготовок
+    /// </summary>
+    public ObservableCollection<JobEntryClock> ListPreparation { get; private set; } = [];
 
     private Observation _mainObservation;
     public Observation MainObservation
@@ -49,6 +57,8 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             }
         }
     }
+
+    #region Readonly поля и кнструктор
 
     public Window? MainWindow { get; set; }
 
@@ -67,9 +77,11 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         _finishedEntryService = finishedEntryService;
         _fileDialogService = fileDialogService;
         _errorMessageHelper = errorMessageHelper;
-        
-        SystemStatic.GeneralStopwatch.Start();
+
+        SystemStatic.GeneralStopwatch.Stop();
     }
+
+    #endregion
 
     /// <summary>
     /// Метод создания новой записи
@@ -77,12 +89,7 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     [RelayCommand]
     private async Task AddNewTask()
     {
-        JobEntryViewModel model = new JobEntryViewModel(_finishedEntryService, this);
-
-        model.Entry = new JobEntry()
-        {
-            Id = _numberTask++
-        };
+        JobEntryClock model = MainObservation.AddToActivListR();
 
         File.AppendAllLines(SystemStatic.EntryFilePath, new[] { model.Entry.Id.ToString() });
 
@@ -90,10 +97,119 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
         if (!GeneralUpdateTimer.IsEnabled)
         {
+            SystemStatic.GeneralStopwatch.Start();
             GeneralUpdateTimer.StartTimer();
         }
-        TimerList.Add(model);
     }
+
+
+    //----------------------------------------------------------------------------------------------------------------------
+    
+    /// <summary>
+    /// Добаление новой задачи в ListPreparation (Массив заготовок задач)
+    /// </summary>
+    /// <returns></returns>
+    [RelayCommand]
+    public async Task AddNewTaskForListPreparation()
+    {
+        var model = new JobEntryClock();
+
+        ListPreparation.Add(model);
+    }
+
+    /// <summary>
+    /// Добавление новой задачи из Массива заготовок в активный лист
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    [RelayCommand]
+    public async Task AddTaskForomListPreparation(object obj)
+    {
+        if (obj is JobEntryClock j)
+        {
+            JobEntryClock model = MainObservation.AddToActivListR(j.Entry.JobName);
+            model.Entry.JobCode = j.Entry.JobCode;
+
+            File.AppendAllLines(SystemStatic.EntryFilePath, new[] { model.Entry.Id.ToString() });
+
+            GeneralUpdateTimer.AddEvent(model);
+
+            if (!GeneralUpdateTimer.IsEnabled)
+            {
+                SystemStatic.GeneralStopwatch.Start();
+                GeneralUpdateTimer.StartTimer();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Удаление задачи из листа заготовок
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    [RelayCommand]
+    public async Task DeliteFromListPreparation(object obj)
+    {
+        if (obj is JobEntryClock j)
+        {
+            ListPreparation.Remove(j);
+        }
+    }
+    //----------------------------------------------------------------------------------------------------------------------
+
+
+    //----------------------------------------------------------------------------------------------------------------------
+
+    public void StartTimer(object obj)
+    {
+        if (obj is JobEntryClock j)
+            TimerControlService.StartTimer(j);
+    }
+
+    public void StopTimer(object obj)
+    {
+        if (obj is JobEntryClock j)
+            TimerControlService.StopTimer(j);
+    }
+
+    [RelayCommand]
+    public void ChangeTimer(object obj)
+    {
+        if (obj is JobEntryClock j)
+        {
+            TimerControlService.ChangeTimer(j);
+            j.ChangeBtnText();
+        }
+    }
+
+
+    [RelayCommand]
+    public void CommentVisibility()
+    {
+        IsVisible = !IsVisible;
+    }
+
+    [RelayCommand]
+    public void EndTimer(object obj)
+    {
+        if (obj is JobEntryClock jobModel)
+        {
+            TimerControlService.EndTimer(jobModel);
+
+            jobModel.Entry.JobSample = jobModel.Timer.StrTimer;
+            jobModel.Entry.RecordStatus = RecordStatusEnum.Finish;
+
+            _finishedEntryService.SaveEntry(new List<JobEntry>() { jobModel.Entry });
+            MainObservation.JobEntriesActiv.Remove(jobModel);
+
+            ReadCsvFile.DeleteEntry(jobModel.Entry.Id.ToString(), SystemStatic.EntryFilePath);
+            ReadCsvFile.WriteJobInFile(jobModel.Entry, SystemStatic.EntryFilePath);
+        }
+    }
+    //----------------------------------------------------------------------------------------------------------------------
+
+
+
 
     /// <summary>
     /// Метод для экспорта завершенных задач
@@ -184,6 +300,8 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
+    #region Проверка на возможность экспорта
+
     /// <summary>
     /// Флаг для указания возможности экспорта записей
     /// </summary>
@@ -203,4 +321,13 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     /// </summary>
     /// <returns></returns>
     private bool CanExport() => !_isExporting;
+
+    #endregion
+
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 }

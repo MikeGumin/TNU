@@ -1,10 +1,26 @@
-﻿using TNU.Core.Services.ClockAction;
+﻿using CommunityToolkit.Mvvm.Input;
+using System.ComponentModel;
+using System.Dynamic;
+using System.Runtime.CompilerServices;
+using TNU.Core.Models.Enum;
+using TNU.Core.Services.ClockAction;
 
 namespace TNU.Core.Models
 {
-    internal class JobEntryClock
+    public partial class JobEntryClock : NotifyChangedModel
     {
-        JobEntry JobEntry { get; set; } = new JobEntry();
-        ClockActionService clockActionService { get; set; } = new ClockActionService();
+        public string BtnText { get; private set; } = "Stop";
+        public JobEntry Entry { get; set; } = new JobEntry();
+        public ClockActionService Timer { get; set; } = new ClockActionService();
+
+        public void ChangeBtnText()
+        {
+            if (BtnText == "Stop")
+                BtnText = "Start";
+            else
+                BtnText = "Stop";
+
+            OnPropertyChanged("BtnText");
+        }
     }
 }
