@@ -51,7 +51,7 @@
 		</StackPanel>
 
 		<!-- Левая панель: активные записи -->
-		<DockPanel Grid.Column="1" Grid.Row="1" Background="DarkGray">
+		<DockPanel x:Name="LeftDockPanel" Grid.Column="1" Grid.Row="1" Background="DarkGray">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>
@@ -61,7 +61,7 @@
 					<Grid RowDefinitions="*,*">
 						<ScrollViewer Grid.Row="0">
 							<StackPanel>
-								<ItemsControl ItemsSource="{Binding TimerList}">
+								<ItemsControl ItemsSource="{Binding MainObservation.JobEntriesActiv}">
 									<ItemsControl.ItemTemplate>
 										<DataTemplate>
 											<StackPanel
@@ -102,16 +102,19 @@
 													LostFocus="JobCodeTextBox_OnLostFocus"
 													Text="{Binding Entry.JobCode, UpdateSourceTrigger=PropertyChanged}"/>
 
+													<!-- Command="{Binding ElementName=MyItems,  Path=DataContext.UserSelectedCommand}"
+														 CommandParameter="{Binding}-->
+
 													<TextBlock Grid.Column="3" Text="{Binding Entry.StartTime}"/>
-													<Button Grid.Column="4" Content="Stop" Command="{Binding StopTimerCommand}"/>
-													<Button Grid.Column="5" Content="Сохранить" Margin="10 0" Command="{Binding EndTimerCommand}"/>
+													<Button Grid.Column="4" Content="Stop" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.StopTimerCommand}" CommandParameter="{Binding}"/>
+													<Button Grid.Column="5" Content="Сохранить" Margin="10 0" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.EndTimerCommand}" CommandParameter="{Binding}"/>
 													<TextBlock Grid.Column="6" Text="{Binding Timer.StrTimer}"/>
-													<Button Grid.Column="7" Content="🖊️" Margin="10 0" Command="{Binding CommentVisibilityCommand}"/>
+													<Button Grid.Column="7" Content="🖊️" Margin="10 0" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.CommentVisibilityCommand}"/>
 
 												</Grid>
 												<DockPanel
 												x:Name="JobEntryDockPanel"
-												IsVisible="{Binding IsVisible}">
+												IsVisible="{Binding ElementName=LeftDockPanel,  Path=DataContext.IsVisible}">
 													<TextBlock Text="Комментарий: "/>
 													<TextBox Text="{Binding Entry.Description}"/>
 												</DockPanel>
@@ -162,8 +165,8 @@
 													Text="{Binding Entry.JobCode, UpdateSourceTrigger=PropertyChanged}"/>
 
 
-													<Button Grid.Column="2" Content="Добавить" Command="{Binding AdTaskForPrarairListCommand}"/>
-													<Button Grid.Column="3" Content="Удалить" Command="{Binding AdTaskForPrarairListCommand}"/>
+													<Button Grid.Column="2" Content="Добавить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.AddTaskForomListPreparationCommand}" CommandParameter="{Binding}"/>
+													<Button Grid.Column="3" Content="Удалить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.DeliteFromListPreparationCommand}" CommandParameter="{Binding}"/>
 
 
 												</Grid>

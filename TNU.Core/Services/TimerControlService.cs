@@ -14,36 +14,35 @@ namespace TNU.Core.Services
         }
 
 
-        public void StartTimer()
+        static public void StartTimer(JobEntryClock jobTimer)
         {
             jobTimer.Timer.StartTimer();
             jobTimer.Entry.RecordStatus = RecordStatusEnum.Start;
         }
 
-        [RelayCommand]
-        public void StopTimer()
+        static public void StopTimer(JobEntryClock jobTimer)
         {
             jobTimer.Timer.StopTimer();
             jobTimer.Entry.RecordStatus = RecordStatusEnum.Stop;
         }
 
-        public void ChangeTimer()
+        static public void ChangeTimer(JobEntryClock jobTimer)
         {
             if (jobTimer.Entry.RecordStatus == RecordStatusEnum.Start)
             {
-                StopTimer();
+                StopTimer(jobTimer);
             }
             else
             {
-                StartTimer();
+                StartTimer(jobTimer);
             }
         }
 
         [RelayCommand]
-        public void EndTimer()
+        static public void EndTimer(JobEntryClock jobTimer)
         {
             if (jobTimer.Entry.RecordStatus != RecordStatusEnum.Stop)
-                StopTimer();
+                StopTimer(jobTimer);
         }
 
     }
