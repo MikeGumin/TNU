@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using TNU.Core.Models;
 using TNU.Core.Repository;
 using TNU.Core.Services.CsvFile;
 using TNU.Core.ViewModels;
@@ -26,7 +27,7 @@ public partial class MainWindow : Window
 
     private void JobCodeTextBox_OnLostFocus(object? sender, RoutedEventArgs e)
     {
-        if (sender is TextBox textBox && textBox.DataContext is JobEntryViewModel vm)
+        if (sender is TextBox textBox && textBox.DataContext is JobEntryClock vm)
         {
             var entry = vm.Entry;
             
@@ -41,7 +42,7 @@ public partial class MainWindow : Window
 
     private void JobCodeTextBox_OnGotFocus(object? sender, GotFocusEventArgs e)
     {
-        if (sender is TextBox textBox && textBox.DataContext is JobEntryViewModel vm)
+        if (sender is TextBox textBox && textBox.DataContext is JobEntryClock vm)
         {
             var entry = vm.Entry;
             
@@ -50,13 +51,5 @@ public partial class MainWindow : Window
                 textBox.Text = code;
             } 
         } 
-    }
-
-    private void Button_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (sender is Button button && button.DataContext is JobEntryViewModel vm)
-        {
-            
-        }
     }
 }

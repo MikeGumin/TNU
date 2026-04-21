@@ -14,11 +14,6 @@ public class JobTitleEnum
     
     public override string ToString() => Name;
 
-    /// <summary>
-    /// Для каких должностей данная работа будет использоваться
-    /// </summary>
-    public List<JobPositionEnum> Enums { get; set; } = new List<JobPositionEnum>() { JobPositionEnum.Default };
-
     public JobTitleEnum(string jobName) 
     {
         Name = jobName;

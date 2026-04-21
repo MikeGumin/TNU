@@ -106,7 +106,7 @@
 														 CommandParameter="{Binding}-->
 
 													<TextBlock Grid.Column="3" Text="{Binding Entry.StartTime}"/>
-													<Button Grid.Column="4" Content="Stop" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.StopTimerCommand}" CommandParameter="{Binding}"/>
+													<Button Grid.Column="4" Content="{Binding BtnText}" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.ChangeTimerCommand}" CommandParameter="{Binding}"/>
 													<Button Grid.Column="5" Content="Сохранить" Margin="10 0" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.EndTimerCommand}" CommandParameter="{Binding}"/>
 													<TextBlock Grid.Column="6" Text="{Binding Timer.StrTimer}"/>
 													<Button Grid.Column="7" Content="🖊️" Margin="10 0" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.CommentVisibilityCommand}"/>

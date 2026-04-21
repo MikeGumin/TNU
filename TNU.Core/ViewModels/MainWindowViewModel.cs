@@ -37,10 +37,6 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
-    /// <summary>
-    /// Коллекция для хранения текущих записей
-    /// </summary>
-    public ObservableCollection<Core.ViewModels.JobEntryViewModel> TimerList { get; private set; } = [];
 
     /// <summary>
     /// массив для заготовок
@@ -108,6 +104,11 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
 
     //----------------------------------------------------------------------------------------------------------------------
+    
+    /// <summary>
+    /// Добаление новой задачи в ListPreparation (Массив заготовок задач)
+    /// </summary>
+    /// <returns></returns>
     [RelayCommand]
     public async Task AddNewTaskForListPreparation()
     {
@@ -116,6 +117,11 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         ListPreparation.Add(model);
     }
 
+    /// <summary>
+    /// Добавление новой задачи из Массива заготовок в активный лист
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     [RelayCommand]
     public async Task AddTaskForomListPreparation(object obj)
     {
@@ -136,6 +142,11 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Удаление задачи из листа заготовок
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     [RelayCommand]
     public async Task DeliteFromListPreparation(object obj)
     {
@@ -149,14 +160,12 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
     //----------------------------------------------------------------------------------------------------------------------
 
-    [RelayCommand]
     public void StartTimer(object obj)
     {
         if (obj is JobEntryClock j)
             TimerControlService.StartTimer(j);
     }
 
-    [RelayCommand]
     public void StopTimer(object obj)
     {
         if (obj is JobEntryClock j)
@@ -167,7 +176,10 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     public void ChangeTimer(object obj)
     {
         if (obj is JobEntryClock j)
+        {
             TimerControlService.ChangeTimer(j);
+            j.ChangeBtnText();
+        }
     }
 
 

@@ -1,40 +1,32 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using System.ComponentModel;
+using System.Dynamic;
+using System.Runtime.CompilerServices;
 using TNU.Core.Models.Enum;
 using TNU.Core.Services.ClockAction;
 
 namespace TNU.Core.Models
 {
-    public partial class JobEntryClock
+    public partial class JobEntryClock : INotifyPropertyChanged
     {
+        public string BtnText { get; private set; } = "Stop";
         public JobEntry Entry { get; set; } = new JobEntry();
         public ClockActionService Timer { get; set; } = new ClockActionService();
 
-        //public void StartTimer()
-        //{
-        //    Timer.StartTimer();
-        //    Entry.RecordStatus = RecordStatusEnum.Start;
-        //}
+        public void ChangeBtnText()
+        {
+            if (BtnText == "Stop")
+                BtnText = "Start";
+            else
+                BtnText = "Stop";
 
+            OnPropertyChanged("BtnText");
+        }
 
-        //[RelayCommand]
-        //public void StopTimer()
-        //{
-        //    Timer.StopTimer();
-        //    Entry.RecordStatus = RecordStatusEnum.Stop;
-        //}
-
-        //public void ChangeTimerStatus()
-        //{
-        //    if (Entry.RecordStatus == RecordStatusEnum.Start)
-        //        StopTimer();
-        //    else
-        //        StartTimer();
-        //}
-
-        //public void EndTimer()
-        //{
-        //    if (Entry.RecordStatus != RecordStatusEnum.Stop)
-        //        StopTimer();
-        //}
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

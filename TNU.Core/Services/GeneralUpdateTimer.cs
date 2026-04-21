@@ -1,7 +1,6 @@
 ﻿using Avalonia.Threading;
 using System;
 using TNU.Core.Models;
-using JobEntryViewModel = TNU.Core.ViewModels.JobEntryViewModel;
 
 namespace TNU.Core.Services
 {
@@ -38,11 +37,6 @@ namespace TNU.Core.Services
         static public void StopTimer()
         {
             _timer.Stop();
-        }
-
-        static public void AddEvent(JobEntryViewModel model)
-        {
-            dl += model.Timer.ReDrowTimer;
         }
 
         static public void AddEvent(JobEntryClock model)
