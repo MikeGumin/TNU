@@ -123,7 +123,7 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     /// <param name="obj"></param>
     /// <returns></returns>
     [RelayCommand]
-    public async Task AddTaskForomListPreparation(object obj)
+    public void AddTaskForomListPreparation(object obj)
     {
         if (obj is JobEntryClock j)
         {
@@ -131,7 +131,12 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             model.Entry.JobCode = j.Entry.JobCode;
 
             File.AppendAllLines(SystemStatic.EntryFilePath, new[] { model.Entry.Id.ToString() });
-
+            
+            if (!j.IsSavePrepareJob)
+            {
+                DeliteFromListPreparation(j);
+            }
+            
             GeneralUpdateTimer.AddEvent(model);
 
             if (!GeneralUpdateTimer.IsEnabled)
@@ -148,7 +153,7 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     /// <param name="obj"></param>
     /// <returns></returns>
     [RelayCommand]
-    public async Task DeliteFromListPreparation(object obj)
+    public void DeliteFromListPreparation(object obj)
     {
         if (obj is JobEntryClock j)
         {
@@ -198,6 +203,7 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
             jobModel.Entry.JobSample = jobModel.Timer.StrTimer;
             jobModel.Entry.RecordStatus = RecordStatusEnum.Finish;
+            jobModel.Entry.IsTimedCorrectly = jobModel.IsSavePrepareJob;
 
             _finishedEntryService.SaveEntry(new List<JobEntry>() { jobModel.Entry });
             MainObservation.JobEntriesActiv.Remove(jobModel);

@@ -105,6 +105,11 @@ public partial class JobEntry : NotifyChangedModel
     /// Статус записи
     /// </summary>
     public RecordStatusEnum RecordStatus { get; set; }
+    
+    /// <summary>
+    /// ЧекБок указывающий, нужно ли уточнить время задачи 
+    /// </summary>
+    public bool IsTimedCorrectly { get; set; } = false;
 
     /// <summary>
     /// Коэффициент сложности
