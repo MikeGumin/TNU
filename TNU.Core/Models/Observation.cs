@@ -66,9 +66,6 @@ namespace TNU.Core.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public bool IsCompleted() 
-        {
-            return City != "" && RespondentId != null && InspectorName != null;
-        }
+
     }
 }
