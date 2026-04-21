@@ -9,6 +9,8 @@ namespace TNU.Core.Models
 {
     public partial class JobEntryClock : NotifyChangedModel
     {
+
+        public bool IsSavePrepareJob { get; set; }
         public string BtnText { get; private set; } = "Stop";
         public JobEntry Entry { get; set; } = new JobEntry();
         public ClockActionService Timer { get; set; } = new ClockActionService();

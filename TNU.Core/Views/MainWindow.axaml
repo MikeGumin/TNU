@@ -58,7 +58,7 @@
 					<RowDefinition Height="30"/>
 				</Grid.RowDefinitions>
 				<Border Grid.Row="0">
-					<Grid RowDefinitions="*,*">
+					<Grid RowDefinitions="*,10,*">
 						<ScrollViewer Grid.Row="0">
 							<StackPanel>
 								<ItemsControl ItemsSource="{Binding MainObservation.JobEntriesActiv}">
@@ -66,7 +66,7 @@
 										<DataTemplate>
 											<StackPanel
 											x:Name="JobEntryStackPanel">
-												<Grid ColumnDefinitions="30, *, 60, Auto, Auto, Auto, 100, Auto">
+												<Grid ColumnDefinitions="30, *, 60, Auto, Auto, Auto, 100, Auto, Auto">
 
 													<TextBlock
 													Grid.Column="0"
@@ -109,7 +109,8 @@
 													<Button Grid.Column="4" Content="{Binding BtnText}" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.ChangeTimerCommand}" CommandParameter="{Binding}"/>
 													<Button Grid.Column="5" Content="Сохранить" Margin="10 0" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.EndTimerCommand}" CommandParameter="{Binding}"/>
 													<TextBlock Grid.Column="6" Text="{Binding Timer.StrTimer}"/>
-													<Button Grid.Column="7" Content="🖊️" Margin="10 0" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.CommentVisibilityCommand}"/>
+													<CheckBox Grid.Column="7" IsChecked="{Binding IsSavePrepareJob}"/>
+													<Button Grid.Column="8" Content="🖊️" Margin="10 0" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.CommentVisibilityCommand}"/>
 
 												</Grid>
 												<DockPanel
@@ -126,17 +127,27 @@
 
 							</StackPanel>
 						</ScrollViewer>
+						
+						<GridSplitter
+							Grid.Row="1"
+							Background="DarkGray"
+							ResizeDirection="Rows" />
 
 						<!--Заготовка для задач-->
-						<ScrollViewer Grid.Row="1">
+						<ScrollViewer Grid.Row="2">
 							<StackPanel>
 								<ItemsControl ItemsSource="{Binding ListPreparation}">
 									<ItemsControl.ItemTemplate>
 										<DataTemplate>
 											<StackPanel>
-												<Grid ColumnDefinitions="*, 60, Auto, Auto">
+												<Grid ColumnDefinitions="30, *, 60, Auto, Auto">
 
-													<AutoCompleteBox Grid.Column="0"
+													<CheckBox
+														Grid.Column="0"
+														IsChecked="{Binding IsSavePrepareJob}"
+														/>
+													
+													<AutoCompleteBox Grid.Column="1"
 																	 x:Name="JobNameTextBox"
 																	 Text="{Binding Entry.JobName}"
 																	 ItemsSource="{x:Static repository1:JobNameRepository.JobNameList}"
@@ -157,7 +168,7 @@
 													</AutoCompleteBox>
 
 													<TextBox
-													Grid.Column="1"
+													Grid.Column="2"
 													Background="Black"
 													x:Name="JobCodeTextBox"
 													GotFocus="JobCodeTextBox_OnGotFocus"
@@ -165,12 +176,10 @@
 													Text="{Binding Entry.JobCode, UpdateSourceTrigger=PropertyChanged}"/>
 
 
-													<Button Grid.Column="2" Content="Добавить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.AddTaskForomListPreparationCommand}" CommandParameter="{Binding}"/>
-													<Button Grid.Column="3" Content="Удалить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.DeliteFromListPreparationCommand}" CommandParameter="{Binding}"/>
-
-
+													<Button Grid.Column="3" Content="Добавить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.AddTaskForomListPreparationCommand}" CommandParameter="{Binding}"/>
+													<Button Grid.Column="4" Content="Удалить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.DeliteFromListPreparationCommand}" CommandParameter="{Binding}"/>
+													
 												</Grid>
-
 											</StackPanel>
 
 										</DataTemplate>
@@ -201,8 +210,7 @@
 		</DockPanel>
 
 		<GridSplitter
-		Grid.Row="0"
-		Grid.RowSpan="2"
+		Grid.Row="1"
 		Grid.Column="2"
 		Background="DarkGray"
 		ResizeDirection="Columns" />
@@ -228,6 +236,7 @@
 								<DataGridTextColumn Header="Текущее время" Binding="{Binding EndTime}" />
 								<DataGridTextColumn Header="Продолжительность мин" Binding="{Binding JobSample}" />
 								<DataGridTextColumn Header="Индекс или код" Binding="{Binding JobCode}" />
+								<DataGridCheckBoxColumn Header="Уточнить время" Binding="{Binding IsTimedCorrectly}" />
 							</DataGrid.Columns>
 
 						</DataGrid>
