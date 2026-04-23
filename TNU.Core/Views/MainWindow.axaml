@@ -17,8 +17,8 @@
 
 		FontFamily="Segoe UI, Arial, sans-serif"
 
-		Icon="/Assets/avalonia-logo.ico"
-		Title="TNU">
+		Icon="/Assets/Ricon.png"
+		Title="ТНУ">
 
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
@@ -26,14 +26,18 @@
 		<viewModels:MainWindowViewModel/>
 	</Design.DataContext>
 
+	<Window.Styles>
+		<StyleInclude Source="/Styles/MainStyles.axaml"></StyleInclude>
+	</Window.Styles>
+
 
 	<Grid ShowGridLines="True">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="10"/>
+			<ColumnDefinition Width="0"/>
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="8"/>
 			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="10"/>
+			<ColumnDefinition Width="0"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="30"/>
@@ -41,7 +45,7 @@
 		</Grid.RowDefinitions>
 
 		<!--Статчные поля-->
-		<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2">
+		<StackPanel Classes="Header" Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3">
 			<TextBlock Text="Дата: "/>
 			<TextBlock Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}'}"/>
 			<TextBlock Margin="10 0 0 0" Text="Идентификатор респондента: "/>
@@ -58,6 +62,7 @@
 					<RowDefinition Height="30"/>
 				</Grid.RowDefinitions>
 				<Border Grid.Row="0">
+
 					<Grid RowDefinitions="*,10,*">
 						<ScrollViewer Grid.Row="0">
 							<StackPanel>
@@ -106,16 +111,16 @@
 														 CommandParameter="{Binding}-->
 
 													<TextBlock Grid.Column="3" Text="{Binding Entry.StartTime}"/>
-													<Button Grid.Column="4" Content="{Binding BtnText}" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.ChangeTimerCommand}" CommandParameter="{Binding}"/>
+													<Button Grid.Column="4"  Classes.accept="True" Content="{Binding BtnText}" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.ChangeTimerCommand}" CommandParameter="{Binding}"/>
 													<Button Grid.Column="5" Content="Сохранить" Margin="10 0" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.EndTimerCommand}" CommandParameter="{Binding}"/>
 													<TextBlock Grid.Column="6" Text="{Binding Timer.StrTimer}"/>
 													<CheckBox Grid.Column="7" IsChecked="{Binding IsSavePrepareJob}"/>
-													<Button Grid.Column="8" Content="🖊️" Margin="10 0" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.CommentVisibilityCommand}"/>
+													<Button Grid.Column="8" Content="🖊️" Margin="10 0" Command="{Binding CommentVisibilityCommand}"/>
 
 												</Grid>
 												<DockPanel
 												x:Name="JobEntryDockPanel"
-												IsVisible="{Binding ElementName=LeftDockPanel,  Path=DataContext.IsVisible}">
+												IsVisible="{Binding IsVisible}">
 													<TextBlock Text="Комментарий: "/>
 													<TextBox Text="{Binding Entry.Description}"/>
 												</DockPanel>
@@ -177,7 +182,7 @@
 
 
 													<Button Grid.Column="3" Content="Добавить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.AddTaskForomListPreparationCommand}" CommandParameter="{Binding}"/>
-													<Button Grid.Column="4" Content="Удалить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.DeliteFromListPreparationCommand}" CommandParameter="{Binding}"/>
+													<Button Grid.Column="4" Classes="Red" Content="Удалить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.DeliteFromListPreparationCommand}" CommandParameter="{Binding}"/>
 													
 												</Grid>
 											</StackPanel>
@@ -199,7 +204,7 @@
 					HorizontalContentAlignment="Center"
 					Command="{Binding AddNewTaskForListPreparationCommand}" />
 
-					<Button Grid.Column="1"
+					<Button Classes="Red" Grid.Column="1"
 							Content="Добавить новую запись"
 							HorizontalAlignment="Stretch"
 							VerticalAlignment="Bottom"
@@ -240,42 +245,6 @@
 							</DataGrid.Columns>
 
 						</DataGrid>
-						<!--<ItemsControl
-						ItemsSource="{x:Static repository1:FinishedEntriesRepository.FinishedEntries}">
-						<ItemsControl.ItemTemplate>
-						<DataTemplate x:DataType="models1:JobEntry">
-						<Border BorderThickness="0,0,0,1" BorderBrush="Black" Margin="5,2">
-						<DockPanel>
-
-						<StackPanel >
-						<TextBlock Text="{Binding Id}" Foreground="Black"/>
-						<TextBlock FontWeight="Bold" Foreground="Black">
-						<Run Text="{Binding StartTime}"/> - <Run Text="{Binding EndTime}"/>
-						</TextBlock>
-						<TextBlock Text="{Binding JobName}" Foreground="Black"/>
-						<TextBlock Text="{Binding JobSample}" Foreground="Black"/>
-						<TextBlock Text="{Binding JobCode}" Foreground="Black"/>
-						</StackPanel>
-
-						<StackPanel
-						HorizontalAlignment="Right"
-						Orientation="Horizontal">
-						<Button Content="Редактировать"
-						Margin="0,10,10,10"
-						Command="{Binding DataContext.EditEntryCommand, ElementName=RootWindow}"
-						CommandParameter="{Binding}" />
-						</StackPanel >
-						</DockPanel>
-
-						</Border>
-						</DataTemplate>
-						</ItemsControl.ItemTemplate>
-						</ItemsControl>-->
-
-						<!--<Button Content="Очистка"
-						HorizontalAlignment="Left"
-						Margin="0,10,10,10"
-						Command="{Binding DeleteEntriesCommand}" />-->
 
 						<StackPanel
 						HorizontalAlignment="Right"
@@ -286,7 +255,8 @@
 									Command="{Binding ExportEntriesInGantaCommand}" />
 
 
-							<Button Content="Экспорт"
+							<Button Classes="Red"
+							Content="Экспорт"
 									Margin="0,10,10,10"
 									Command="{Binding ExportEntriesCommand}" />
 						</StackPanel >

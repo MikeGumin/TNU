@@ -1,0 +1,101 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<Styles.Resources>
+		<SolidColorBrush x:Key="MyRed">#972214</SolidColorBrush>
+		<SolidColorBrush x:Key="MainRed">#E21A1A</SolidColorBrush>
+
+		<!--bg-->
+		<SolidColorBrush x:Key="Page">#F8F8F8</SolidColorBrush>
+		<SolidColorBrush x:Key="Form">#FFFFFF</SolidColorBrush>
+		<SolidColorBrush x:Key="Card">#FFFFFF</SolidColorBrush>
+
+		<!--Font-->
+		<SolidColorBrush x:Key="MainFont">#000000</SolidColorBrush>
+		<SolidColorBrush x:Key="SecondFond">#8D8D8D</SolidColorBrush>
+
+		<!--Button-->
+		<SolidColorBrush x:Key="BtnDef">#0066A1</SolidColorBrush>
+		<SolidColorBrush x:Key="BtnSecondary">#F4F4F4</SolidColorBrush>
+		<SolidColorBrush x:Key="BtnHover">#00a0dc</SolidColorBrush>
+
+		<!--Field-->
+		<SolidColorBrush x:Key="FieldActive">#e9f9ff</SolidColorBrush>
+		<SolidColorBrush x:Key="FieldHover">#f8fdff</SolidColorBrush>
+
+		<SolidColorBrush x:Key="divider">#cecece</SolidColorBrush>
+
+	</Styles.Resources>
+
+	<!--Button-->
+	<Style Selector="Button">
+		<Setter Property="Background" Value="{StaticResource BtnDef}"/>
+	</Style>
+
+	<Style Selector="Button.SecondBtn">
+		<Setter Property="Background" Value="{StaticResource BtnSecondary}"/>
+		<Setter Property="Foreground" Value="{StaticResource MainFont}" />
+	</Style>
+
+	<Style Selector="Button:pointerover /template/ ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource BtnHover}" />
+		<Setter Property="Foreground" Value="{StaticResource MainFont}" />
+	</Style>
+
+	<!--Стиль когда кнопка нажимается-->
+	<Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource BtnHover}" />
+		<Setter Property="Foreground" Value="{StaticResource MainFont}" />
+	</Style>
+
+	<!--Текст-->
+
+	<Style Selector="TextBlock">
+		<Setter Property="Foreground" Value="{StaticResource MainFont}"/>
+	</Style>
+
+	<!--Поля-->
+	<Style Selector="TextBox">
+		<Setter Property="Background" Value="{StaticResource BtnSecondary}"/>
+		<Setter Property="Foreground" Value="{StaticResource MainFont}"/>
+	</Style>
+
+	<Style Selector="TextBox:empty">
+		<Setter Property="Background" Value="{StaticResource BtnSecondary}"/>
+	</Style>
+
+	<Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+		<Setter Property="Background" Value="{StaticResource FieldHover}"/>
+	</Style>
+
+	<Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+		<Setter Property="Background" Value="{StaticResource FieldActive}"/>
+
+	</Style>
+
+	<Style Selector="TextBox:focus-within">
+		<Setter Property="Foreground" Value="{StaticResource MainFont}" />
+		<Setter Property="CaretBrush" Value="{StaticResource MainFont}" />
+	</Style>
+
+
+
+	<Style Selector="StackPanel.Header">
+		<Setter Property="Background" Value="{StaticResource MyRed}"/>
+	</Style>
+
+	<Style Selector="Window">
+		<Setter Property="Background" Value="{StaticResource divider}"/>
+	</Style>
+
+	<Style Selector="DataGridColumnHeader">
+		<Setter Property="Background" Value="{StaticResource divider}"/>
+	</Style>
+
+
+
+
+
+
+
+</Styles>

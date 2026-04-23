@@ -31,7 +31,7 @@ namespace TNU.Core.ViewModels
         {
             // Проверка введены ли данные в окна. Работает, но пока убрал 
             //if (IsCompleted())
-            OnLoginSuccess();
+                OnLoginSuccess();
         }
 
         [RelayCommand]
@@ -57,6 +57,7 @@ namespace TNU.Core.ViewModels
 
             _windowService.CloseCurrentWindow();
         }
+
         private bool IsCompleted()
         {
             return ObservationElement.City != "" && ObservationElement.RespondentId != null && ObservationElement.InspectorName != null;
