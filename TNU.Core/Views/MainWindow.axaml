@@ -93,6 +93,7 @@
 														<AutoCompleteBox.ItemTemplate>
 															<DataTemplate x:DataType="enum:JobTitleEnum">
 																<TextBlock Text="{Binding Name}"
+																           Foreground="White"
 																		   FontSize="14"
 																		   Padding="4"/>
 															</DataTemplate>
@@ -101,7 +102,8 @@
 
 													<TextBox
 													Grid.Column="2"
-													Background="Black"
+													Foreground="Black"
+													Background="Gray"
 													x:Name="JobCodeTextBox"
 													GotFocus="JobCodeTextBox_OnGotFocus"
 													LostFocus="JobCodeTextBox_OnLostFocus"
@@ -174,7 +176,8 @@
 
 													<TextBox
 													Grid.Column="2"
-													Background="Black"
+													Foreground="Black"
+													Background="Gray"
 													x:Name="JobCodeTextBox"
 													GotFocus="JobCodeTextBox_OnGotFocus"
 													LostFocus="JobCodeTextBox_OnLostFocus"

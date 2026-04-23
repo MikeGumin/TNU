@@ -15,10 +15,11 @@ public class EntryExportResponse
     //public required string FullName { get; set; }
     
     /// <summary>
-    /// Дата, когда проводилась работа
+    /// Идентификатор записи
     /// </summary>
-    [Name("Дата проведения работы")]
-    public DateTimeOffset JobDate { get; set; }
+    // [ExcelColumnName("Род деятельности")]
+    [Name("Id")]
+    public required int Id { get; set; }
     
     /// <summary>
     /// Род деятельности
@@ -28,8 +29,27 @@ public class EntryExportResponse
     public required string JobTitle { get; set; }
     
     /// <summary>
-    /// Время работы
+    /// 
+    /// </summary>
+    [Name("Текущее время")]
+    public required string DuringTime { get; set; }
+    
+    
+    /// <summary>
+    /// Продолжительность мин.
     /// </summary>
     [Name("Замер")]
     public required string JobTime { get; set; }
+    
+    /// <summary>
+    /// Индекс/Код
+    /// </summary>
+    [Name("Индекс")]
+    public required string JobCode { get; set; }
+    
+    /// <summary>
+    /// Дата, когда проводилась работа
+    /// </summary>
+    [Name("Дата проведения работы")]
+    public DateTimeOffset JobDate { get; set; }
 }

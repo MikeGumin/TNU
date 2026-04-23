@@ -42,9 +42,12 @@ public class EntryExportService: IEntryExportService
                 {
                     exportList.Add(new EntryExportResponse()
                     {
+                        Id = entry.Id,
                         JobTitle = entry.JobName,
                         JobTime = entry.JobSample,
                         JobDate =  entry.JobDate,
+                        DuringTime = entry.EndTime,
+                        JobCode = entry.JobCode
                     });
                 }
             }
