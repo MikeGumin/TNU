@@ -1,13 +1,14 @@
 ﻿<Window Name="LoginW"
-	xmlns="https://github.com/avaloniaui"
+		xmlns="https://github.com/avaloniaui"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:viewModels="clr-namespace:TNU.Core.ViewModels"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		x:Class="TNU.Core.Views.LoginWindow"
 		x:DataType="viewModels:LoginWindowViewModel"
-		Title="LoginWindow">
+		Icon="/Assets/Ricon.png"
+		Title="ТНУ">
 
 	<Design.DataContext>
 		<viewModels:LoginWindowViewModel/>
@@ -17,32 +18,31 @@
 		<viewModels:LoginWindowViewModel/>
 	</Window.DataContext>
 
-	<Grid ColumnDefinitions="Auto,*,Auto">
+	<Window.Styles>
+		<StyleInclude Source="/Styles/MainStyles.axaml"></StyleInclude>
+	</Window.Styles>
 
-		<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-			<StackPanel>
+	<Grid ColumnDefinitions="Auto,*,Auto"
+		  RowDefinitions="auto,*,auto">
 
-			</StackPanel>
+		<StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-			<StackPanel>
-				<TextBlock Text="Введите ФИО Наблюдателя"/>
+			<StackPanel MaxWidth="250" HorizontalAlignment="Center" Margin="10">
+				<TextBlock Classes="TitleLogin" Text="Авторизация" Margin="0 0 0 20"/>
+				<TextBlock Text="ФИО"/>
 				<TextBox Text="{Binding ObservationElement.InspectorName}"/>
-				<TextBlock MaxWidth="250" TextWrapping="Wrap" Text="Введите номер респондента"/>
+				<TextBlock TextWrapping="Wrap" Text="Номер респондента"/>
 				<TextBox Text="{Binding ObservationElement.RespondentId}"/>
-				<TextBlock Text="Введите город проведения замера"/>
+				<TextBlock Text="Город проведения замера"/>
 				<TextBox Text="{Binding ObservationElement.City}"/>
+
+				<Button  Grid.Column="2" Margin="0 10" Width="250" CornerRadius="5" Command="{Binding LoginCommand}" CommandParameter="{Binding #LoginW}" Content="Авторизоваться"/>
+			
 			</StackPanel>
 
-			<StackPanel>
-	
-			</StackPanel>
+				<Button Classes="SecondBtn" Command="{Binding OpenFileCommand}"  Content="Открыть регистр наименования задач"/>
 		</StackPanel>
 
-		<Button  Grid.Column="2" Command="{Binding LoginCommand}" CommandParameter="{Binding #LoginW}" Content="Зарегестрировать"/>
-		
-		<StackPanel Grid.Column="2">
-		<Button Command="{Binding OpenFileCommand}"  Content="Открыть файл наименования задач"/>
-		</StackPanel>
 	</Grid>
 
 </Window>
