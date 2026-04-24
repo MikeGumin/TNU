@@ -9,7 +9,7 @@ namespace TNU.Core.ViewModels.MainWindow;
 public partial class MainWindowViewModel
 {
     private readonly IWindowService _windowService;
-    public Observation ObservationElement { get; set; } = new Observation();
+    public Observation ObservationElement { get; set; }
 
     public MainWindowViewModel()
     {

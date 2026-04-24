@@ -246,7 +246,6 @@
 								<DataGridTextColumn Header="Что наблюдается" Binding="{Binding JobName}" />
 								<DataGridTextColumn Header="Текущее время" Binding="{Binding EndTime}" />
 								<DataGridTextColumn Header="Продолжительность мин" Binding="{Binding JobSample}" />
-								<DataGridTextColumn Header="Индекс или код" Binding="{Binding JobCode}" />
 								<DataGridCheckBoxColumn Header="Уточнить время" Binding="{Binding IsTimedCorrectly}" />
 							</DataGrid.Columns>
 
