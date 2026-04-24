@@ -1,14 +1,10 @@
-﻿using Avalonia.Controls.ApplicationLifetimes;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Runtime.InteropServices;
 using TNU.Core.Models;
 using TNU.Core.Services;
 using TNU.Core.Services.CloseWindow;
 using TNU.Core.Services.FileOpener;
+using MainWindowViewModel = TNU.Core.ViewModels.MainWindow.MainWindowViewModel;
 
 namespace TNU.Core.ViewModels
 {
