@@ -18,6 +18,7 @@
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.3.0.6" />
+        <PackageReference Include="ClosedXML" Version="0.105.0" />
         <PackageReference Include="CsvHelper" Version="33.1.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />

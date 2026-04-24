@@ -1,23 +1,22 @@
-﻿using Avalonia.Controls;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Avalonia.Controls;
+using CommunityToolkit.Mvvm.Input;
 using TNU.Core.Models;
 using TNU.Core.Models.Enum;
-using TNU.Core.Repository;
 using TNU.Core.Services;
+using TNU.Core.Services.CloseWindow;
 using TNU.Core.Services.CsvFile;
 using TNU.Core.Services.EntryExport;
 using TNU.Core.Services.FileDialog;
 using TNU.Core.Services.FinishedEntry;
-using TNU.Core.Views;
 using EditEntryWindow = TNU.Core.Views.EditEntryWindow;
 
-namespace TNU.Core.ViewModels;
+namespace TNU.Core.ViewModels.MainWindow;
 
 
 public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
@@ -71,11 +70,13 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         IEntryExportService entryExportService,
         IFinishedEntryService finishedEntryService,
         IFileDialogService fileDialogService,
+        IWindowService windowService,
         ErrorMessageHelper errorMessageHelper)
     {
         _entryExportService = entryExportService;
         _finishedEntryService = finishedEntryService;
         _fileDialogService = fileDialogService;
+        _windowService = windowService;
         _errorMessageHelper = errorMessageHelper;
 
         SystemStatic.GeneralStopwatch.Stop();
@@ -213,41 +214,8 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
     //----------------------------------------------------------------------------------------------------------------------
-
-
-
-
-    /// <summary>
-    /// Метод для экспорта завершенных задач
-    /// </summary>
-    [RelayCommand(CanExecute = nameof(CanExport))]
-    private async Task ExportEntries()
-    {
-        var exportResult = await _entryExportService.CsvEntryAsync(
-            FinishedEntriesRepository.FinishedEntries,
-            _fileDialogService
-        );
-
-        if (exportResult.IsFailed)
-        {
-            await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, MainWindow!);
-        }
-    }
-
-    /// <summary>
-    /// Метод для экспорта завершенных задач в формате Диаграммы Ганта
-    /// </summary>
-    [RelayCommand(CanExecute = nameof(CanExport))]
-    private async Task ExportEntriesInGanta()
-    {
-        // var exportResult = await _entryExportService.ExportDiagrammaGanta(FinishedEntriesRepository.FinishedEntries, _fileDialogService);
-        //
-        // if (exportResult.IsFailed)
-        // {
-        //     await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, MainWindow!);
-        // }
-    }
-
+    
+    
     /// <summary>
     /// Метод для удаления всех завершенных задач
     /// </summary>
@@ -305,31 +273,6 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             //}
         }
     }
-
-    #region Проверка на возможность экспорта
-
-    /// <summary>
-    /// Флаг для указания возможности экспорта записей
-    /// </summary>
-    private bool _isExporting = false;
-    public bool IsExporting
-    {
-        get => _isExporting;
-        private set
-        {
-            _isExporting = value;
-            ExportEntriesCommand.NotifyCanExecuteChanged();
-        }
-    }
-
-    /// <summary>
-    /// Метод проверки на возможность экспорта записей
-    /// </summary>
-    /// <returns></returns>
-    private bool CanExport() => !_isExporting;
-
-    #endregion
-
 
     public event PropertyChangedEventHandler? PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)

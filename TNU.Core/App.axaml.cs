@@ -8,13 +8,12 @@ using System;
 using System.Linq;
 using TNU.Core.Services;
 using TNU.Core.Services.CloseWindow;
-using TNU.Core.Services.CsvFile;
 using TNU.Core.Services.EntryExport;
 using TNU.Core.Services.FileDialog;
 using TNU.Core.Services.FinishedEntry;
+using TNU.Core.ViewModels;
 using LoginWindow = TNU.Core.Views.LoginWindow;
 using LoginWindowViewModel = TNU.Core.ViewModels.LoginWindowViewModel;
-using MainWindowViewModel = TNU.Core.ViewModels.MainWindowViewModel;
 
 namespace TNU.Core;
 
@@ -34,8 +33,9 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             var collection = new ServiceCollection();
-            collection.AddSingleton<MainWindowViewModel>();
+            collection.AddSingleton<ViewModels.MainWindow.MainWindowViewModel>();
             collection.AddSingleton<LoginWindowViewModel>();
+            collection.AddSingleton<FrdWindowViewModel>();
             collection.AddSingleton<ErrorMessageHelper>();
             collection.AddSingleton<OperationResult>();
 

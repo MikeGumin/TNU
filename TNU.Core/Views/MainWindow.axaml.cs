@@ -4,8 +4,6 @@ using Avalonia.Interactivity;
 using TNU.Core.Models;
 using TNU.Core.Repository;
 using TNU.Core.Services.CsvFile;
-using TNU.Core.ViewModels;
-using MainWindowViewModel = TNU.Core.ViewModels.MainWindowViewModel;
 
 namespace TNU.Core.Views;
 
@@ -18,7 +16,7 @@ public partial class MainWindow : Window
         // Нужно для передачи в контекст родительского окна
         this.Loaded += (sender, e) =>
         {
-            if (DataContext is MainWindowViewModel vm)
+            if (DataContext is ViewModels.MainWindow.MainWindowViewModel vm)
             {
                 vm.MainWindow = this;
             }

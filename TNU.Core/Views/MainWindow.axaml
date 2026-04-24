@@ -5,7 +5,7 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		x:Class="TNU.Core.Views.MainWindow"
-		x:DataType="viewModels:MainWindowViewModel"
+		x:DataType="mainWindow:MainWindowViewModel"
 		xmlns:models1="clr-namespace:TNU.Core.Models"
 		xmlns:repository1="clr-namespace:TNU.Core.Repository"
 		xmlns:viewModels="clr-namespace:TNU.Core.ViewModels"
@@ -13,6 +13,7 @@
 		xmlns:visualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
 		xmlns:behaviors="clr-namespace:TNU.Core.Behaviors"
 		xmlns:i="using:Avalonia.Xaml.Interactivity"
+		xmlns:mainWindow="clr-namespace:TNU.Core.ViewModels.MainWindow"
 
 
 		FontFamily="Segoe UI, Arial, sans-serif"
@@ -23,7 +24,7 @@
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
 		to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-		<viewModels:MainWindowViewModel/>
+		<mainWindow:MainWindowViewModel/>
 	</Design.DataContext>
 
 	<Window.Styles>
@@ -104,6 +105,7 @@
 													Grid.Column="2"
 													Foreground="Black"
 													Background="Gray"
+													IsVisible="False"
 													x:Name="JobCodeTextBox"
 													GotFocus="JobCodeTextBox_OnGotFocus"
 													LostFocus="JobCodeTextBox_OnLostFocus"
@@ -178,6 +180,7 @@
 													Grid.Column="2"
 													Foreground="Black"
 													Background="Gray"
+													IsVisible="False"
 													x:Name="JobCodeTextBox"
 													GotFocus="JobCodeTextBox_OnGotFocus"
 													LostFocus="JobCodeTextBox_OnLostFocus"
@@ -250,18 +253,11 @@
 						</DataGrid>
 
 						<StackPanel
-						HorizontalAlignment="Right"
+						HorizontalAlignment="Center"
 						Orientation="Horizontal">
-							<Button Content="Экспорт в формате Диаграммы Ганта"
+							<Button Content="Завершить ФРД"
 									Margin="0,10,10,10"
-									IsEnabled="False"
-									Command="{Binding ExportEntriesInGantaCommand}" />
-
-
-							<Button Classes="Red"
-							Content="Экспорт"
-									Margin="0,10,10,10"
-									Command="{Binding ExportEntriesCommand}" />
+									Command="{Binding OpenFrdWindowCommand}" />
 						</StackPanel >
 					</StackPanel>
 				</ScrollViewer>

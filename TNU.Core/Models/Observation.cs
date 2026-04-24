@@ -43,7 +43,7 @@ namespace TNU.Core.Models
         public JobEntryClock AddToActivListR(string jobName="") 
         {
             JobEntryClock jobEntryClock = CreateJobEntryServise.CreateJobEntry(jobName);
-            JobEntriesActiv.Add(jobEntryClock);
+            JobEntriesActiv.Insert(0, jobEntryClock);
             return jobEntryClock;
         }
 
