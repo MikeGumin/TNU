@@ -1,4 +1,6 @@
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -23,6 +25,7 @@ public partial class FrdWindowViewModel: ViewModelBase
     private readonly IFileDialogService _fileDialogService;
     private readonly ErrorMessageHelper _errorMessageHelper;
     private readonly IWindowService _windowService;
+    private int frdId = 1;
     public Observation ObservationElement { get; set; } = new Observation();
     
     public Window? FrdWindow { get; set; }
@@ -126,6 +129,37 @@ public partial class FrdWindowViewModel: ViewModelBase
         }
 
         mainWindow.Show();
+
+        _windowService.CloseCurrentWindow();
+    }
+
+    [RelayCommand]
+    private void GoToListFrd()
+    {
+        var files = Directory.EnumerateFiles(@".", "output*", SearchOption.AllDirectories);
+        
+        FrdRepository.FinishedFrd.Clear();
+
+        foreach (var file in files)
+        {
+            FrdRepository.FinishedFrd.Add( new FrdModel()
+            {
+                Id = frdId++,
+                FileName = Path.GetFileName(file),
+            });
+        }
+        
+        var frdWindow = new Views.AllFrdWindow()
+        {
+            DataContext = App.Services.GetRequiredService<AllFrdWindowViewModel>()
+        };
+
+        if (frdWindow.DataContext is AllFrdWindowViewModel a)
+        {
+            a.MainObservation = ObservationElement;
+        }
+
+        frdWindow.Show();
 
         _windowService.CloseCurrentWindow();
     }

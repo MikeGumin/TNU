@@ -56,6 +56,12 @@
                                                         Content="Экспорт"
                                                         Margin="0,10,10,10"
                                                         Command="{Binding ExportEntriesCommand}" />
+                                                
+                                                <Button Classes="Red"
+                                                        Content="Перейти к списку ФРД"
+                                                        Margin="0,10,10,10"
+                                                        Command="{Binding GoToListFrdCommand}" />
+                                                
                                         </StackPanel >
                                 </StackPanel>
                         </ScrollViewer>

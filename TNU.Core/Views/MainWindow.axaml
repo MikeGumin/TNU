@@ -48,8 +48,8 @@
 		<!--Статчные поля-->
 		<StackPanel Classes="Header" Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3">
 			<TextBlock Text="Дата: "/>
-			<TextBlock Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}'}"/>
-			<TextBlock Margin="10 0 0 0" Text="Идентификатор респондента: "/>
+			<TextBox BorderBrush="#972214" Width="100" Background="#972214" Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}'}"/>
+			<TextBlock Margin="15 0 0 0" Text="Идентификатор респондента: "/>
 			<TextBlock Text="{Binding MainObservation.RespondentId}"/>
 			<TextBlock Margin="10 0 0 0" Text="Предприятие: "/>
 			<TextBlock Text="{Binding MainObservation.City}"/>
