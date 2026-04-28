@@ -185,6 +185,8 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         {
             TimerControlService.ChangeTimer(j);
             j.ChangeBtnText();
+            
+            
         }
     }
 
@@ -198,7 +200,7 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     [RelayCommand]
     public void EndTimer(object obj)
     {
-        if (obj is JobEntryClock jobModel)
+        if (obj is JobEntryClock jobModel && jobModel.Entry.RecordStatus is RecordStatusEnum.Stop)
         {
             TimerControlService.EndTimer(jobModel);
 
