@@ -37,12 +37,19 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
-    public DateTime GeneralTime {  get=> SystemStatic.GeneralTime;
+    public DateTime GeneralTime
+    {
+        get => SystemStatic.GeneralTime;
         set
         {
             SystemStatic.GeneralTime = value;
             OnPropertyChanged();
 
+            if (MainObservation != null)
+                foreach (JobEntryClock jobClock in MainObservation.JobEntriesActiv)
+                {
+                    jobClock.Entry.StartTime = "";
+                }
         }
     }
 
@@ -119,7 +126,7 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
 
 
     //----------------------------------------------------------------------------------------------------------------------
-    
+
     /// <summary>
     /// Добаление новой задачи в ListPreparation (Массив заготовок задач)
     /// </summary>
@@ -146,18 +153,18 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             model.Entry.JobCode = j.Entry.JobCode;
 
             File.AppendAllLines(SystemStatic.EntryFilePath, new[] { model.Entry.Id.ToString() });
-            
+
             if (!j.IsSavePrepareJob)
             {
                 DeliteFromListPreparation(j);
             }
-            
+
             GeneralUpdateTimer.AddEvent(model);
 
             if (!GeneralUpdateTimer.IsEnabled)
             {
                 SystemStatic.GeneralStopwatch.Start();
-               // SystemStatic.GeneralStopwatch2 = DateTime.Now;
+                // SystemStatic.GeneralStopwatch2 = DateTime.Now;
                 GeneralUpdateTimer.StartTimer();
             }
         }
@@ -229,8 +236,8 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
     //----------------------------------------------------------------------------------------------------------------------
-    
-    
+
+
     /// <summary>
     /// Метод для удаления всех завершенных задач
     /// </summary>
