@@ -8,6 +8,7 @@
 		x:DataType="mainWindow:MainWindowViewModel"
 		xmlns:models1="clr-namespace:TNU.Core.Models"
 		xmlns:repository1="clr-namespace:TNU.Core.Repository"
+		xmlns:sysStatic="clr-namespace:TNU.Core.SystemStatic"
 		xmlns:viewModels="clr-namespace:TNU.Core.ViewModels"
 		xmlns:enum="clr-namespace:TNU.Core.Models.Enum"
 		xmlns:visualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
@@ -53,6 +54,8 @@
 			<TextBlock Text="{Binding MainObservation.RespondentId}"/>
 			<TextBlock Margin="10 0 0 0" Text="Предприятие: "/>
 			<TextBlock Text="{Binding MainObservation.City}"/>
+			<TextBlock Margin="10 0 0 0" Text="Время начала:"/>
+			<TextBox Text="{Binding GeneralTime, StringFormat='{}{0:HH:mm:ss}'}"/>
 		</StackPanel>
 
 		<!-- Левая панель: активные записи -->

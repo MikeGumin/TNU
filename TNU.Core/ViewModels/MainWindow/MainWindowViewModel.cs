@@ -37,6 +37,14 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
+    public DateTime GeneralTime {  get=> SystemStatic.GeneralTime;
+        set
+        {
+            SystemStatic.GeneralTime = value;
+            OnPropertyChanged();
+
+        }
+    }
 
     /// <summary>
     /// массив для заготовок
@@ -94,17 +102,19 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     [RelayCommand]
     private async Task AddNewTask()
     {
+        if (!GeneralUpdateTimer.IsEnabled)
+        {
+            SystemStatic.GeneralTime = DateTime.Now;
+            SystemStatic.GeneralStopwatch.Start();
+            GeneralUpdateTimer.StartTimer();
+        }
+
         JobEntryClock model = MainObservation.AddToActivListR();
 
         File.AppendAllLines(SystemStatic.EntryFilePath, new[] { model.Entry.Id.ToString() });
 
         GeneralUpdateTimer.AddEvent(model);
 
-        if (!GeneralUpdateTimer.IsEnabled)
-        {
-            SystemStatic.GeneralStopwatch.Start();
-            GeneralUpdateTimer.StartTimer();
-        }
     }
 
 

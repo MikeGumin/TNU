@@ -54,6 +54,10 @@
 		<Setter Property="Foreground" Value="{StaticResource MainFont}"/>
 	</Style>
 
+	<Style Selector="TextBlock:pointerover">
+		<Setter Property="Foreground" Value="{StaticResource MainFont}"/>
+	</Style>
+
 	<!--Поля-->
 	<Style Selector="TextBox">
 		<Setter Property="Background" Value="{StaticResource BtnSecondary}"/>
@@ -62,6 +66,10 @@
 
 	<Style Selector="TextBox:empty">
 		<Setter Property="Background" Value="{StaticResource BtnSecondary}"/>
+	</Style>
+
+	<Style Selector="TextBox:pointerover">
+		<Setter Property="Foreground" Value="{StaticResource MainFont}"/>
 	</Style>
 
 	<Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
