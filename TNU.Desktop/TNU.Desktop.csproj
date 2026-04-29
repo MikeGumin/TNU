@@ -1,10 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <OutputType>WinExe</OutputType>
-        <TargetFrameworks>net9.0-windows;net9.0</TargetFrameworks>
-        <Nullable>enable</Nullable>
-        <ApplicationManifest>app.manifest</ApplicationManifest>
-    </PropertyGroup>
+<PropertyGroup>
+  <!-- Критично для исправления ошибки AvaloniaBuildTasks -->
+  <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  <DisableAvaloniaXamlCompilation Condition="'$(TargetFramework)' != 'net9.0'">true</DisableAvaloniaXamlCompilation>
+
+  <TargetFrameworks>net9.0</TargetFrameworks>
+  
+  <OutputType>Exe</OutputType>
+  <TargetFramework Condition="'$(Configuration)' == 'Release'">net9.0</TargetFramework>
+  
+  <!-- macOS настройки -->
+  <RuntimeIdentifier Condition="'$(Configuration)' == 'Release'">osx-arm64</RuntimeIdentifier>
+  
+  <SelfContained Condition="'$(Configuration)' == 'Release'">true</SelfContained>
+  <PublishSingleFile Condition="'$(Configuration)' == 'Release'">true</PublishSingleFile>
+  <UseAppHost Condition="'$(Configuration)' == 'Release'">true</UseAppHost>
+  <UseMonoRuntime>false</UseMonoRuntime>
+
+  <CFBundleName>TNU</CFBundleName>
+  <CFBundleDisplayName>TNU</CFBundleDisplayName>
+  <CFBundleIdentifier>com.mikegumin.tnu</CFBundleIdentifier>
+  <CFBundleVersion>1.0.0</CFBundleVersion>
+  <CFBundleShortVersionString>1.0.0</CFBundleShortVersionString>
+</PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Avalonia.Desktop" Version="11.3.12" />

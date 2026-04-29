@@ -51,7 +51,7 @@ namespace TNU.Core.ViewModels
 
             mainWindow.Show();
 
-            _windowService.CloseCurrentWindow();
+            _windowService.CloseCurrentWindow(mainWindow);
         }
 
         private bool IsCompleted()

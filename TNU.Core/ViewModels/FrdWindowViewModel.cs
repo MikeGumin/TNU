@@ -132,7 +132,7 @@ public partial class FrdWindowViewModel: ViewModelBase
 
         mainWindow.Show();
 
-        _windowService.CloseCurrentWindow();
+        _windowService.CloseCurrentWindow(mainWindow);
     }
 
     [RelayCommand]

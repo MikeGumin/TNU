@@ -1,36 +1,24 @@
-﻿<Window x:Name="RootWindow"
-		xmlns="https://github.com/avaloniaui"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-		x:Class="TNU.Core.Views.MainWindow"
-		x:DataType="mainWindow:MainWindowViewModel"
-		xmlns:models1="clr-namespace:TNU.Core.Models"
-		xmlns:repository1="clr-namespace:TNU.Core.Repository"
-		xmlns:sysStatic="clr-namespace:TNU.Core.SystemStatic"
-		xmlns:viewModels="clr-namespace:TNU.Core.ViewModels"
-		xmlns:enum="clr-namespace:TNU.Core.Models.Enum"
-		xmlns:visualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
-		xmlns:behaviors="clr-namespace:TNU.Core.Behaviors"
-		xmlns:i="using:Avalonia.Xaml.Interactivity"
-		xmlns:mainWindow="clr-namespace:TNU.Core.ViewModels.MainWindow"
-
-
-		FontFamily="Segoe UI, Arial, sans-serif"
-
-		Icon="/Assets/Ricon.png"
-		Title="ТНУ">
-
-	<Design.DataContext>
-		<!-- This only sets the DataContext for the previewer in an IDE,
-		to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:mainWindow="clr-namespace:TNU.Core.ViewModels.MainWindow"
+			 xmlns:repository1="clr-namespace:TNU.Core.Repository"
+			 xmlns:behaviors="clr-namespace:TNU.Core.Behaviors"
+			 xmlns:enum="clr-namespace:TNU.Core.Models.Enum"
+			 xmlns:i="using:Avalonia.Xaml.Interactivity"
+             x:Class="TNU.Core.MainPageView">
+  
+	<!--<Design.DataContext>
+		--><!-- This only sets the DataContext for the previewer in an IDE,
+		to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) --><!--
 		<mainWindow:MainWindowViewModel/>
 	</Design.DataContext>
 
-	<Window.Styles>
+	<UserControl.Styles>
 		<StyleInclude Source="/Styles/MainStyles.axaml"></StyleInclude>
-	</Window.Styles>
+	</UserControl.Styles>
 
 
 	<Grid ShowGridLines="True">
@@ -46,19 +34,17 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
-		<!--Статчные поля-->
+		--><!--Статчные поля--><!--
 		<StackPanel Classes="Header" Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3">
 			<TextBlock Text="Дата: "/>
-			<TextBox BorderBrush="#972214" Width="100" Background="#972214" Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}'}"/>
-			<TextBlock Margin="15 0 0 0" Text="Идентификатор респондента: "/>
+			<TextBlock Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}'}"/>
+			<TextBlock Margin="10 0 0 0" Text="Идентификатор респондента: "/>
 			<TextBlock Text="{Binding MainObservation.RespondentId}"/>
 			<TextBlock Margin="10 0 0 0" Text="Предприятие: "/>
 			<TextBlock Text="{Binding MainObservation.City}"/>
-			<TextBlock Margin="10 0 0 0" Text="Время начала:"/>
-			<TextBox Text="{Binding GeneralTime, StringFormat='{}{0:HH:mm:ss}'}"/>
 		</StackPanel>
 
-		<!-- Левая панель: активные записи -->
+		--><!-- Левая панель: активные записи --><!--
 		<DockPanel x:Name="LeftDockPanel" Grid.Column="1" Grid.Row="1" Background="DarkGray">
 			<Grid>
 				<Grid.RowDefinitions>
@@ -114,12 +100,12 @@
 													LostFocus="JobCodeTextBox_OnLostFocus"
 													Text="{Binding Entry.JobCode, UpdateSourceTrigger=PropertyChanged}"/>
 
-													<!-- Command="{Binding ElementName=MyItems,  Path=DataContext.UserSelectedCommand}"
-														 CommandParameter="{Binding}-->
+													--><!-- Command="{Binding ElementName=MyItems,  Path=DataContext.UserSelectedCommand}"
+														 CommandParameter="{Binding}--><!--
 
 													<TextBlock Grid.Column="3" Text="{Binding Entry.StartTime}"/>
-													<Button Grid.Column="4"  Classes.accept="True" Content="{Binding BtnText}" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.ChangeTimerCommand}" CommandParameter="{Binding}"/>
-													<Button Grid.Column="5" Content="Сохранить" Margin="10 0" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.EndTimerCommand}" CommandParameter="{Binding}"/>
+													--><!--<Button Grid.Column="4"  Classes.accept="True" Content="{Binding BtnText}" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.ChangeTimerCommand}" CommandParameter="{Binding}"/>
+													<Button Grid.Column="5" Content="Сохранить" Margin="10 0" Command="{Binding ElementName=LeftDockPanel,  Path=DataContext.EndTimerCommand}" CommandParameter="{Binding}"/>--><!--
 													<TextBlock Grid.Column="6" Text="{Binding Timer.StrTimer}"/>
 													<CheckBox Grid.Column="7" IsChecked="{Binding IsSavePrepareJob}"/>
 													<Button Grid.Column="8" Content="🖊️" Margin="10 0" Command="{Binding CommentVisibilityCommand}"/>
@@ -145,7 +131,7 @@
 							Background="DarkGray"
 							ResizeDirection="Rows" />
 
-						<!--Заготовка для задач-->
+						--><!--Заготовка для задач--><!--
 						<ScrollViewer Grid.Row="2">
 							<StackPanel>
 								<ItemsControl ItemsSource="{Binding ListPreparation}">
@@ -190,8 +176,8 @@
 													Text="{Binding Entry.JobCode, UpdateSourceTrigger=PropertyChanged}"/>
 
 
-													<Button Grid.Column="3" Content="Добавить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.AddTaskForomListPreparationCommand}" CommandParameter="{Binding}"/>
-													<Button Grid.Column="4" Classes="Red" Content="Удалить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.DeliteFromListPreparationCommand}" CommandParameter="{Binding}"/>
+													--><!--<Button Grid.Column="3" Content="Добавить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.AddTaskForomListPreparationCommand}" CommandParameter="{Binding}"/>
+													<Button Grid.Column="4" Classes="Red" Content="Удалить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.DeliteFromListPreparationCommand}" CommandParameter="{Binding}"/>--><!--
 													
 												</Grid>
 											</StackPanel>
@@ -229,7 +215,7 @@
 		Background="DarkGray"
 		ResizeDirection="Columns" />
 
-		<!-- Правая панель: сохранённые записи -->
+		--><!-- Правая панель: сохранённые записи --><!--
 		<DockPanel Grid.Column="3" Grid.Row="1" Background="DarkGray">
 			<Border>
 				<ScrollViewer>
@@ -249,6 +235,7 @@
 								<DataGridTextColumn Header="Что наблюдается" Binding="{Binding JobName}" />
 								<DataGridTextColumn Header="Текущее время" Binding="{Binding EndTime}" />
 								<DataGridTextColumn Header="Продолжительность мин" Binding="{Binding JobSample}" />
+								<DataGridTextColumn Header="Индекс или код" Binding="{Binding JobCode}" />
 								<DataGridCheckBoxColumn Header="Уточнить время" Binding="{Binding IsTimedCorrectly}" />
 							</DataGrid.Columns>
 
@@ -265,5 +252,6 @@
 				</ScrollViewer>
 			</Border>
 		</DockPanel>
-	</Grid>
-</Window>
+	</Grid>-->
+
+</UserControl>

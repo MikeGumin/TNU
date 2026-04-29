@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using TNU.Core.Models;
 using TNU.Core.Services;
@@ -8,8 +8,7 @@ namespace TNU.Core.ViewModels.MainWindow;
 
 public partial class MainWindowViewModel
 {
-    private readonly IWindowService _windowService;
-    public Observation ObservationElement { get; set; }
+    public Observation ObservationElement { get; set; } = new Observation();
 
     public MainWindowViewModel()
     {
@@ -34,6 +33,6 @@ public partial class MainWindowViewModel
 
         frdWindow.Show();
 
-        _windowService.CloseCurrentWindow();
+        _windowService.CloseCurrentWindow(frdWindow);
     }
 }

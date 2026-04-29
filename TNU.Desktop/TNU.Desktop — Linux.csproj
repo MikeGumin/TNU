@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+	<OutputType>WinExe</OutputType>
+        <Nullable>enable</Nullable>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+
+	<!-- dotnet publish TNU.Desktop/TNU.Desktop.csproj -c Release -r linux-x64 -->
+
+	<!-- Настройки для Release под Linux -->
+  	<TargetFramework Condition="'$(Configuration)' == 'Release'">net9.0</TargetFramework>
+  	<RuntimeIdentifier Condition="'$(Configuration)' == 'Release'">linux-x64</RuntimeIdentifier>
+  
+  	<SelfContained Condition="'$(Configuration)' == 'Release'">true</SelfContained>
+  	<PublishSingleFile Condition="'$(Configuration)' == 'Release'">true</PublishSingleFile>
+ 	<IncludeNativeLibrariesForSelfExtract Condition="'$(Configuration)' == 'Release'">true</IncludeNativeLibrariesForSelfExtract>
+  	<PublishReadyToRun Condition="'$(Configuration)' == 'Release'">true</PublishReadyToRun>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia.Desktop" Version="11.3.12" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../TNU.Core/TNU.Core.csproj" />
+    </ItemGroup>
+</Project>
