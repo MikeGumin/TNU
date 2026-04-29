@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -127,7 +127,7 @@ public partial class FrdWindowViewModel: ViewModelBase
 
         mainWindow.Show();
 
-        _windowService.CloseCurrentWindow();
+        _windowService.CloseCurrentWindow(mainWindow);
     }
     
     public event PropertyChangedEventHandler? PropertyChanged;

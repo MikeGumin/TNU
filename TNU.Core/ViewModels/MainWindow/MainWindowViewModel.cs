@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -60,11 +61,14 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     #region Readonly поля и кнструктор
 
     public Window? MainWindow { get; set; }
+    public UserControl? MainUserControl { get; set; }
 
     private readonly IEntryExportService _entryExportService;
     private readonly IFinishedEntryService _finishedEntryService;
     private readonly IFileDialogService _fileDialogService;
+    private readonly IWindowService _windowService;
     private readonly ErrorMessageHelper _errorMessageHelper;
+
 
     public MainWindowViewModel(
         IEntryExportService entryExportService,
@@ -143,6 +147,7 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
             if (!GeneralUpdateTimer.IsEnabled)
             {
                 SystemStatic.GeneralStopwatch.Start();
+               // SystemStatic.GeneralStopwatch2 = DateTime.Now;
                 GeneralUpdateTimer.StartTimer();
             }
         }
