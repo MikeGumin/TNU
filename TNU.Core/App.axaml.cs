@@ -35,6 +35,7 @@ public partial class App : Application
             var collection = new ServiceCollection();
             collection.AddSingleton<ViewModels.MainWindow.MainWindowViewModel>();
             collection.AddSingleton<LoginWindowViewModel>();
+            collection.AddSingleton<AllFrdWindowViewModel>();
             collection.AddSingleton<FrdWindowViewModel>();
             collection.AddSingleton<ErrorMessageHelper>();
             collection.AddSingleton<OperationResult>();
