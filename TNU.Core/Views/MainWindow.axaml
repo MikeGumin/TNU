@@ -75,7 +75,7 @@
 										<DataTemplate>
 											<StackPanel
 											x:Name="JobEntryStackPanel">
-												<Grid ColumnDefinitions="30, *, 60, Auto, Auto, Auto, 100, Auto, Auto">
+												<Grid ColumnDefinitions="30, *, Auto, Auto, Auto, 100, Auto, Auto">
 
 													<TextBlock
 													Grid.Column="0"
@@ -103,16 +103,6 @@
 															</DataTemplate>
 														</AutoCompleteBox.ItemTemplate>
 													</AutoCompleteBox>
-
-													<TextBox
-													Grid.Column="2"
-													Foreground="Black"
-													Background="Gray"
-													IsVisible="False"
-													x:Name="JobCodeTextBox"
-													GotFocus="JobCodeTextBox_OnGotFocus"
-													LostFocus="JobCodeTextBox_OnLostFocus"
-													Text="{Binding Entry.JobCode, UpdateSourceTrigger=PropertyChanged}"/>
 
 													<!-- Command="{Binding ElementName=MyItems,  Path=DataContext.UserSelectedCommand}"
 														 CommandParameter="{Binding}-->
@@ -152,7 +142,7 @@
 									<ItemsControl.ItemTemplate>
 										<DataTemplate>
 											<StackPanel>
-												<Grid ColumnDefinitions="30, *, 60, Auto, Auto">
+												<Grid ColumnDefinitions="30, *, Auto, Auto">
 
 													<CheckBox
 														Grid.Column="0"
@@ -178,17 +168,6 @@
 															</DataTemplate>
 														</AutoCompleteBox.ItemTemplate>
 													</AutoCompleteBox>
-
-													<TextBox
-													Grid.Column="2"
-													Foreground="Black"
-													Background="Gray"
-													IsVisible="False"
-													x:Name="JobCodeTextBox"
-													GotFocus="JobCodeTextBox_OnGotFocus"
-													LostFocus="JobCodeTextBox_OnLostFocus"
-													Text="{Binding Entry.JobCode, UpdateSourceTrigger=PropertyChanged}"/>
-
 
 													<Button Grid.Column="3" Content="Добавить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.AddTaskForomListPreparationCommand}" CommandParameter="{Binding}"/>
 													<Button Grid.Column="4" Classes="Red" Content="Удалить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.DeliteFromListPreparationCommand}" CommandParameter="{Binding}"/>

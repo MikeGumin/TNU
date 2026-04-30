@@ -11,15 +11,16 @@ namespace TNU.Core.ViewModels
     public partial class LoginWindowViewModel : ViewModelBase
     {
         private readonly IWindowService _windowService;
+        private readonly IFileOpenerService _fileOpenerService;
         public Observation ObservationElement { get; set; } = new Observation();
 
-        public LoginWindowViewModel(IWindowService windowService)
-        {
-            _windowService = windowService;
-        }
         public LoginWindowViewModel()
         {
-            _windowService = new WindowService();
+        }
+        public LoginWindowViewModel(IWindowService windowService, IFileOpenerService fileOpenerService)
+        {
+            _windowService = windowService;
+            _fileOpenerService = fileOpenerService;
         }
 
         [RelayCommand]
@@ -33,8 +34,7 @@ namespace TNU.Core.ViewModels
         [RelayCommand]
         public void OpenFile()
         {
-            FileOpenerServise file = new FileOpenerServise();
-            file.OpenFile();
+            _fileOpenerService.OpenFile();
         }
 
         private void OnLoginSuccess()

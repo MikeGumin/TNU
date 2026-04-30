@@ -1,15 +1,18 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using CommunityToolkit.Mvvm.Input;
 using TNU.Core.Models;
 using TNU.Core.Repository;
 using TNU.Core.Services;
 using TNU.Core.Services.CloseWindow;
+using TNU.Core.Services.FileOpener;
 
 namespace TNU.Core.ViewModels;
 
-public class AllFrdWindowViewModel : ViewModelBase
+public partial class AllFrdWindowViewModel : ViewModelBase
 {
     private readonly IWindowService _windowService;
+    private readonly IFileOpenerService _fileOpenerService;
     public Observation ObservationElement { get; set; } = new Observation();
     private Observation _mainObservation;
     public Observation MainObservation
@@ -26,9 +29,16 @@ public class AllFrdWindowViewModel : ViewModelBase
         }
     }
 
-    public AllFrdWindowViewModel()
+    public AllFrdWindowViewModel(IFileOpenerService fileOpenerService)
     {
+        _fileOpenerService = fileOpenerService;
         _windowService = new WindowService();
+    }
+
+    [RelayCommand]
+    private void OpenFrdFile(FrdModel frd)
+    {
+        _fileOpenerService.OpenFrdFile(frd.FileName);
     }
     
     public event PropertyChangedEventHandler? PropertyChanged;

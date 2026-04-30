@@ -10,8 +10,10 @@ using TNU.Core.Services;
 using TNU.Core.Services.CloseWindow;
 using TNU.Core.Services.EntryExport;
 using TNU.Core.Services.FileDialog;
+using TNU.Core.Services.FileOpener;
 using TNU.Core.Services.FinishedEntry;
 using TNU.Core.ViewModels;
+using TNU.Core.Views.DialogViews;
 using LoginWindow = TNU.Core.Views.LoginWindow;
 using LoginWindowViewModel = TNU.Core.ViewModels.LoginWindowViewModel;
 
@@ -34,6 +36,7 @@ public partial class App : Application
         {
             var collection = new ServiceCollection();
             collection.AddSingleton<ViewModels.MainWindow.MainWindowViewModel>();
+            collection.AddSingleton<ConfirmDialog>();
             collection.AddSingleton<LoginWindowViewModel>();
             collection.AddSingleton<AllFrdWindowViewModel>();
             collection.AddSingleton<FrdWindowViewModel>();
@@ -44,6 +47,7 @@ public partial class App : Application
             collection.AddSingleton<IWindowService, WindowService>();
 
             collection.AddScoped<IEntryExportService, EntryExportService>();
+            collection.AddScoped<IFileOpenerService, FileOpenerService>();
             collection.AddScoped<IFinishedEntryService, FinishedEntryService>();
 
             // Передаём Func — TopLevel будет получен позже, в момент вызова

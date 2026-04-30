@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -113,7 +114,7 @@ public partial class FrdWindowViewModel: ViewModelBase
             }
         }
     }
-    
+
     /// <summary>
     /// Метод закрытия окна ФРД и возвращения к основному окну приложения 
     /// </summary>
@@ -138,7 +139,7 @@ public partial class FrdWindowViewModel: ViewModelBase
     [RelayCommand]
     private void GoToListFrd()
     {
-        var files = Directory.EnumerateFiles(@".", "output*", SearchOption.AllDirectories);
+        var files = Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory, "output*", SearchOption.AllDirectories);
         
         FrdRepository.FinishedFrd.Clear();
 
@@ -148,6 +149,7 @@ public partial class FrdWindowViewModel: ViewModelBase
             {
                 Id = frdId++,
                 FileName = Path.GetFileName(file),
+                CreatedAt =  File.GetCreationTime(file),
             });
         }
         
@@ -163,9 +165,9 @@ public partial class FrdWindowViewModel: ViewModelBase
 
         frdWindow.Show();
 
-        _windowService.CloseCurrentWindow();
+        _windowService.CloseCurrentWindow(frdWindow);
     }
-    
+
     public event PropertyChangedEventHandler? PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {

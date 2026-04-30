@@ -1,13 +1,30 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+﻿using Avalonia.Controls;
+using Avalonia.Interactivity;
+using CommunityToolkit.Mvvm.Input;
 
 namespace TNU.Core.Views.DialogViews;
 
 public partial class ConfirmDialog : Window
 {
-    public ConfirmDialog()
+    public bool Result { get; private set; }
+
+    public ConfirmDialog(string message)
     {
         InitializeComponent();
+        MessageText.Text = message;
+        DataContext = this;
+    }
+    
+    
+    private void OnYes_Click(object sender, RoutedEventArgs e)
+    {
+        Result = true;
+        Close();
+    }
+
+    private void OnNo_Click(object sender, RoutedEventArgs e)
+    {
+        Result = false;
+        Close();
     }
 }
