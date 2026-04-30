@@ -1,11 +1,13 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using TNU.Core.Models;
 using TNU.Core.Repository;
 using TNU.Core.Services;
 using TNU.Core.Services.CloseWindow;
 using TNU.Core.Services.FileOpener;
+using TNU.Core.ViewModels.MainWindow;
 
 namespace TNU.Core.ViewModels;
 
@@ -40,6 +42,28 @@ public partial class AllFrdWindowViewModel : ViewModelBase
     {
         _fileOpenerService.OpenFrdFile(frd.FileName);
     }
+    
+    /// <summary>
+    /// Метод закрытия списка ФРД и возвращения к окну фрд 
+    /// </summary>
+    [RelayCommand]
+    private void CloseAllFrdWindow()
+    {
+        var frdWindow = new Views.FrdWindow()
+        {
+            DataContext = App.Services.GetRequiredService<FrdWindowViewModel>()
+        };
+
+        if (frdWindow.DataContext is FrdWindowViewModel a)
+        {
+            a.MainObservation = ObservationElement;
+        }
+
+        frdWindow.Show();
+
+        _windowService.CloseCurrentWindow(frdWindow);
+    }
+    
     
     public event PropertyChangedEventHandler? PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
