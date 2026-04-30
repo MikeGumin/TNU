@@ -11,7 +11,7 @@ namespace TNU.Core.Services
             var obj = new JobEntryClock();
             obj.Entry.Id = JobId++;
             obj.Entry.JobDate = DateTime.Now;
-            obj.Entry.StartDateTime = DateTime.Now;
+
             obj.Entry.JobName = jobName;
 
             GeneralUpdateTimer.AddEvent(obj);
