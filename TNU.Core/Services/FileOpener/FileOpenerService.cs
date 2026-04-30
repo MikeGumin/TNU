@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace TNU.Core.Services.FileOpener
 {
-    public class FileOpenerServise
+    public class FileOpenerService : IFileOpenerService
     {
         public void OpenFile()
         {
@@ -23,6 +23,8 @@ namespace TNU.Core.Services.FileOpener
         {
             // длаем из относительного пути полный 
             string fullPath = Path.Combine(AppContext.BaseDirectory, fileName);
+            
+            Console.WriteLine(fullPath);
 
             if (File.Exists(fullPath))
             {

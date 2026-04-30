@@ -1,3 +1,5 @@
+using System;
+
 namespace TNU.Core.Models;
 
 public class FrdModel
@@ -11,4 +13,9 @@ public class FrdModel
     /// Наименование файла
     /// </summary>
     public required string FileName { get; set; } 
+    
+    /// <summary>
+    /// Дата создания фрд
+    /// </summary>
+    public required DateTime CreatedAt { get; set; }
 }

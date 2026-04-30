@@ -4,13 +4,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:repository1="clr-namespace:TNU.Core.Repository"
         xmlns:models="clr-namespace:TNU.Core.Models"
+        xmlns:viewModels="clr-namespace:TNU.Core.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="TNU.Core.Views.AllFrdWindow"
         Title="AllFrdWindow">
-    <DockPanel Background="DarkGray">
+    <DockPanel x:Name="FrdDockPanel" x:DataType="viewModels:AllFrdWindowViewModel" Background="DarkGray">
                 <Border>
                         <ScrollViewer>
-                                <StackPanel>
+                                <StackPanel >
                                         <TextBlock Text="Список ФРД на устройстве"
                                                    FontWeight="Bold"
                                                    Margin="5"
@@ -25,12 +26,24 @@
                                                         <DataGridTextColumn Header="№"  
                                                                             Binding="{Binding Path=Id}"
                                                                             x:DataType="models:FrdModel" />
-                                                        <DataGridTextColumn Header="Наименование файла"
-                                                                            Width="*"
-                                                                            Binding="{Binding FileName}"
+                                                        <DataGridTemplateColumn 
+                                                                Header="Наименование файла"
+                                                                Width="*">
+                                                                <DataGridTemplateColumn.CellTemplate>
+                                                                        <DataTemplate x:DataType="models:FrdModel">
+                                                                                <Button 
+                                                                                        HorizontalAlignment="Stretch"
+                                                                                        Content="{Binding FileName}"
+                                                                                        Command="{Binding ElementName=FrdDockPanel,  Path=DataContext.OpenFrdFileCommand}"
+                                                                                        CommandParameter="{Binding}"
+                                                                                        />
+                                                                        </DataTemplate>
+                                                                </DataGridTemplateColumn.CellTemplate>
+                                                        </DataGridTemplateColumn>
+                                                        <DataGridTextColumn Header="Дата создания"  
+                                                                            Binding="{Binding Path=CreatedAt}"
                                                                             x:DataType="models:FrdModel" />
                                                 </DataGrid.Columns>
-
                                         </DataGrid>
                                 </StackPanel>
                         </ScrollViewer>
