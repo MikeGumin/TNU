@@ -45,8 +45,17 @@
                                                                             x:DataType="models:FrdModel" />
                                                 </DataGrid.Columns>
                                         </DataGrid>
+                                        
+                                        <StackPanel
+                                                HorizontalAlignment="Center"
+                                                Orientation="Horizontal">
+                                                <Button Content="Назад"
+                                                        Margin="0,10,10,10"
+                                                        Command="{Binding CloseAllFrdWindowCommand}" />
+                                        </StackPanel>
                                 </StackPanel>
                         </ScrollViewer>
                 </Border>
+            
         </DockPanel>
 </Window>
