@@ -44,12 +44,6 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         {
             SystemStatic.GeneralTime = value;
             OnPropertyChanged();
-
-            if (MainObservation != null)
-                foreach (JobEntryClock jobClock in MainObservation.JobEntriesActiv)
-                {
-                    jobClock.Entry.StartTime = "";
-                }
         }
     }
 

@@ -13,8 +13,6 @@ namespace TNU.Core.Models;
 public partial class JobEntry : NotifyChangedModel
 {
 
-    public DateTime StartDateTime { get; set; }
-
     /// <summary>
     /// Идентификатор
     /// </summary>
@@ -70,7 +68,7 @@ public partial class JobEntry : NotifyChangedModel
     private string startTime = SystemStatic.GeneralStopwatch.Elapsed.ToString(@"hh\:mm\:ss");
     public string StartTime
     {
-        get => (SystemStatic.GeneralTime - StartDateTime).ToString(@"hh\:mm\:ss"); 
+        get => startTime; 
         set
         {
             startTime = value;
