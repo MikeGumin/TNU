@@ -18,6 +18,17 @@ namespace TNU.Core.Services.FileOpener
                 ReaderFile(fullPath);
             }
         }
+        
+        public void OpenFrdFile(string fileName)
+        {
+            // длаем из относительного пути полный 
+            string fullPath = Path.Combine(AppContext.BaseDirectory, fileName);
+
+            if (File.Exists(fullPath))
+            {
+                ReaderFile(fullPath);
+            }
+        }
 
          public void OpenExploier()
         {
