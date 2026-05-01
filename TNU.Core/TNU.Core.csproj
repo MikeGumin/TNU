@@ -31,4 +31,9 @@
             <DependentUpon>EditEntryWindow.axaml</DependentUpon>
         </Compile>
     </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Fonts\RussianRail G Pro\RussianRail G Pro Regular_0.otf" />
+        <AvaloniaResource Include="Fonts\RussianRail G Pro\RussianRail G Pro Regular_0.otf" />
+    </ItemGroup>
 </Project>

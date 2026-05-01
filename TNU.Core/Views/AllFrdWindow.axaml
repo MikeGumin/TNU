@@ -8,54 +8,70 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="TNU.Core.Views.AllFrdWindow"
         Title="AllFrdWindow">
-    <DockPanel x:Name="FrdDockPanel" x:DataType="viewModels:AllFrdWindowViewModel" Background="DarkGray">
-                <Border>
-                        <ScrollViewer>
-                                <StackPanel >
-                                        <TextBlock Text="Список ФРД на устройстве"
-                                                   FontWeight="Bold"
-                                                   Margin="5"
-                                                   HorizontalAlignment="Center"/>
+    
+    <Window.Styles>
+        <StyleInclude Source="/Styles/MainStyles.axaml"></StyleInclude>
+    </Window.Styles>
+    
+    <DockPanel x:Name="FrdDockPanel" x:DataType="viewModels:AllFrdWindowViewModel" Background="#F8F8F8">
+        <Border Padding="10">
+            <Grid RowDefinitions="Auto, *, Auto" RowSpacing="10">
+                
+                <TextBlock Grid.Row="0"
+                           Text="Список ФРД на устройстве"
+                           FontWeight="Bold"
+                           Margin="5"
+                           HorizontalAlignment="Center"
+                           Foreground="#8D8D8D"/>
+                
+                <DataGrid Grid.Row="1"
+                          ItemsSource="{x:Static repository1:FrdRepository.FinishedFrd}"
+                          AutoGenerateColumns="False"
+                          GridLinesVisibility="All"
+                          BorderThickness="1"
+                          Padding="5"
+                          BorderBrush="#8D8D8D"
+                          Background="#FFFFFF"
+                          Foreground="Black"
+                          CornerRadius="5"
+                          CanUserResizeColumns="True"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Auto">
 
-                                        <DataGrid ItemsSource="{x:Static repository1:FrdRepository.FinishedFrd}"
-                                                  AutoGenerateColumns="False"
-                                                  GridLinesVisibility="All"
-                                                  BorderThickness="1" BorderBrush="Gray">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="№"
+                                            Binding="{Binding Path=Id}"
+                                            x:DataType="models:FrdModel"/>
 
-                                                <DataGrid.Columns>
-                                                        <DataGridTextColumn Header="№"  
-                                                                            Binding="{Binding Path=Id}"
-                                                                            x:DataType="models:FrdModel" />
-                                                        <DataGridTemplateColumn 
-                                                                Header="Наименование файла"
-                                                                Width="*">
-                                                                <DataGridTemplateColumn.CellTemplate>
-                                                                        <DataTemplate x:DataType="models:FrdModel">
-                                                                                <Button 
-                                                                                        HorizontalAlignment="Stretch"
-                                                                                        Content="{Binding FileName}"
-                                                                                        Command="{Binding ElementName=FrdDockPanel,  Path=DataContext.OpenFrdFileCommand}"
-                                                                                        CommandParameter="{Binding}"
-                                                                                        />
-                                                                        </DataTemplate>
-                                                                </DataGridTemplateColumn.CellTemplate>
-                                                        </DataGridTemplateColumn>
-                                                        <DataGridTextColumn Header="Дата создания"  
-                                                                            Binding="{Binding Path=CreatedAt}"
-                                                                            x:DataType="models:FrdModel" />
-                                                </DataGrid.Columns>
-                                        </DataGrid>
-                                        
-                                        <StackPanel
-                                                HorizontalAlignment="Center"
-                                                Orientation="Horizontal">
-                                                <Button Content="Назад"
-                                                        Margin="0,10,10,10"
-                                                        Command="{Binding CloseAllFrdWindowCommand}" />
-                                        </StackPanel>
-                                </StackPanel>
-                        </ScrollViewer>
-                </Border>
-            
-        </DockPanel>
+                        <DataGridTemplateColumn Header="Наименование файла" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate x:DataType="models:FrdModel">
+                                    <Button HorizontalAlignment="Stretch"
+                                            Content="{Binding FileName}"
+                                            Command="{Binding ElementName=FrdDockPanel, Path=DataContext.OpenFrdFileCommand}"
+                                            CommandParameter="{Binding}"
+                                            Foreground="White"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTextColumn Header="Время окн."
+                                            Binding="{Binding Path=CreatedAt}"
+                                            x:DataType="models:FrdModel"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                
+                <StackPanel Grid.Row="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0 0 0 10">
+
+                    <Button Content="Назад"
+                            Margin="0 0 10 0"
+                            Command="{Binding CloseAllFrdWindowCommand}"/>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+    </DockPanel>
 </Window>
