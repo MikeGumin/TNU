@@ -14,7 +14,11 @@
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
     </Application.Styles>
 
-    <Application.Resources>
-        <FontFamily x:Key="ContentControlThemeFontFamily">Inter, Segoe UI, Arial, sans-serif</FontFamily>
-    </Application.Resources>
+     <Application.Resources>
+         <ResourceDictionary>
+             <FontFamily x:Key="RussianRailFont">
+                 avares://TNU.Core/Fonts/RussianRail G Pro#RussianRail G Pro
+             </FontFamily>
+         </ResourceDictionary>
+     </Application.Resources>
 </Application>
