@@ -7,7 +7,7 @@ namespace TNU.Core.Models
     {
 
         public bool IsSavePrepareJob { get; set; }
-        public string BtnText { get; private set; } = "Stop";
+        public string BtnText { get; private set; } = "Стоп";
 
         private bool _isVisible = false;
         public bool IsVisible
@@ -26,10 +26,10 @@ namespace TNU.Core.Models
 
         public void ChangeBtnText()
         {
-            if (BtnText == "Stop")
-                BtnText = "Start";
+            if (BtnText == "Стоп")
+                BtnText = "Старт";
             else
-                BtnText = "Stop";
+                BtnText = "Стоп";
 
             OnPropertyChanged("BtnText");
         }

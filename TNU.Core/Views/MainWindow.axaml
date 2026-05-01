@@ -48,13 +48,13 @@
 
 		<!--Статчные поля-->
 		<StackPanel Classes="Header" Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3">
-			<TextBlock Text="Дата: "/>
-			<TextBox BorderBrush="#972214" Width="100" Background="#972214" Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}'}"/>
-			<TextBlock Margin="15 0 0 0" Text="Идентификатор респондента: "/>
+			<TextBlock Classes="HeaderTextBlock" Text="Дата: "/>
+			<TextBox Classes="HeaderTextBox" BorderBrush="{StaticResource MainRed}" Width="100" Background="{StaticResource MainRed}" Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}'}"/>
+			<TextBlock Classes="HeaderTextBlock" Margin="15 0 0 0" Text="Идентификатор респондента: "/>
 			<TextBlock Text="{Binding MainObservation.RespondentId}"/>
-			<TextBlock Margin="10 0 0 0" Text="Предприятие: "/>
+			<TextBlock Classes="HeaderTextBlock" Margin="10 0 0 0" Text="Предприятие: "/>
 			<TextBlock Text="{Binding MainObservation.City}"/>
-			<TextBlock Margin="10 0 0 0" Text="Время начала:"/>
+			<TextBlock Classes="HeaderTextBlock" Margin="10 0 0 0" Text="Время начала:"/>
 			<TextBox Text="{Binding GeneralTime, StringFormat='{}{0:HH:mm:ss}'}"/>
 			<Button Content="Завершить ФРД" Command="{Binding OpenFrdWindowCommand}" />
 		</StackPanel>
@@ -115,6 +115,8 @@
 														                CommandParameter="{Binding}"/>
 														        <Button Classes.accept="True"
 														                Margin="10 0 0 0"
+														                Width="80"
+														                HorizontalContentAlignment="Center"
 														                Content="{Binding BtnText}"
 														                Command="{Binding ElementName=LeftDockPanel, Path=DataContext.ChangeTimerCommand}"
 														                CommandParameter="{Binding}"

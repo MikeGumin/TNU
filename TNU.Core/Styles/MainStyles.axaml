@@ -2,13 +2,13 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 	<Styles.Resources>
-		<SolidColorBrush x:Key="MyRed">#972214</SolidColorBrush>
+		<!-- <SolidColorBrush x:Key="MyRed">#972214</SolidColorBrush>  -->
 		<SolidColorBrush x:Key="MainRed">#E21A1A</SolidColorBrush>
 
 		<!--bg-->
 		<SolidColorBrush x:Key="Page">#F8F8F8</SolidColorBrush>
 		<SolidColorBrush x:Key="Form">#FFFFFF</SolidColorBrush>
-		<SolidColorBrush x:Key="Card">#FFFFFF</SolidColorBrush>
+		<SolidColorBrush x:Key="MainWhite">#FFFFFF</SolidColorBrush>
 
 		<!--Font-->
 		<SolidColorBrush x:Key="MainFont">#000000</SolidColorBrush>
@@ -33,7 +33,7 @@
 
 	<!--Button-->
 	<Style Selector="Button">
-		<Setter Property="Background" Value="{StaticResource MyRed}"/>
+		<Setter Property="Background" Value="{StaticResource MainRed}"/>
 		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
 		<Setter Property="Foreground" Value="{StaticResource Form}"/>
 	</Style>
@@ -69,6 +69,16 @@
 	<Style Selector="TextBlock:pointerover">
 		<Setter Property="Foreground" Value="{StaticResource MainFont}"/>
 	</Style>
+	
+	<Style Selector="TextBlock.HeaderTextBlock">
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="Foreground" Value="{StaticResource MainWhite}"/>
+	</Style>
+	
+	<Style Selector="TextBlock.HeaderTextBox">
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="Foreground" Value="{StaticResource MainWhite}"/>
+	</Style>
 
 	<!--Поля-->
 	<Style Selector="TextBox">
@@ -101,7 +111,7 @@
 
 
 	<Style Selector="StackPanel.Header">
-		<Setter Property="Background" Value="{StaticResource MyRed}"/>
+		<Setter Property="Background" Value="{StaticResource MainRed}"/>
 	</Style>
 
 	<Style Selector="Window">
