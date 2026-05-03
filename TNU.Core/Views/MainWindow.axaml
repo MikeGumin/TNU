@@ -5,7 +5,9 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		x:Class="TNU.Core.Views.MainWindow"
+
 		x:DataType="mainWindow:MainWindowViewModel"
+
 		xmlns:models1="clr-namespace:TNU.Core.Models"
 		xmlns:repository1="clr-namespace:TNU.Core.Repository"
 		xmlns:sysStatic="clr-namespace:TNU.Core.SystemStatic"
@@ -13,14 +15,30 @@
 		xmlns:enum="clr-namespace:TNU.Core.Models.Enum"
 		xmlns:visualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
 		xmlns:behaviors="clr-namespace:TNU.Core.Behaviors"
+		xmlns:views="clr-namespace:TNU.Core"
 		xmlns:i="using:Avalonia.Xaml.Interactivity"
-		xmlns:mainWindow="clr-namespace:TNU.Core.ViewModels.MainWindow"
 
+		xmlns:mainWindow="clr-namespace:TNU.Core.ViewModels.MainWindow"
+		
 
 		FontFamily="Segoe UI, Arial, sans-serif"
 
 		Icon="/Assets/Ricon.png"
 		Title="ТНУ">
+
+
+
+	<Window.DataTemplates>
+		<!-- Главная страница -->
+		<DataTemplate DataType="viewModels:MainPageViewModel">
+			<views:MainPageView />
+		</DataTemplate>
+
+		<!-- Страница ФРД -->
+		<DataTemplate DataType="viewModels:FrdPageViewModel">
+			<views:FrdPageView />
+		</DataTemplate>
+	</Window.DataTemplates>
 
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
@@ -34,238 +52,22 @@
 
 
 	<Grid ShowGridLines="True">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="0"/>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="5"/>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="0"/>
-		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="30"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
-		<!--Статчные поля-->
-		<StackPanel Classes="Header" Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3">
-			<TextBlock Text="Дата: "/>
-			<TextBox BorderBrush="#972214" Width="100" Background="#972214" Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}'}"/>
-			<TextBlock Margin="15 0 0 0" Text="Идентификатор респондента: "/>
-			<TextBlock Text="{Binding MainObservation.RespondentId}"/>
-			<TextBlock Margin="10 0 0 0" Text="Предприятие: "/>
-			<TextBlock Text="{Binding MainObservation.City}"/>
-			<TextBlock Margin="10 0 0 0" Text="Время начала:"/>
-			<TextBox Text="{Binding GeneralTime, StringFormat='{}{0:HH:mm:ss}'}"/>
-			<Button Content="Завершить ФРД" Command="{Binding OpenFrdWindowCommand}" />
+
+		<StackPanel Grid.Row="0" Orientation="Horizontal"  HorizontalAlignment="Center" >
+			<Button Content="Главная" Command="{Binding ShowMainPageCommand}"/>
+			<Button Content="ФРД" Command="{Binding ShowFrdPageCommand}"/>
 		</StackPanel>
 
-		<!-- Левая панель: активные записи -->
-		<DockPanel x:Name="LeftDockPanel" Grid.Column="1" Grid.Row="1" Background="#F8F8F8">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="*"/>
-					<RowDefinition Height="50"/>
-				</Grid.RowDefinitions>
-				<Border Grid.Row="0">
-					<Grid RowDefinitions="30, *">
-					<TextBlock Text="Наблюдения"
-					           FontWeight="Bold"
-					           Margin="5"
-					           HorizontalAlignment="Stretch"
-					           TextAlignment="Center"
-					           Padding="5"
-					           Background="#FFFFFF"
-					           Foreground="#8D8D8D"/>
-						
-						<ScrollViewer Grid.Row="1">
-							<StackPanel>
-								<ItemsControl ItemsSource="{Binding MainObservation.JobEntriesActiv}">
-									<ItemsControl.ItemTemplate>
-										<DataTemplate>
-											<StackPanel
-											x:Name="JobEntryStackPanel"
-											Background="#FFFFFF">
-												
-												<Border CornerRadius="5" Padding="10" Background="#F4F4F4"
-												        Margin=" 0 0 0 10">
-													
-													<StackPanel Background="#F4F4F4">
-														
-													    <DockPanel Margin="10 10 10 0" LastChildFill="False">
-														    
-													        <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Margin="0 0 10 0">
-													            <StackPanel Orientation="Horizontal">
-													                <TextBlock Text="Время добавления: " Foreground="#8D8D8D"/>
-													                <TextBlock Text="{Binding Entry.StartTime}"/>
-													            </StackPanel>
-													            <StackPanel Orientation="Horizontal">
-													                <TextBlock Text="Старт добавления: " Foreground="#8D8D8D"/>
-													                <TextBlock Text="{Binding Timer.StrTimer}"/>
-													            </StackPanel>
-													        </StackPanel>
-														    
-														    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-															    <CheckBox IsChecked="{Binding IsSavePrepareJob}" />
-															    <TextBlock Foreground="#8D8D8D" Text="Уточнить&#x0a;время" TextAlignment="Left"/>
-														    </StackPanel>
-														    
-													        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-														        <Button Content="Сохранить"
-														                Command="{Binding ElementName=LeftDockPanel, Path=DataContext.EndTimerCommand}"
-														                CommandParameter="{Binding}"/>
-														        <Button Classes.accept="True"
-														                Margin="10 0 0 0"
-														                Content="{Binding BtnText}"
-														                Command="{Binding ElementName=LeftDockPanel, Path=DataContext.ChangeTimerCommand}"
-														                CommandParameter="{Binding}"
-														                Background="#8D8D8D"/>
-													        </StackPanel>
-													    </DockPanel>
-														
-													    <DockPanel Margin="10 5 10 0" LastChildFill="True">
-														    
-													        <Button DockPanel.Dock="Right"
-													                Content="Комментарий"
-													                Margin="10 0 0 0"
-													                Command="{Binding CommentVisibilityCommand}"/>
-													        
-													        <AutoCompleteBox
-													            x:Name="JobNameTextBox"
-													            Text="{Binding Entry.JobName}"
-													            ItemsSource="{x:Static repository1:JobNameRepository.JobNameList}"
-													            FilterMode="Contains"
-													            MinimumPrefixLength="1"
-													            IsTextCompletionEnabled="True"
-													            BorderBrush="#8D8D8D"
-													            BorderThickness="2">
-														        <i:Interaction.Behaviors>
-													                <behaviors:AddNewJobBehavior/>
-													            </i:Interaction.Behaviors>
-													            <AutoCompleteBox.ItemTemplate>
-													                <DataTemplate x:DataType="enum:JobTitleEnum">
-													                    <TextBlock Text="{Binding Name}" Foreground="White" FontSize="14" Padding="4"/>
-													                </DataTemplate>
-													            </AutoCompleteBox.ItemTemplate>
-													        </AutoCompleteBox>
+		<ContentControl Grid.Row="1"
+		Content="{Binding SelectedPageItem}"
+		HorizontalContentAlignment="Stretch"
+		VerticalContentAlignment="Stretch"/>
 
-													    </DockPanel>
-														
-													    <DockPanel x:Name="JobEntryDockPanel" IsVisible="{Binding IsVisible}" Margin="10 5">
-													        <TextBlock DockPanel.Dock="Left" Text="Комментарий: "/>
-													        <TextBox Text="{Binding Entry.Description}" BorderBrush="#8D8D8D"/>
-													    </DockPanel>
 
-													</StackPanel>
-												</Border>
-												
-												
-
-												<!-- Command="{Binding ElementName=MyItems,  Path=DataContext.UserSelectedCommand}"
-													 CommandParameter="{Binding}-->
-												
-												
-											</StackPanel>
-
-										</DataTemplate>
-									</ItemsControl.ItemTemplate>
-								</ItemsControl>
-
-							</StackPanel>
-						</ScrollViewer>
-					</Grid>
-				</Border>
-
-				<Grid Grid.Row="1" >
-					<Button Classes="MainBtn"
-							Content="Добавить наблюдение"
-							HorizontalAlignment="Stretch"
-							VerticalAlignment="Bottom"
-							HorizontalContentAlignment="Center"
-							Command="{Binding AddNewTaskCommand}" />
-				</Grid>
-			</Grid>
-		</DockPanel>
-
-		<GridSplitter
-		Grid.Row="1"
-		Grid.Column="2"
-		Background="DarkGray"
-		ResizeDirection="Columns"/>
-
-		<!-- Правая панель: сохранённые записи -->
-		<DockPanel Grid.Column="3" Grid.Row="1" Background="#F8F8F8">
-			<Grid RowDefinitions="30, *, 50">
-			<TextBlock Text="Заготовки"
-			           FontWeight="Bold"
-			           Margin="5"
-			           Padding="5"
-			           Background="#FFFFFF"
-			           Foreground="#8D8D8D"
-			           HorizontalAlignment="Stretch"
-			           TextAlignment="Center"/>
-			
-			<Border Grid.Row="1">
-				<ScrollViewer >
-					<StackPanel>
-							<StackPanel>
-								<ItemsControl ItemsSource="{Binding ListPreparation}">
-									<ItemsControl.ItemTemplate>
-										<DataTemplate>
-											<Border CornerRadius="5" Background="#FFFFFF">
-												<Grid ColumnDefinitions="30, *, Auto, Auto" Background="#F4F4F4" Margin="10 0 " ColumnSpacing="10">
-													<CheckBox Margin="10 5 0 5"
-														Grid.Column="0"
-														IsChecked="{Binding IsSavePrepareJob}"
-													/>
-														
-													<AutoCompleteBox Grid.Column="1"
-													                 x:Name="JobNameTextBox"
-													                 Text="{Binding Entry.JobName}"
-													                 ItemsSource="{x:Static repository1:JobNameRepository.JobNameList}"
-													                 FilterMode="Contains"
-													                 MinimumPrefixLength="1"
-													                 IsTextCompletionEnabled="True"
-													                 BorderBrush="#8D8D8D"
-													                 BorderThickness="2"
-													                 Margin="0 5 0 5">
-														<i:Interaction.Behaviors>
-															<behaviors:AddNewJobBehavior />
-														</i:Interaction.Behaviors>
-
-														<AutoCompleteBox.ItemTemplate>
-															<DataTemplate x:DataType="enum:JobTitleEnum">
-																<TextBlock Text="{Binding Name}"
-																           FontSize="14"
-																           Padding="4"/>
-															</DataTemplate>
-														</AutoCompleteBox.ItemTemplate>
-													</AutoCompleteBox>
-
-													<Button Grid.Column="2" Content="Старт" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.AddTaskForomListPreparationCommand}" CommandParameter="{Binding}"/>
-													<Button Grid.Column="3" Classes="Gray" Content="Удалить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.DeliteFromListPreparationCommand}" CommandParameter="{Binding}"
-													        Margin="0 0 10 0"/>
-														
-												</Grid>
-											</Border>
-
-										</DataTemplate>
-									</ItemsControl.ItemTemplate>
-								</ItemsControl>
-							</StackPanel>
-					</StackPanel>
-				</ScrollViewer>
-			</Border>
-			
-			<Grid Grid.Row="2">
-				<Button
-					Content="Добавить заготовку"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Bottom"
-					HorizontalContentAlignment="Center"
-					Command="{Binding AddNewTaskForListPreparationCommand}" 
-					Classes="MainBtn"/>
-			</Grid>
-			</Grid>
-		</DockPanel>
 	</Grid>
 </Window>

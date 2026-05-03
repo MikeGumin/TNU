@@ -35,11 +35,11 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             var collection = new ServiceCollection();
-            collection.AddSingleton<ViewModels.MainWindow.MainWindowViewModel>();
+            collection.AddSingleton<ViewModels.MainPageViewModel>();
             collection.AddSingleton<ConfirmDialog>();
             collection.AddSingleton<LoginWindowViewModel>();
             collection.AddSingleton<AllFrdWindowViewModel>();
-            collection.AddSingleton<FrdWindowViewModel>();
+            collection.AddSingleton<FrdPageViewModel>();
             collection.AddSingleton<ErrorMessageHelper>();
             collection.AddSingleton<OperationResult>();
 

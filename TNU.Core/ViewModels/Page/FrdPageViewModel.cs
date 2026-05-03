@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -22,7 +22,7 @@ namespace TNU.Core.ViewModels;
 /// <summary>
 /// Логика окна с сохраненными записями за весь ФРД
 /// </summary>
-public partial class FrdWindowViewModel: ViewModelBase
+public partial class FrdPageViewModel: PageViewModelBase
 {
     private readonly IEntryExportService _entryExportService;
     private readonly IFileDialogService _fileDialogService;
@@ -33,7 +33,7 @@ public partial class FrdWindowViewModel: ViewModelBase
     
     public Window? FrdWindow { get; set; }
     
-    public FrdWindowViewModel(
+    public FrdPageViewModel(
         IEntryExportService entryExportService,
         IFileDialogService fileDialogService, 
         ErrorMessageHelper errorMessageHelper,
@@ -43,12 +43,18 @@ public partial class FrdWindowViewModel: ViewModelBase
         _fileDialogService = fileDialogService;
         _errorMessageHelper = errorMessageHelper;
         _windowService = windowService;
+
+        Title = "FrdList";
     }
-    
-    /// <summary>
-    /// Метод для экспорта завершенных задач
-    /// </summary>
-    [RelayCommand(CanExecute = nameof(CanExport))]
+    public FrdPageViewModel()
+    {
+
+    }
+
+   /// <summary>
+   /// Метод для экспорта завершенных задач
+   /// </summary>
+   [RelayCommand(CanExecute = nameof(CanExport))]
     private async Task ExportEntries()
     {
         var exportResult = await _entryExportService.CsvEntryAsync(
@@ -123,10 +129,10 @@ public partial class FrdWindowViewModel: ViewModelBase
     {
         var mainWindow = new Views.MainWindow()
         {
-            DataContext = App.Services.GetRequiredService<MainWindowViewModel>()
+            DataContext = App.Services.GetRequiredService<MainPageViewModel>()
         };
 
-        if (mainWindow.DataContext is MainWindowViewModel a)
+        if (mainWindow.DataContext is MainPageViewModel a)
         {
             a.MainObservation = ObservationElement;
         }

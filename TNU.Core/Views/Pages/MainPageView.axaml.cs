@@ -3,9 +3,11 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
 using TNU.Core.Models;
 using TNU.Core.Repository;
 using TNU.Core.Services.CsvFile;
+using TNU.Core.ViewModels;
 
 namespace TNU.Core;
 
@@ -15,13 +17,7 @@ public partial class MainPageView : UserControl
     {
         InitializeComponent();
 
-        this.Loaded += (sender, e) =>
-        {
-            if (DataContext is ViewModels.MainWindow.MainWindowViewModel vm)
-            {
-                vm.MainUserControl = this;
-            }
-        };
+        //DataContext = App.Services.GetRequiredService<MainPageViewModel>();
     }
 
     private void JobCodeTextBox_OnLostFocus(object? sender, RoutedEventArgs e)

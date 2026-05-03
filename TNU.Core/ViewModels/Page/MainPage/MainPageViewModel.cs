@@ -17,10 +17,10 @@ using TNU.Core.Services.FileDialog;
 using TNU.Core.Services.FinishedEntry;
 using EditEntryWindow = TNU.Core.Views.EditEntryWindow;
 
-namespace TNU.Core.ViewModels.MainWindow;
+namespace TNU.Core.ViewModels;
 
 
-public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
+public partial class MainPageViewModel : PageViewModelBase
 {
     /// <summary>
     /// Пааметр видимости комментария
@@ -79,7 +79,7 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     private readonly ErrorMessageHelper _errorMessageHelper;
 
 
-    public MainWindowViewModel(
+    public MainPageViewModel(
         IEntryExportService entryExportService,
         IFinishedEntryService finishedEntryService,
         IFileDialogService fileDialogService,
@@ -93,6 +93,7 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         _errorMessageHelper = errorMessageHelper;
 
         SystemStatic.GeneralStopwatch.Stop();
+        Title = "MainPage";
     }
 
     #endregion
@@ -201,8 +202,8 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         {
             TimerControlService.ChangeTimer(j);
             j.ChangeBtnText();
-            
-            
+
+
         }
     }
 
@@ -218,17 +219,20 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
         if (obj is JobEntryClock jobModel) // && jobModel.Entry.RecordStatus is RecordStatusEnum.Stop
         {
-            TimerControlService.EndTimer(jobModel);
+            if (jobModel.Entry.RecordStatus == RecordStatusEnum.Stop)
+            {
+                TimerControlService.EndTimer(jobModel);
 
-            jobModel.Entry.JobSample = jobModel.Timer.StrTimer;
-            jobModel.Entry.RecordStatus = RecordStatusEnum.Finish;
-            jobModel.Entry.IsTimedCorrectly = jobModel.IsSavePrepareJob;
+                jobModel.Entry.JobSample = jobModel.Timer.StrTimer;
+                jobModel.Entry.RecordStatus = RecordStatusEnum.Finish;
+                jobModel.Entry.IsTimedCorrectly = jobModel.IsSavePrepareJob;
 
-            _finishedEntryService.SaveEntry(new List<JobEntry>() { jobModel.Entry });
-            MainObservation.JobEntriesActiv.Remove(jobModel);
+                _finishedEntryService.SaveEntry(new List<JobEntry>() { jobModel.Entry });
+                MainObservation.JobEntriesActiv.Remove(jobModel);
 
-            ReadCsvFile.DeleteEntry(jobModel.Entry.Id.ToString(), SystemStatic.EntryFilePath);
-            ReadCsvFile.WriteJobInFile(jobModel.Entry, SystemStatic.EntryFilePath);
+                ReadCsvFile.DeleteEntry(jobModel.Entry.Id.ToString(), SystemStatic.EntryFilePath);
+                ReadCsvFile.WriteJobInFile(jobModel.Entry, SystemStatic.EntryFilePath);
+            }
         }
     }
     //----------------------------------------------------------------------------------------------------------------------
@@ -292,9 +296,5 @@ public partial class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
+
 }
