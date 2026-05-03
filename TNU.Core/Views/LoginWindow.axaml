@@ -34,7 +34,7 @@
 					
 					<TextBlock Classes="TitleLogin" Text="Авторизация" Margin="0 0 0 5" />
 					
-					<Border Background="#E21A1A" Padding="2" Margin="0 0 0 20" CornerRadius="10"/>
+					<Border Classes="BorderMain" Padding="2" Margin="0 0 0 20" CornerRadius="10"/>
 					
 					<TextBlock Text="ФИО"
 					           Foreground="Gray"
@@ -53,8 +53,7 @@
 					
 					<TextBox Classes="LoginText" Text="{Binding ObservationElement.City}"/>
 
-					<Button  Grid.Column="2" Margin="0 10 0 0" Width="250" CornerRadius="5" Command="{Binding LoginCommand}" CommandParameter="{Binding #LoginW}" Content="Начать записи"
-					         Classes="LoginBtn"/>
+					<Button  Grid.Column="2" Margin="0 10 0 0" Width="250" CornerRadius="5" Command="{Binding LoginCommand}" CommandParameter="{Binding #LoginW}" Content="Начать записи"/>
 				
 				</StackPanel>
 			</Border>

@@ -33,7 +33,7 @@ public class ErrorMessageHelper
                 Foreground = Brushes.White,
                 CornerRadius = new CornerRadius(6)
             };
-            
+
             var dialog = new Window
             {
                 Title = "Ошибка",
@@ -57,10 +57,13 @@ public class ErrorMessageHelper
                     }
                 }
             };
-            
-            closeButton.Click += (s, e) => dialog.Close();
 
-            await dialog.ShowDialog(mainWindow);
+            closeButton.Click += (s, e) => dialog.Close();
+            try
+            {
+                await dialog.ShowDialog(mainWindow);
+            }
+            catch { }
         }
     }
 }

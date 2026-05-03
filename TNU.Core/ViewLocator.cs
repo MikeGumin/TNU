@@ -12,22 +12,43 @@ namespace TNU.Core;
 [RequiresUnreferencedCode(
     "Default implementation of ViewLocator involves reflection which may be trimmed away.",
     Url = "https://docs.avaloniaui.net/docs/concepts/view-locator")]
+
 public class ViewLocator : IDataTemplate
 {
     public Control? Build(object? param)
     {
         if (param is null)
-            return null;
+            return new TextBlock { Text = "Data is null" };
 
-        var name = param.GetType().FullName!.Replace("ViewModel", "View", StringComparison.Ordinal);
-        var type = Type.GetType(name);
+        var vmFullName = param.GetType().FullName!;
 
-        if (type != null)
+        // === ИСПРАВЛЕНИЕ ===
+        // Заменяем ViewModel на View и исправляем namespace
+        var viewFullName = vmFullName
+            .Replace("ViewModel", "View", StringComparison.Ordinal)
+            .Replace(".ViewModels.", ".");   // Убираем .ViewModels. → .
+
+        var viewType = Type.GetType(viewFullName);
+
+        if (viewType != null)
         {
-            return (Control)Activator.CreateInstance(type)!;
+            var control = (Control)Activator.CreateInstance(viewType)!;
+
+            if (control.DataContext == null)
+                control.DataContext = param;
+
+            return control;
         }
 
-        return new TextBlock { Text = "Not Found: " + name };
+        // Подробная ошибка для отладки
+        return new TextBlock
+        {
+            Text = $"View not found!\n\n" +
+                   $"ViewModel: {vmFullName}\n" +
+                   $"Искал View: {viewFullName}",
+            Foreground = Avalonia.Media.Brushes.Red,
+            Margin = new Avalonia.Thickness(20)
+        };
     }
 
     public bool Match(object? data)

@@ -26,18 +26,18 @@
 		<SolidColorBrush x:Key="divider">#cecece</SolidColorBrush>
 
 	</Styles.Resources>
-	
+
 	<Style Selector="DataGrid">
 		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
 	</Style>
 
 	<!--Button-->
 	<Style Selector="Button">
-		<Setter Property="Background" Value="{StaticResource MyRed}"/>
+		<Setter Property="Background" Value="{StaticResource BtnDef}"/>
 		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
 		<Setter Property="Foreground" Value="{StaticResource Form}"/>
 	</Style>
-	
+
 	<Style Selector="Button.Gray">
 		<Setter Property="Background" Value="{StaticResource SecondFond}"/>
 		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
@@ -48,21 +48,25 @@
 		<Setter Property="Foreground" Value="{StaticResource MainFont}" />
 	</Style>
 
-	 <Style Selector="Button:pointerover /template/ ContentPresenter">
-	 	<Setter Property="Background" Value="{StaticResource BtnHover}" />
-	 	<Setter Property="Foreground" Value="{StaticResource MainFont}" />
-	 </Style>
+	<Style Selector="Button:pointerover /template/ ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource BtnHover}" />
+		<Setter Property="Foreground" Value="{StaticResource MainFont}" />
+	</Style>
 
 	<!-- Стиль когда кнопка нажимается -->
-	 <Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
-	 	<Setter Property="Background" Value="{StaticResource BtnHover}" />
-	 	<Setter Property="Foreground" Value="{StaticResource MainFont}" />
-	 </Style>
+	<Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource BtnHover}" />
+		<Setter Property="Foreground" Value="{StaticResource MainFont}" />
+	</Style>
 
 	<!--Текст-->
-
 	<Style Selector="TextBlock">
 		<Setter Property="Foreground" Value="{StaticResource MainFont}"/>
+		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
+	</Style>
+
+	<Style Selector="TextBlock.SecondText">
+		<Setter Property="Foreground" Value="{StaticResource SecondFond}"/>
 		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
 	</Style>
 
@@ -82,15 +86,17 @@
 
 	<Style Selector="TextBox:pointerover">
 		<Setter Property="Foreground" Value="{StaticResource MainFont}"/>
+		<Setter Property="BorderBrush" Value="#ff067977"/>
 	</Style>
-	
+
 	<Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
 		<Setter Property="Background" Value="{StaticResource FieldHover}"/>
+		<Setter Property="BorderBrush" Value="#ff067977"/>
 	</Style>
-	
+
 	<Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
 		<Setter Property="Background" Value="{StaticResource FieldActive}"/>
-	
+
 	</Style>
 
 	<Style Selector="TextBox:focus-within">
@@ -101,7 +107,7 @@
 
 
 	<Style Selector="StackPanel.Header">
-		<Setter Property="Background" Value="{StaticResource MyRed}"/>
+		<Setter Property="Background" Value="{StaticResource Page}"/>
 	</Style>
 
 	<Style Selector="Window">
@@ -112,20 +118,35 @@
 		<Setter Property="Background" Value="{StaticResource divider}"/>
 	</Style>
 
+	<!--CheckBox-->
+
+	<Style Selector="CheckBox /template/ Border">
+		<Setter Property="BorderBrush" Value="{StaticResource MainFont}"/>
+	</Style>
+
+	<Style Selector="CheckBox:unchecked">
+		<Setter Property="BorderBrush" Value="{StaticResource MainFont}"/>
+	</Style>
+
+    <Style Selector="CheckBox:unchecked /template/ Border">
+      <Setter Property="BorderBrush" Value="{StaticResource MainFont}"/>
+    </Style>
+
+
 	<!-- Окно логина -->
 	<Style Selector="TextBox.LoginText">
 		<Setter Property="Margin" Value="0 0 0 10"/>
 		<Setter Property="BorderBrush" Value="LightGray"/>
 		<Setter Property="BorderThickness" Value="2"/>
 	</Style>
-	
+
 	<Style Selector="TextBlock.TitleLogin">
 		<Setter Property="HorizontalAlignment" Value="Left"/>
-		<Setter Property="Foreground" Value="#E21A1A"/>
+		<Setter Property="Foreground" Value="{StaticResource BtnDef}"/>
 		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
 		<Setter Property="FontSize" Value="20"/>
 	</Style>
-	
+
 	<Style Selector="Button.LoginBtn">
 		<Setter Property="Background" Value="#E21A1A"/>
 		<Setter Property="Foreground" Value="White"/>
@@ -133,16 +154,24 @@
 		<Setter Property="Padding" Value="10"/>
 		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
 	</Style>
-	
-	<!-- Основное окно приложения -->
-	<Style Selector="Button.MainBtn">
-		<Setter Property="Background" Value="#E21A1A"/>
-		<Setter Property="Foreground" Value="White"/>
-		<Setter Property="HorizontalContentAlignment" Value="Center"/>
-		<Setter Property="Padding" Value="10"/>
-		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
+
+
+	<Style Selector="Border.BorderMain">
+		<Setter Property="Background" Value="{StaticResource BtnDef}"/>
 	</Style>
-	
+
+	<Style Selector="DataValidationErrors">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<!-- Пустой шаблон — ничего не показываем -->
+				<ContentPresenter Content="{TemplateBinding Content}" />
+			</ControlTemplate>
+		</Setter>
+	</Style>
+
+	<!-- Основное окно приложения -->
+
+
 	<Style Selector="Window">
 		<Setter Property="Background" Value="{StaticResource Page}"/>
 	</Style>

@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,10 +51,10 @@ public partial class AllFrdWindowViewModel : ViewModelBase
     {
         var frdWindow = new Views.FrdWindow()
         {
-            DataContext = App.Services.GetRequiredService<FrdWindowViewModel>()
+            DataContext = App.Services.GetRequiredService<FrdPageViewModel>()
         };
 
-        if (frdWindow.DataContext is FrdWindowViewModel a)
+        if (frdWindow.DataContext is FrdPageViewModel a)
         {
             a.MainObservation = ObservationElement;
         }

@@ -1,9 +1,13 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.Extensions.DependencyInjection;
 using TNU.Core.Models;
 using TNU.Core.Repository;
 using TNU.Core.Services.CsvFile;
+using TNU.Core.ViewModels;
+using TNU.Core.ViewModels.MainWindow;
 
 namespace TNU.Core.Views;
 
@@ -12,17 +16,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-
-        // Нужно для передачи в контекст родительского окна
-        this.Loaded += (sender, e) =>
-        {
-            if (DataContext is ViewModels.MainWindow.MainWindowViewModel vm)
-            {
-                vm.MainWindow = this;
-            }
-        };
     }
-
     private void JobCodeTextBox_OnLostFocus(object? sender, RoutedEventArgs e)
     {
         if (sender is TextBox textBox && textBox.DataContext is JobEntryClock vm)

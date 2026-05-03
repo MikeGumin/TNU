@@ -4,13 +4,13 @@ using TNU.Core.Models;
 using TNU.Core.Services;
 using TNU.Core.Services.CloseWindow;
 
-namespace TNU.Core.ViewModels.MainWindow;
+namespace TNU.Core.ViewModels;
 
-public partial class MainWindowViewModel
+public partial class MainPageViewModel
 {
     public Observation ObservationElement { get; set; } = new Observation();
 
-    public MainWindowViewModel()
+    public MainPageViewModel()
     {
         _windowService = new WindowService();
     }
@@ -23,10 +23,10 @@ public partial class MainWindowViewModel
     {
         var frdWindow = new Views.FrdWindow()
         {
-            DataContext = App.Services.GetRequiredService<FrdWindowViewModel>()
+            DataContext = App.Services.GetRequiredService<FrdPageViewModel>()
         };
 
-        if (frdWindow.DataContext is FrdWindowViewModel a)
+        if (frdWindow.DataContext is FrdPageViewModel a)
         {
             a.MainObservation = ObservationElement;
         }

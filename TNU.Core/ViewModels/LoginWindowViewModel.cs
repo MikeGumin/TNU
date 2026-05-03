@@ -4,7 +4,7 @@ using TNU.Core.Models;
 using TNU.Core.Services;
 using TNU.Core.Services.CloseWindow;
 using TNU.Core.Services.FileOpener;
-using MainWindowViewModel = TNU.Core.ViewModels.MainWindow.MainWindowViewModel;
+using TNU.Core.ViewModels.MainWindow;
 
 namespace TNU.Core.ViewModels
 {
@@ -41,13 +41,14 @@ namespace TNU.Core.ViewModels
         {
             var mainWindow = new Core.Views.MainWindow
             {
-                DataContext = App.Services.GetRequiredService<MainWindowViewModel>()
-            };
-
-            if (mainWindow.DataContext is MainWindowViewModel a)
-            {
-                a.MainObservation = ObservationElement;
+                DataContext = new MainWindowViewModel (ObservationElement)
             }
+            ;
+
+            //if (mainWindow.DataContext is MainWindowViewModel a)
+            //{
+            //    a.MainObservation = ObservationElement;
+            //}
 
             mainWindow.Show();
 
