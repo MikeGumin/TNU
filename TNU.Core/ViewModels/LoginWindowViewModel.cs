@@ -1,10 +1,13 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using Avalonia.Controls.ApplicationLifetimes;
+using CommunityToolkit.Mvvm.Input;
+using DocumentFormat.OpenXml.Vml.Office;
 using Microsoft.Extensions.DependencyInjection;
 using TNU.Core.Models;
 using TNU.Core.Services;
 using TNU.Core.Services.CloseWindow;
 using TNU.Core.Services.FileOpener;
 using TNU.Core.ViewModels.MainWindow;
+using TNU.Core.Views.DialogViews;
 
 namespace TNU.Core.ViewModels
 {
@@ -27,8 +30,15 @@ namespace TNU.Core.ViewModels
         public void Login()
         {
             // Проверка введены ли данные в окна. Работает, но пока убрал 
-            //if (IsCompleted())
+            if (IsCompleted())
                 OnLoginSuccess();
+            else
+            {
+                var dialog = new ConfirmDialog($"Заполните все поля");
+                dialog.ShowDialog(App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+                    ? desktop.MainWindow
+                    : null);
+            }
         }
 
         [RelayCommand]
@@ -42,13 +52,7 @@ namespace TNU.Core.ViewModels
             var mainWindow = new Core.Views.MainWindow
             {
                 DataContext = new MainWindowViewModel (ObservationElement)
-            }
-            ;
-
-            //if (mainWindow.DataContext is MainWindowViewModel a)
-            //{
-            //    a.MainObservation = ObservationElement;
-            //}
+            };
 
             mainWindow.Show();
 

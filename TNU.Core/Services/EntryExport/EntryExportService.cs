@@ -15,18 +15,18 @@ using TNU.Core.Services.FileDialog;
 namespace TNU.Core.Services.EntryExport;
 
 /// <inheritdoc />
-public class EntryExportService: IEntryExportService
+public class EntryExportService : IEntryExportService
 {
     /// <inheritdoc />
     public async Task<OperationResult<string>> CsvEntryAsync(
-        ObservableCollection<JobEntry> entryList,
-        IFileDialogService fileDialogService)
+         ObservableCollection<JobEntry> entryList,
+         IFileDialogService fileDialogService)
     {
         if (!entryList.Any())
         {
             return OperationResult<string>.Fail("У вас нет завершенных записей.");
         }
-        
+
         var stream = await fileDialogService.SaveFileAsync($"output{DateTime.Now:yyyy-MM-dd_HH-mm-ss}");
         if (stream is null)
         {
@@ -37,22 +37,25 @@ public class EntryExportService: IEntryExportService
         {
             var exportList = new List<EntryExportResponse>();
 
-            foreach (var entry in entryList)
+            var orderEntryList = entryList.OrderBy(e => e.StartTime);
+            var id = 1;
+
+            foreach (var entry in orderEntryList)
             {
                 if (entry.RecordStatus is RecordStatusEnum.Finish)
                 {
                     exportList.Add(new EntryExportResponse()
                     {
-                        Id = entry.Id,
+                        Id = id++,
                         JobTitle = entry.JobName,
                         JobTime = entry.JobSample,
-                        JobDate =  entry.JobDate,
+                        JobDate = entry.JobDate,
                         DuringTime = entry.EndTime,
                         JobCode = entry.JobCode
                     });
                 }
             }
-        
+
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.WriteRecords(exportList); // Автоматически записывает заголовки и данные
@@ -71,30 +74,30 @@ public class EntryExportService: IEntryExportService
         {
             return OperationResult<string>.Fail("У вас нет завершённых записей");
         }
-        
+
         var stream = await fileDialogService.SaveFileAsync($"gantt-{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.xlsx");
-        
+
         if (stream is null)
         {
             return OperationResult<string>.Fail("Ошибка при сохранение файла. Попробуйте еще раз.");
         }
-    
+
         var startMin = entryList.Min(e => ParseToMinutes(e.StartTime));
         var endMin = entryList.Max(e => ParseToMinutes(e.EndTime));
         var duration = endMin - startMin; // количество минутных колонок
-    
+
         using var wb = new XLWorkbook();
         var ws = wb.AddWorksheet("Диаграмма Ганта");
-    
+
         FillTimelineHeader(ws, startMin, duration);
         FillJobRows(ws, entryList, startMin);
         ApplyFormatting(ws, duration);
-        
+
         await using (stream)
         {
             wb.SaveAs(stream);
         }
-    
+
         return OperationResult<string>.Ok();
     }
 
@@ -107,8 +110,8 @@ public class EntryExportService: IEntryExportService
     private void FillTimelineHeader(IXLWorksheet ws, int startMin, int duration)
     {
         var baseTime = TimeSpan.FromMinutes(startMin);
-    
-        for (int i = 0; i < duration+1; i++)
+
+        for (int i = 0; i < duration + 1; i++)
         {
             var time = baseTime + TimeSpan.FromMinutes(i);
             ws.Cell(SystemConst.HeaderRow, SystemConst.TimelineStartColumn + i).Value = $"{time.Hours}:{time.Minutes:D2}";
@@ -124,19 +127,19 @@ public class EntryExportService: IEntryExportService
     private void FillJobRows(IXLWorksheet ws, IEnumerable<JobEntry> entryList, int startMin)
     {
         int row = 2;
-    
+
         foreach (var entry in entryList.OrderBy(e => e.StartTime))
         {
             ws.Cell(row, SystemConst.JobNameColumn).Value = entry.JobName;
-    
+
             int colStart = ParseToMinutes(entry.StartTime) - startMin + SystemConst.TimelineStartColumn;
             int colEnd = ParseToMinutes(entry.EndTime) - startMin + SystemConst.TimelineStartColumn;
-    
+
             for (int col = colStart; col <= colEnd; col++)
             {
                 ws.Cell(row, col).Value = entry.DifficultyFactor;
             }
-            
+
             row++;
         }
     }
@@ -149,10 +152,10 @@ public class EntryExportService: IEntryExportService
     private void ApplyFormatting(IXLWorksheet ws, int duration)
     {
         ws.Column(SystemConst.JobNameColumn).Width = 25;
-    
+
         for (int col = SystemConst.TimelineStartColumn; col < SystemConst.TimelineStartColumn + duration; col++)
             ws.Column(col).Width = 5;
-    
+
         ws.SheetView.FreezeColumns(1);
     }
 

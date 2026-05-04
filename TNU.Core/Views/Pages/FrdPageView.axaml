@@ -16,7 +16,7 @@
 		<StyleInclude Source="/Styles/MainStyles.axaml"></StyleInclude>
 	</UserControl.Styles>
 
-	<DockPanel Background="#F8F8F8">
+	<DockPanel x:Name="MainDackPanel" Background="#F8F8F8">
 		<Border DockPanel.Dock="Top" Padding="10">
 			<Grid RowDefinitions="Auto, *, Auto" RowSpacing="10">
 				<TextBlock Grid.Row="0"
@@ -40,7 +40,7 @@
 						  HorizontalScrollBarVisibility="Auto">
 
 					<DataGrid.Columns>
-						<DataGridTextColumn Header="№" Binding="{Binding Path=Id}"/>
+						<!--<DataGridTextColumn Header="№" Binding="{Binding Path=Id}"/>-->
 						<DataGridTextColumn Header="Что наблюдается" Binding="{Binding JobName}"/>
 						<DataGridTextColumn Header="Текущее время" Binding="{Binding EndTime}"/>
 						<DataGridTextColumn Header="Продолжительность мин" Binding="{Binding JobSample}"/>
@@ -53,8 +53,7 @@
 											ToolTip.Tip="Удалить запись"
 											Classes="btn-delete"
 											HorizontalAlignment="Center"
-											Command="{Binding DeleteEntryCommand,
-											RelativeSource={RelativeSource AncestorType={x:Type views:FrdWindow}}}"
+											Command="{Binding ElementName=MainDackPanel, Path=DataContext.DeleteEntryCommand}"
 											CommandParameter="{Binding}"/>
 								</DataTemplate>
 							</DataGridTemplateColumn.CellTemplate>

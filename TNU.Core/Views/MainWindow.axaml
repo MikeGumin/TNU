@@ -59,7 +59,7 @@
 
 
 		<StackPanel Grid.Row="0" Orientation="Horizontal"  HorizontalAlignment="Center" >
-			<Button Content="Главная" Command="{Binding ShowMainPageCommand}"/>
+			<Button Content="Замеры" Command="{Binding ShowMainPageCommand}"/>
 			<Button Content="ФРД" Command="{Binding ShowFrdPageCommand}"/>
 		</StackPanel>
 

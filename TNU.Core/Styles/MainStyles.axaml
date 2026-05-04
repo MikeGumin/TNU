@@ -38,9 +38,24 @@
 		<Setter Property="Foreground" Value="{StaticResource Form}"/>
 	</Style>
 
+	<Style Selector="Button:disabled">
+		<Setter Property="Background" Value="{StaticResource BtnSecondary}"/>
+		<Setter Property="Foreground" Value="{StaticResource SecondFond}"/>
+	</Style>
+
 	<Style Selector="Button.Gray">
 		<Setter Property="Background" Value="{StaticResource SecondFond}"/>
 		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
+	</Style>
+
+	<Style Selector="Button.Start">
+		<Setter Property="Background" Value="{StaticResource BtnSecondary}"/>
+		<Setter Property="Foreground" Value="#0055f1" />
+	</Style>
+
+	<Style Selector="Button.Stop">
+		<Setter Property="Background" Value="{StaticResource BtnSecondary}"/>
+		<Setter Property="Foreground" Value="#ff1103" />
 	</Style>
 
 	<Style Selector="Button.SecondBtn">
@@ -53,8 +68,37 @@
 		<Setter Property="Foreground" Value="{StaticResource MainFont}" />
 	</Style>
 
+
+
 	<!-- Стиль когда кнопка нажимается -->
 	<Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource BtnHover}" />
+		<Setter Property="Foreground" Value="{StaticResource MainFont}" />
+	</Style>
+
+	<!--ToggleButton-->
+
+	<Style Selector="ToggleButton">
+		<Setter Property="Background" Value="{StaticResource MyRed}"/>
+		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
+		<Setter Property="Foreground" Value="{StaticResource Form}"/>
+	</Style>
+
+	<Style Selector="ToggleButton:unchecked /template/ ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource MyRed}"/>
+	</Style>
+
+	<Style Selector="ToggleButton:checked">
+		<Setter Property="Background" Value="#4CAF50"/>
+
+	</Style>
+
+	<Style Selector="ToggleButton:pointerover /template/ ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource BtnHover}" />
+		<Setter Property="Foreground" Value="{StaticResource MainFont}" />
+	</Style>
+
+	<Style Selector="ToggleButton:pressed /template/ ContentPresenter#PART_ContentPresenter">
 		<Setter Property="Background" Value="{StaticResource BtnHover}" />
 		<Setter Property="Foreground" Value="{StaticResource MainFont}" />
 	</Style>
@@ -128,9 +172,9 @@
 		<Setter Property="BorderBrush" Value="{StaticResource MainFont}"/>
 	</Style>
 
-    <Style Selector="CheckBox:unchecked /template/ Border">
-      <Setter Property="BorderBrush" Value="{StaticResource MainFont}"/>
-    </Style>
+	<Style Selector="CheckBox:unchecked /template/ Border">
+		<Setter Property="BorderBrush" Value="{StaticResource MainFont}"/>
+	</Style>
 
 
 	<!-- Окно логина -->

@@ -6,6 +6,9 @@
 
 			 x:DataType="viewModels:MainPageViewModel"
 
+			 xmlns:ia="using:Avalonia.Xaml.Interactions"
+			 xmlns:ie="using:Avalonia.Xaml.Interactivity"
+
 			 xmlns:mainWindow="clr-namespace:TNU.Core.ViewModels.MainWindow"
 			 xmlns:viewModels="clr-namespace:TNU.Core.ViewModels"
 			 xmlns:repository1="clr-namespace:TNU.Core.Repository"
@@ -25,9 +28,9 @@
 	<Grid ShowGridLines="True">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="0"/>
-			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="70*"/>
 			<ColumnDefinition Width="8"/>
-			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="45*"/>
 			<ColumnDefinition Width="0"/>
 		</Grid.ColumnDefinitions>
 
@@ -64,7 +67,7 @@
 								   HorizontalAlignment="Stretch"
 								   TextAlignment="Center"
 								   Padding="5"
-								  
+
 								   />
 
 						<ScrollViewer Grid.Row="1">
@@ -103,12 +106,14 @@
 																<Button Content="Сохранить"
 																		Command="{Binding ElementName=LeftDockPanel, Path=DataContext.EndTimerCommand}"
 																		CommandParameter="{Binding}"/>
-																<Button Classes.accept="True"
-																		Margin="10 0 0 0"
-																		Content="{Binding BtnText}"
-																		Command="{Binding ElementName=LeftDockPanel, Path=DataContext.ChangeTimerCommand}"
-																		CommandParameter="{Binding}"
-																		Background="#8D8D8D"/>
+
+																	<ToggleButton IsChecked="False"
+																			Margin="10 0 0 0"
+																			Content="{Binding BtnText}"
+																			Command="{Binding ElementName=LeftDockPanel, Path=DataContext.ChangeTimerCommand}"
+																			CommandParameter="{Binding}"
+																			Background="#8D8D8D"/>
+
 															</StackPanel>
 														</DockPanel>
 
@@ -161,12 +166,12 @@
 				</Border>
 
 				<Grid Grid.Row="1" >
-					<Button 
-							Content="Добавить наблюдение"
-							HorizontalAlignment="Stretch"
-							VerticalAlignment="Bottom"
-							HorizontalContentAlignment="Center"
-							Command="{Binding AddNewTaskCommand}" />
+					<Button
+					Content="Добавить наблюдение"
+					HorizontalAlignment="Stretch"
+					VerticalAlignment="Bottom"
+					HorizontalContentAlignment="Center"
+					Command="{Binding AddNewTaskCommand}" />
 				</Grid>
 			</Grid>
 		</DockPanel>

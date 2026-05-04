@@ -49,19 +49,28 @@ public partial class AllFrdWindowViewModel : ViewModelBase
     [RelayCommand]
     private void CloseAllFrdWindow()
     {
-        var frdWindow = new Views.FrdWindow()
+        //var frdWindow = new Views.FrdWindow()
+        //{
+        //    DataContext = App.Services.GetRequiredService<FrdPageViewModel>()
+        //};
+
+        //if (frdWindow.DataContext is FrdPageViewModel a)
+        //{
+        //    a.MainObservation = ObservationElement;
+        //}
+
+        //frdWindow.Show();
+
+        //_windowService.CloseCurrentWindow(frdWindow);
+
+        var mainWindow = new Core.Views.MainWindow
         {
-            DataContext = App.Services.GetRequiredService<FrdPageViewModel>()
+            DataContext = new MainWindowViewModel(ObservationElement)
         };
 
-        if (frdWindow.DataContext is FrdPageViewModel a)
-        {
-            a.MainObservation = ObservationElement;
-        }
+        mainWindow.Show();
 
-        frdWindow.Show();
-
-        _windowService.CloseCurrentWindow(frdWindow);
+        _windowService.CloseCurrentWindow(mainWindow);
     }
     
     

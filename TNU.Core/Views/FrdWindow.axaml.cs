@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -23,17 +23,6 @@ public partial class FrdWindow : Window
     /// Метод для удаления сохраненной записи
     /// </summary>
     /// <param name="entry"></param>
-    [RelayCommand]
-    private async Task DeleteEntry(JobEntry entry)
-    {
-        var dialog = new ConfirmDialog($"Удалить запись \"{entry.JobName}\"?");
-        await dialog.ShowDialog(App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop 
-            ? desktop.MainWindow 
-            : null);
+    /// 
 
-        if (dialog.Result)
-        {
-            FinishedEntriesRepository.FinishedEntries.Remove(entry);
-        }
-    }
 }
