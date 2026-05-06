@@ -25,7 +25,7 @@ public class EntryExportResponse
     /// Род деятельности
     /// </summary>
     // [ExcelColumnName("Род деятельности")]
-    [Name("Род деятельности")]
+    [Name("Что наблюдается")]
     public required string JobTitle { get; set; }
     
     /// <summary>
@@ -51,5 +51,8 @@ public class EntryExportResponse
     /// Дата, когда проводилась работа
     /// </summary>
     [Name("Дата проведения работы")]
-    public DateTimeOffset JobDate { get; set; }
+    public string JobDate { get; set; }
+
+    [Name("Дата проведения работы")]
+    public string JobDateTime { get; set; }
 }

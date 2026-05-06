@@ -19,7 +19,12 @@ namespace TNU.Core.Models
         /// <summary>
         /// Наблюдаемый за кем ведется наблюдение 
         /// </summary>
-        public int? RespondentId { get; set; }
+        public string? RespondentId { get; set; }
+
+        /// <summary>
+        /// ФИО респондента
+        /// </summary>
+        public string RespondentName { get; set; }
 
         /// <summary>
         /// Дата записи

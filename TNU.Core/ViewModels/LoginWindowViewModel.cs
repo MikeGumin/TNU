@@ -61,7 +61,7 @@ namespace TNU.Core.ViewModels
 
         private bool IsCompleted()
         {
-            return ObservationElement.City != "" && ObservationElement.RespondentId != null && ObservationElement.InspectorName != null;
+            return ObservationElement.RespondentId != "" && ObservationElement.InspectorName != "";
         }
     }
 }
