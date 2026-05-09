@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using TNU.Core.Models;
@@ -93,6 +94,7 @@ public partial class MainPageViewModel : PageViewModelBase
         _errorMessageHelper = errorMessageHelper;
 
         SystemStatic.GeneralStopwatch.Stop();
+
         Title = "MainPage";
     }
 
@@ -219,7 +221,7 @@ public partial class MainPageViewModel : PageViewModelBase
     {
         if (obj is JobEntryClock jobModel) // && jobModel.Entry.RecordStatus is RecordStatusEnum.Stop
         {
-            if (jobModel.Entry.RecordStatus == RecordStatusEnum.Stop)
+            if (jobModel.Entry.RecordStatus == RecordStatusEnum.Stop && jobModel.Entry.JobName != "")
             {
                 TimerControlService.EndTimer(jobModel);
 
@@ -235,6 +237,8 @@ public partial class MainPageViewModel : PageViewModelBase
             }
         }
     }
+
+
     //----------------------------------------------------------------------------------------------------------------------
 
 
@@ -287,12 +291,6 @@ public partial class MainPageViewModel : PageViewModelBase
                 editWindow.Close();
             }
 
-            //int indexEditEntry = FinishedEntriesRepository.FinishedEntries.IndexOf(entry);
-
-            //if (indexEditEntry >= 0)
-            //{
-            //    FinishedEntriesRepository.FinishedEntries[indexEditEntry] = updatedEntry;
-            //}
         }
     }
 

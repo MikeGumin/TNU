@@ -1,21 +1,18 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
-using ReactiveUI;
+using System;
+using System.ComponentModel;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using TNU.Core.Models;
 using TNU.Core.Repository;
 using TNU.Core.Services.CloseWindow;
 using TNU.Core.Services.EntryExport;
 using TNU.Core.Services.FileDialog;
-using TNU.Core.ViewModels.MainWindow;
-using TNU.Core.Views;
+using TNU.Core.Views.DialogViews;
 
 namespace TNU.Core.ViewModels;
 
@@ -32,7 +29,22 @@ public partial class FrdPageViewModel: PageViewModelBase
     public Observation ObservationElement { get; set; } = new Observation();
     
     public Window? FrdWindow { get; set; }
-    
+
+
+    [RelayCommand]
+    private async Task DeleteEntry(JobEntry entry)
+    {
+        var dialog = new ConfirmDialog($"Удалить запись \"{entry.JobName}\"?");
+        await dialog.ShowDialog(App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+            ? desktop.MainWindow
+            : null);
+
+        if (dialog.Result)
+        {
+            FinishedEntriesRepository.FinishedEntries.Remove(entry);
+        }
+    }
+
     public FrdPageViewModel(
         IEntryExportService entryExportService,
         IFileDialogService fileDialogService, 
@@ -45,10 +57,6 @@ public partial class FrdPageViewModel: PageViewModelBase
         _windowService = windowService;
 
         Title = "FrdList";
-    }
-    public FrdPageViewModel()
-    {
-
     }
 
    /// <summary>

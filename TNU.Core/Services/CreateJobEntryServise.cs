@@ -9,7 +9,7 @@ namespace TNU.Core.Services
         static public JobEntryClock CreateJobEntry(string jobName)
         {
             var obj = new JobEntryClock();
-            obj.Entry.Id = JobId++;
+            //obj.Entry.Id = JobId++;
             obj.Entry.JobDate = DateTime.Now;
 
             obj.Entry.JobName = jobName;
