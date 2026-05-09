@@ -13,9 +13,10 @@ public interface IEntryExportService
     /// <summary>
     /// Метод для экспорта записей
     /// </summary>
+    /// <param name="observation">Значения полей из окна Логина</param>
     /// <param name="entryList">Массив записей</param>
     /// <param name="fileDialogService">Сервис для работы с файловой системой</param>
-    public Task<OperationResult<string>> CsvEntryAsync(ObservableCollection<JobEntry> entryList, IFileDialogService fileDialogService);
+    public Task<OperationResult<string>> CsvEntryAsync(Observation observation, ObservableCollection<JobEntry> entryList, IFileDialogService fileDialogService);
 
     /// <summary>
     /// Метод для экспорта записей в виде диаграммы ганта

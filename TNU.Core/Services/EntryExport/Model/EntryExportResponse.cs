@@ -25,7 +25,7 @@ public class EntryExportResponse
     /// Род деятельности
     /// </summary>
     // [ExcelColumnName("Род деятельности")]
-    [Name("Род деятельности")]
+    [Name("Что наблюдается")]
     public required string JobTitle { get; set; }
     
     /// <summary>
@@ -33,7 +33,6 @@ public class EntryExportResponse
     /// </summary>
     [Name("Текущее время")]
     public required string DuringTime { get; set; }
-    
     
     /// <summary>
     /// Продолжительность мин.
@@ -48,8 +47,32 @@ public class EntryExportResponse
     public required string JobCode { get; set; }
     
     /// <summary>
+    /// Уточнить время записи
+    /// </summary>
+    [Name("Уточнить время")]
+    public required string IsCorrectly { get; set; }
+    
+    /// <summary>
     /// Дата, когда проводилась работа
     /// </summary>
-    [Name("Дата проведения работы")]
-    public DateTimeOffset JobDate { get; set; }
+    [Name("Дата работы")]
+    public required DateTime JobDate { get; set; }
+    
+    /// <summary>
+    /// Дата, когда проводилась работа
+    /// </summary>
+    [Name("Время начала")]
+    public required string JobDateStart { get; set; }
+    
+    /// <summary>
+    /// Дата, когда проводилась работа
+    /// </summary>
+    [Name("Время окончания")]
+    public required string JobDateEnd { get; set; }
+
+    /// <summary>
+    /// Дата, когда проводилась работа
+    /// </summary>
+    [Name("Комментарий")]
+    public string Comments { get; set; } = "";
 }
