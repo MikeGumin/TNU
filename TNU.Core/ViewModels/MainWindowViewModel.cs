@@ -33,6 +33,7 @@ namespace TNU.Core.ViewModels.MainWindow
 
             FrdPageView frd = new FrdPageView();
             FrdPageViewModel frdPage = App.Services.GetRequiredService<FrdPageViewModel>();
+            frdPage.ObservationElement = obs;
             frd.DataContext = frdPage;
 
 

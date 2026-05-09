@@ -19,6 +19,7 @@ public class EntryExportService : IEntryExportService
 {
     /// <inheritdoc />
     public async Task<OperationResult<string>> CsvEntryAsync(
+         Observation observation,
          ObservableCollection<JobEntry> entryList,
          IFileDialogService fileDialogService)
     {
@@ -32,11 +33,32 @@ public class EntryExportService : IEntryExportService
         {
             return OperationResult<string>.Fail("Ошибка при сохранение файла. Попробуйте еще раз.");
         }
-
+        
         using (var writer = new StreamWriter(stream))
+        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
-            var exportList = new List<EntryExportResponse>();
+            csv.WriteHeader<EntryExportHeader>();
+            await csv.NextRecordAsync();
 
+            csv.WriteRecord(new EntryExportHeader()
+            {
+                ExpertFullName = observation.InspectorName,
+                City = observation.City.Split()[0],
+                Enterprise = observation.City.Split()[^1],
+                RespondentCode = observation.RespondentId,
+                RespondentFullName = "",
+                EntryDate = DateTime.Now.ToString("dd/MM/yyyy"),
+                StartObservation = observation.JobDate.ToString("HH:mm:ss"),
+                EndObservation = DateTime.Now.ToString("HH:mm:ss"),
+            });
+            await csv.NextRecordAsync();
+            
+            await writer.WriteLineAsync();
+            
+            csv.WriteHeader<EntryExportResponse>();
+            await csv.NextRecordAsync();
+            
+            var exportList = new List<EntryExportResponse>();
             var orderEntryList = entryList.OrderBy(e => e.StartTime);
             var id = 1;
 
@@ -50,18 +72,23 @@ public class EntryExportService : IEntryExportService
                         JobTitle = entry.JobName,
                         JobTime = entry.JobSample,
                         JobDate = entry.JobDate,
+                        JobDateStart = entry.StartTime,
+                        JobDateEnd = entry.EndTime,
                         DuringTime = entry.EndTime,
-                        JobCode = entry.JobCode
+                        IsCorrectly = entry.IsTimedCorrectly ? "Да" : "Нет",
+                        JobCode = entry.JobCode,
+                        Comments =  entry.Description,
                     });
                 }
             }
 
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            foreach (var record in exportList)
             {
-                csv.WriteRecords(exportList); // Автоматически записывает заголовки и данные
+                csv.WriteRecord(record);
+                await csv.NextRecordAsync();
             }
         }
-
+        
         return OperationResult<string>.Ok();
     }
 

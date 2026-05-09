@@ -26,7 +26,7 @@ public partial class JobEntry : NotifyChangedModel
     /// <summary>
     /// Дата записи
     /// </summary>
-    public DateTimeOffset JobDate { get; set; } = DateTimeOffset.Now;
+    public DateTime JobDate { get; set; } = DateTime.Now;
 
     /// <summary>
     /// Наименование выполняемой работы
