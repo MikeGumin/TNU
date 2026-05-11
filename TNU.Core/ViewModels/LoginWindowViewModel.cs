@@ -126,7 +126,7 @@ namespace TNU.Core.ViewModels
 
         private bool IsCompleted()
         {
-            return (ObservationElement.RespondentId != null && ObservationElement.InspectorName != null) && (ObservationElement.RespondentId != "" && ObservationElement.InspectorName != "");
+            return (!string.IsNullOrWhiteSpace(ObservationElement.RespondentId) && !string.IsNullOrWhiteSpace(ObservationElement.InspectorName));
         }
     }
 }
