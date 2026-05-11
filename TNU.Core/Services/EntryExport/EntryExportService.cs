@@ -1,12 +1,14 @@
-﻿using System;
+﻿using ClosedXML.Excel;
+using CsvHelper;
+using CsvHelper.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using ClosedXML.Excel;
-using CsvHelper;
 using TNU.Core.Models;
 using TNU.Core.Models.Enum;
 using TNU.Core.Services.EntryExport.Model;
@@ -33,9 +35,20 @@ public class EntryExportService : IEntryExportService
         {
             return OperationResult<string>.Fail("Ошибка при сохранение файла. Попробуйте еще раз.");
         }
-        
+
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            Delimiter = ";",
+            Encoding = Encoding.UTF8,
+            // Дополнительно полезные настройки:
+            // HasHeaderRecord = true, // по умолчанию true
+            // Quote = '"',
+            // Escape = '\\',
+            // Encoding = Encoding.UTF8
+        };
+
         using (var writer = new StreamWriter(stream))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+        using (var csv = new CsvWriter(writer, config))
         {
             csv.WriteHeader<EntryExportHeader>();
             await csv.NextRecordAsync();

@@ -43,11 +43,11 @@
 		<StackPanel Classes="Header" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3">
 			<TextBlock VerticalAlignment="Center" Text="Дата: "/>
 			<TextBox Width="100" Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}'}"/>
-			<TextBlock VerticalAlignment="Center" Margin="15 0 0 0" Text="Идентификатор респондента: "/>
+			<TextBlock VerticalAlignment="Center" Margin="15 0 0 0" Text="Код респондента: "/>
 			<TextBlock VerticalAlignment="Center" Text="{Binding MainObservation.RespondentId}"/>
 			<TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="Предприятие: "/>
 			<TextBlock VerticalAlignment="Center" Text="{Binding MainObservation.City}"/>
-			<TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="Время начала:"/>
+			<TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="Начало наблюдения:"/>
 			<TextBox Text="{Binding GeneralTime, StringFormat='{}{0:HH:mm:ss}'}" Width="75"/>
 			<!--<Button Content="Завершить ФРД" Command="{Binding OpenFrdWindowCommand}" />-->
 		</StackPanel>

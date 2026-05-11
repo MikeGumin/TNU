@@ -65,12 +65,12 @@ namespace TNU.Core.ViewModels
         {
             if (!_isActivityListExport)
             {
-                JobNameRepository.FillJobNameList();    
+                JobNameRepository.FillJobNameList();
             }
-            
+
             var mainWindow = new Core.Views.MainWindow
             {
-                DataContext = new MainWindowViewModel (ObservationElement)
+                DataContext = new MainWindowViewModel(ObservationElement)
             };
 
             mainWindow.Show();
@@ -88,17 +88,17 @@ namespace TNU.Core.ViewModels
             FrdRepository.FinishedFrd.Clear();
 
             var frdId = 1;
-            
+
             foreach (var file in files)
             {
-                FrdRepository.FinishedFrd.Add( new FrdModel()
+                FrdRepository.FinishedFrd.Add(new FrdModel()
                 {
                     Id = frdId++,
                     FileName = Path.GetFileName(file),
-                    CreatedAt =  File.GetCreationTime(file),
+                    CreatedAt = File.GetCreationTime(file),
                 });
             }
-            
+
             var frdWindow = new Views.AllFrdWindow()
             {
                 DataContext = App.Services.GetRequiredService<AllFrdWindowViewModel>()
@@ -118,7 +118,7 @@ namespace TNU.Core.ViewModels
         private async Task<OperationResult<string>> ImportActivityList()
         {
             await _fileDialogService.OpenFileAsync();
-            
+
             _isActivityListExport = true;
 
             return OperationResult<string>.Ok();
@@ -126,7 +126,7 @@ namespace TNU.Core.ViewModels
 
         private bool IsCompleted()
         {
-            return ObservationElement.City != "" && ObservationElement.RespondentId != null && ObservationElement.InspectorName != null;
+            return (!string.IsNullOrWhiteSpace(ObservationElement.RespondentId) && !string.IsNullOrWhiteSpace(ObservationElement.InspectorName));
         }
     }
 }

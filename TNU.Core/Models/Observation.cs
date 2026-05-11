@@ -15,6 +15,7 @@ namespace TNU.Core.Models
         /// Инспектор который делает запись
         /// </summary>
         public string InspectorName { get; set; }
+        public string RespondentName { get; set; }
 
         /// <summary>
         /// Наблюдаемый за кем ведется наблюдение 
@@ -30,6 +31,7 @@ namespace TNU.Core.Models
         /// Город в котором проводиться наблюдение
         /// </summary>
         public string City { get; set; } = "";
+        public string Enterprise { get; set; } = "";
 
         /// <summary>
         /// События которые входят в наблюдения
