@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using TNU.Core.Models;
-using TNU.Core.Repository;
 using TNU.Core.Services;
 using TNU.Core.Services.CloseWindow;
 using TNU.Core.Services.FileOpener;
@@ -15,6 +14,9 @@ public partial class AllFrdWindowViewModel : ViewModelBase
 {
     private readonly IWindowService _windowService;
     private readonly IFileOpenerService _fileOpenerService;
+
+    public ViewModelBase ViewModel { get; set; }
+
     public Observation ObservationElement { get; set; } = new Observation();
     private Observation _mainObservation;
     public Observation MainObservation
@@ -42,38 +44,40 @@ public partial class AllFrdWindowViewModel : ViewModelBase
     {
         _fileOpenerService.OpenFrdFile(frd.FileName);
     }
-    
+
     /// <summary>
     /// Метод закрытия списка ФРД и возвращения к окну фрд 
     /// </summary>
     [RelayCommand]
     private void CloseAllFrdWindow()
     {
-        //var frdWindow = new Views.FrdWindow()
-        //{
-        //    DataContext = App.Services.GetRequiredService<FrdPageViewModel>()
-        //};
 
-        //if (frdWindow.DataContext is FrdPageViewModel a)
-        //{
-        //    a.MainObservation = ObservationElement;
-        //}
-
-        //frdWindow.Show();
-
-        //_windowService.CloseCurrentWindow(frdWindow);
-
-        var mainWindow = new Core.Views.MainWindow
+        if (ViewModel is LoginWindowViewModel)
         {
-            DataContext = new MainWindowViewModel(ObservationElement)
-        };
+            var mainWindow = new Core.Views.LoginWindow
+            {
+                DataContext = App.Services.GetRequiredService<LoginWindowViewModel>()
+            };
 
-        mainWindow.Show();
+            mainWindow.Show();
 
-        _windowService.CloseCurrentWindow(mainWindow);
+            _windowService.CloseCurrentWindow(mainWindow);
+        }
+        else
+        {
+            var mainWindow = new Core.Views.MainWindow
+            {
+                DataContext = new MainWindowViewModel(ObservationElement)
+            };
+
+            mainWindow.Show();
+
+            _windowService.CloseCurrentWindow(mainWindow);
+        }
     }
-    
-    
+
+
+
     public event PropertyChangedEventHandler? PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {

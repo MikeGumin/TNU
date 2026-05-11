@@ -8,14 +8,12 @@ namespace TNU.Core.Services
     
     public class WindowService : IWindowService
     {
+        public IClassicDesktopStyleApplicationLifetime CurrentWindow { get; set; } = (IClassicDesktopStyleApplicationLifetime)Application.Current?.ApplicationLifetime;
+
         public void CloseCurrentWindow(Window window)
         {
-
-            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
-            {
-                lifetime.MainWindow?.Close();
-                lifetime.MainWindow = window;
-            }
+                CurrentWindow.MainWindow?.Close();
+                CurrentWindow.MainWindow = window;
         }
 
     }

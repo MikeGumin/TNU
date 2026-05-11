@@ -1,14 +1,11 @@
 ﻿using Avalonia.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Avalonia.Controls.ApplicationLifetimes;
 
 namespace TNU.Core.Services.CloseWindow
 {
     public interface IWindowService
     {
+        public IClassicDesktopStyleApplicationLifetime CurrentWindow { get; set; }
         void CloseCurrentWindow(Window window);
     }
 }
