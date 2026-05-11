@@ -22,6 +22,11 @@ namespace TNU.Core.Models
         public string? RespondentId { get; set; }
 
         /// <summary>
+        /// ФИО респондента
+        /// </summary>
+        public string RespondentName { get; set; }
+
+        /// <summary>
         /// Дата записи
         /// </summary>
         public DateTimeOffset JobDate { get; set; } = DateTimeOffset.Now;

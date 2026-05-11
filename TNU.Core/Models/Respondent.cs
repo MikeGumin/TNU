@@ -1,13 +1,13 @@
-﻿namespace TNU.Core.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-/// <summary>
-/// Модель респондента
-/// </summary>
-public class Respondent
+namespace TNU.Core.Models
 {
-    /// <summary>
-    /// Идентификатор респондента 
-    /// </summary>
-    public int Id { get; set; }
-
+    public class Respondent
+    {
+        public string Id { get; set; }
+    }
 }

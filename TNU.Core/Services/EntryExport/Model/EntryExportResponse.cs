@@ -73,6 +73,9 @@ public class EntryExportResponse
     /// <summary>
     /// Дата, когда проводилась работа
     /// </summary>
-    [Name("Комментарий")]
-    public string Comments { get; set; } = "";
+    [Name("Дата проведения работы")]
+    public string JobDate { get; set; }
+
+    [Name("Дата проведения работы")]
+    public string JobDateTime { get; set; }
 }

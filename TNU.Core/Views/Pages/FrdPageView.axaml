@@ -58,6 +58,8 @@
 								</DataTemplate>
 							</DataGridTemplateColumn.CellTemplate>
 						</DataGridTemplateColumn>
+						<DataGridTextColumn Header="Коменарий" Binding="{Binding Description}"/>
+					
 					</DataGrid.Columns>
 				</DataGrid>
 
