@@ -9,7 +9,7 @@ namespace TNU.Core.Repository
     /// <summary>
     /// Репозиторий для наименований возможных работ
     /// </summary>
-    internal class JobNameRepository
+    internal static class JobNameRepository
     {
         /// <summary>
         /// Лист с перечислениями возможных работ
@@ -17,14 +17,13 @@ namespace TNU.Core.Repository
         public static ObservableCollection<JobTitleEnum> JobNameList { get;private set; } = [];
         public static Dictionary<string, string> JobNameCodeList { get;private set; } = [];
 
-        static JobNameRepository()
+        public static void FillJobNameList()
         {
             foreach (var job in ReadCsvFile.Read())
             {
                 AddJob(new JobTitleEnum(job[0])); // добавляем наименование в список из файла
                 JobNameCodeList[job[0]] = job[1]; // добавляем наименование в 
             }
-            
         }
 
         /// <summary>

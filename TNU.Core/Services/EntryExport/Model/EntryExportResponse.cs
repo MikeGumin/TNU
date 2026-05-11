@@ -34,7 +34,6 @@ public class EntryExportResponse
     [Name("Текущее время")]
     public required string DuringTime { get; set; }
     
-    
     /// <summary>
     /// Продолжительность мин.
     /// </summary>
@@ -47,6 +46,30 @@ public class EntryExportResponse
     [Name("Индекс")]
     public required string JobCode { get; set; }
     
+    /// <summary>
+    /// Уточнить время записи
+    /// </summary>
+    [Name("Уточнить время")]
+    public required string IsCorrectly { get; set; }
+    
+    /// <summary>
+    /// Дата, когда проводилась работа
+    /// </summary>
+    [Name("Дата работы")]
+    public required DateTime JobDate { get; set; }
+    
+    /// <summary>
+    /// Дата, когда проводилась работа
+    /// </summary>
+    [Name("Время начала")]
+    public required string JobDateStart { get; set; }
+    
+    /// <summary>
+    /// Дата, когда проводилась работа
+    /// </summary>
+    [Name("Время окончания")]
+    public required string JobDateEnd { get; set; }
+
     /// <summary>
     /// Дата, когда проводилась работа
     /// </summary>

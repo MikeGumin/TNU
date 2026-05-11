@@ -13,4 +13,9 @@ public interface IFileDialogService
     /// </summary>
     /// <param name="fileName">Название файла</param>
     Task<Stream?> SaveFileAsync(string fileName);
+    
+    /// <summary>
+    /// Открыть файловый диалог 
+    /// </summary>
+    Task OpenFileAsync();
 }

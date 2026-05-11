@@ -34,10 +34,34 @@ public class EntryExportService : IEntryExportService
         {
             return OperationResult<string>.Fail("Ошибка при сохранение файла. Попробуйте еще раз.");
         }
-
+        
         using (var writer = new StreamWriter(stream))
+        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
+            csv.WriteHeader<EntryExportHeader>();
+            await csv.NextRecordAsync();
+
+            csv.WriteRecord(new EntryExportHeader()
+            {
+                ExpertFullName = observation.InspectorName,
+                City = observation.City.Split()[0],
+                Enterprise = observation.City.Split()[^1],
+                RespondentCode = observation.RespondentId,
+                RespondentFullName = "",
+                EntryDate = DateTime.Now.ToString("dd/MM/yyyy"),
+                StartObservation = observation.JobDate.ToString("HH:mm:ss"),
+                EndObservation = DateTime.Now.ToString("HH:mm:ss"),
+            });
+            await csv.NextRecordAsync();
+            
+            await writer.WriteLineAsync();
+            
+            csv.WriteHeader<EntryExportResponse>();
+            await csv.NextRecordAsync();
+            
             var exportList = new List<EntryExportResponse>();
+            var orderEntryList = entryList.OrderBy(e => e.StartTime);
+            var id = 1;
 
             var orderEntryList = entryList.OrderBy(e => e.StartTime);
             var id = 1;
@@ -53,7 +77,9 @@ public class EntryExportService : IEntryExportService
                         JobTime = entry.JobSample,
                         JobDate = entry.JobDate.ToString("dd/MM/yyyy"),
                         DuringTime = entry.EndTime,
-                        JobCode = entry.JobCode
+                        IsCorrectly = entry.IsTimedCorrectly ? "Да" : "Нет",
+                        JobCode = entry.JobCode,
+                        Comments =  entry.Description,
                     });
                 }
             }
@@ -75,7 +101,7 @@ public class EntryExportService : IEntryExportService
 
             }
         }
-
+        
         return OperationResult<string>.Ok();
     }
 

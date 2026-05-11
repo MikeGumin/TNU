@@ -66,6 +66,7 @@ public partial class FrdPageViewModel: PageViewModelBase
     private async Task ExportEntries()
     {
         var exportResult = await _entryExportService.CsvEntryAsync(
+            ObservationElement,
             FinishedEntriesRepository.FinishedEntries,
             _fileDialogService
         );
