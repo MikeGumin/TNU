@@ -53,7 +53,7 @@
                                FontFamily="{StaticResource RussianRailFont}"/>
                     <TextBox Text="{Binding ObservationElement.RespondentName}"
                              Classes="LoginText"/>
-
+                    
                     <TextBlock Text="Город проведения замера"
                                TextWrapping="Wrap" Foreground="Gray"/>
                     <TextBox Classes="LoginText" Text="{Binding ObservationElement.City}"/>

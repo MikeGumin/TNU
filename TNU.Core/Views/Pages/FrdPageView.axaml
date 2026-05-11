@@ -56,7 +56,21 @@
                         <DataGridTextColumn Header="Что наблюдается" Binding="{Binding JobName}"/>
                         <DataGridTextColumn Header="Текущее время" Binding="{Binding EndTime}"/>
                         <DataGridTextColumn Header="Продолжительность мин" Binding="{Binding JobSample}"/>
-                        <DataGridTextColumn Header="Индекс или код" Binding="{Binding JobCode}"/>
+                        <DataGridTemplateColumn Header="Индекс или код">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="{Binding JobCode}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellEditingTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding JobCode}"
+                                             VerticalContentAlignment="Center"
+                                             GotFocus="JobCodeTextBox_OnGotFocus"
+                                             LostFocus="JobCodeTextBox_OnLostFocus"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridCheckBoxColumn Header="Уточнить время" Binding="{Binding IsTimedCorrectly}"/>
                         <DataGridTextColumn Width="*" Header="Коментарий" Binding="{Binding Description}"/>
                     </DataGrid.Columns>

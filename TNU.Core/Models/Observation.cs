@@ -14,13 +14,13 @@ namespace TNU.Core.Models
         /// <summary>
         /// Инспектор который делает запись
         /// </summary>
-        public string InspectorName { get; set; }
-        public string RespondentName { get; set; }
+        public string InspectorName { get; set; } = string.Empty;
+        public string? RespondentName { get; set; }
 
         /// <summary>
         /// Наблюдаемый за кем ведется наблюдение 
         /// </summary>
-        public string? RespondentId { get; set; }
+        public string RespondentId { get; set; } = string.Empty;
 
         /// <summary>
         /// Дата записи
@@ -61,9 +61,5 @@ namespace TNU.Core.Models
                 OnPropertyChanged();
             }
         } 
-
-        
-
-
     }
 }

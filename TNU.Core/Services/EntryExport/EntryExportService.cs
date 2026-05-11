@@ -56,10 +56,10 @@ public class EntryExportService : IEntryExportService
             csv.WriteRecord(new EntryExportHeader()
             {
                 ExpertFullName = observation.InspectorName,
-                City = observation.City.Split()[0],
-                Enterprise = observation.City.Split()[^1],
+                City = observation.City,
+                Enterprise = observation.Enterprise,
                 RespondentCode = observation.RespondentId,
-                RespondentFullName = "",
+                RespondentFullName = observation.RespondentName,
                 EntryDate = DateTime.Now.ToString("dd/MM/yyyy"),
                 StartObservation = observation.JobDate.ToString("HH:mm:ss"),
                 EndObservation = DateTime.Now.ToString("HH:mm:ss"),
@@ -83,10 +83,10 @@ public class EntryExportService : IEntryExportService
                     {
                         Id = id++,
                         JobTitle = entry.JobName,
-                        JobTime = entry.JobSample,
+                        JobTime = entry.JobSample.Substring(0, entry.JobSample.LastIndexOf(':')),
                         JobDate = entry.JobDate,
                         JobDateStart = entry.StartTime,
-                        JobDateEnd = entry.EndTime,
+                        JobDateEnd = entry.JobDate.Add(DateTime.Parse(entry.EndTime).TimeOfDay).ToString("HH:mm:ss"),
                         DuringTime = entry.EndTime,
                         IsCorrectly = entry.IsTimedCorrectly ? "Да" : "Нет",
                         JobCode = entry.JobCode,
