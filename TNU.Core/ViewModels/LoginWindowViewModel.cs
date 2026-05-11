@@ -1,5 +1,11 @@
-﻿using Avalonia.Controls.ApplicationLifetimes;
+﻿using System;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.Input;
+using CsvHelper;
 using DocumentFormat.OpenXml.Vml.Office;
 using Microsoft.Extensions.DependencyInjection;
 using TNU.Core.Models;
@@ -120,7 +126,7 @@ namespace TNU.Core.ViewModels
 
         private bool IsCompleted()
         {
-            return ObservationElement.RespondentId != "" && ObservationElement.InspectorName != "";
+            return ObservationElement.City != "" && ObservationElement.RespondentId != null && ObservationElement.InspectorName != null;
         }
     }
 }
