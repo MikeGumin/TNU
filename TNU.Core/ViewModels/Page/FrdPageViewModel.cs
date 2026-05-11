@@ -176,6 +176,7 @@ public partial class FrdPageViewModel: PageViewModelBase
         if (frdWindow.DataContext is AllFrdWindowViewModel a)
         {
             a.MainObservation = ObservationElement;
+            a.ViewModel = this;
         }
 
         frdWindow.Show();

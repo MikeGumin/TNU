@@ -107,6 +107,7 @@ namespace TNU.Core.ViewModels
             if (frdWindow.DataContext is AllFrdWindowViewModel a)
             {
                 a.MainObservation = ObservationElement;
+                a.ViewModel = this;
             }
 
             frdWindow.Show();
