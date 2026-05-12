@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.JavaScript;
 using TNU.Core.Models.Enum;
+using TNU.Core.Repository;
 
 namespace TNU.Core.Models;
 
@@ -39,6 +40,8 @@ public partial class JobEntry : NotifyChangedModel
         {
             jobName = value;
             OnPropertyChanged();
+            
+            AutoFillJobCode();
         }
     }
 
@@ -100,7 +103,16 @@ public partial class JobEntry : NotifyChangedModel
 
     /// Код работы
     /// </summary>
-    public string JobCode { get; set; } = string.Empty;
+    private string _jobCode;
+    public string JobCode
+    {
+        get => _jobCode;
+        set
+        {
+            _jobCode = value;
+            OnPropertyChanged();
+        }
+    }
 
     /// <summary>
     /// Статус записи
@@ -154,6 +166,19 @@ public partial class JobEntry : NotifyChangedModel
         catch (Exception e)
         {
             return OperationResult.Fail($"Ошибка перевода времени окончания, некоректное значение - {value}");
+        }
+    }
+    
+    private void AutoFillJobCode()
+    {
+        if (!string.IsNullOrWhiteSpace(JobName) && 
+            string.IsNullOrWhiteSpace(JobCode))
+        {
+            if (JobNameRepository.JobNameCodeList.TryGetValue(JobName, out var code) && 
+                !string.IsNullOrWhiteSpace(code))
+            {
+                JobCode = code;
+            }
         }
     }
 }

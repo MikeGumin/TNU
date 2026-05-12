@@ -29,19 +29,19 @@ public class EntryExportHeader
     /// Идентификатор записи
     /// </summary>
     [Name("ФИО респондента")]
-    public required string RespondentFullName { get; set; }
+    public string? RespondentFullName { get; set; }
     
     /// <summary>
     /// Род деятельности
     /// </summary>
     [Name("Предприятие")]
-    public required string Enterprise { get; set; }
+    public string? Enterprise { get; set; }
     
     /// <summary>
     /// 
     /// </summary>
     [Name("Город")]
-    public required string City { get; set; }
+    public string? City { get; set; }
     
     /// <summary>
     /// 

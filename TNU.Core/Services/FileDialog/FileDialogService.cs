@@ -53,11 +53,6 @@ public class FileDialogService : IFileDialogService
         {
             Title = "Открыть файл",
             AllowMultiple = false, // Только один файл
-            FileTypeFilter = new[] 
-            { 
-                new FilePickerFileType("Текстовые файлы") { Patterns = new[] { "*.txt" } },
-                new FilePickerFileType("Все файлы") { Patterns = new[] { "*" } }
-            }
         });
         
         if (files.Count >= 1)
@@ -86,5 +81,8 @@ public class FileDialogService : IFileDialogService
                 }
             }
         }
+        
+        // foreach (var file in JobNameRepository.JobNameCodeList) Console.WriteLine(file.Key + "-" + file.Value);
+        
     }
 }
