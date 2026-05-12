@@ -138,7 +138,7 @@
 																</i:Interaction.Behaviors>
 																<AutoCompleteBox.ItemTemplate>
 																	<DataTemplate x:DataType="enum:JobTitleEnum">
-																		<TextBlock Text="{Binding Name}" Foreground="White" FontSize="14" Padding="4"/>
+																		<TextBlock Text="{Binding Name}" FontSize="14" Padding="4"/>
 																	</DataTemplate>
 																</AutoCompleteBox.ItemTemplate>
 															</AutoCompleteBox>

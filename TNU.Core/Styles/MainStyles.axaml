@@ -19,6 +19,9 @@
 		<SolidColorBrush x:Key="BtnSecondary">#F4F4F4</SolidColorBrush>
 		<SolidColorBrush x:Key="BtnHover">#00a0dc</SolidColorBrush>
 
+		<!--TogleButton-->
+		<SolidColorBrush x:Key="BtnStart">#228B22</SolidColorBrush>
+
 		<!--Field-->
 		<SolidColorBrush x:Key="FieldActive">#e9f9ff</SolidColorBrush>
 		<SolidColorBrush x:Key="FieldHover">#f8fdff</SolidColorBrush>
@@ -26,6 +29,28 @@
 		<SolidColorBrush x:Key="divider">#cecece</SolidColorBrush>
 
 	</Styles.Resources>
+
+    <Style Selector="AutoCompleteBox TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource MainFont}" />
+    </Style>
+
+    <Style Selector="AutoCompleteBox">
+        <Setter Property="Foreground" Value="{StaticResource Page}" />
+    </Style>
+
+    <Style Selector="AutoCompleteBox ListBoxItem">
+        <Setter Property="Background" Value="{StaticResource Form}" />
+    </Style>
+    <Style Selector="AutoCompleteBox TextElement">
+        <Setter Property="Background" Value="{StaticResource BtnSecondary}" />
+        <Setter Property="Foreground" Value="{StaticResource MainFont}" />
+    </Style>
+
+
+
+
+
+
 
 	<Style Selector="DataGrid">
 		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
@@ -46,16 +71,6 @@
 	<Style Selector="Button.Gray">
 		<Setter Property="Background" Value="{StaticResource SecondFond}"/>
 		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
-	</Style>
-
-	<Style Selector="Button.Start">
-		<Setter Property="Background" Value="{StaticResource BtnSecondary}"/>
-		<Setter Property="Foreground" Value="#0055f1" />
-	</Style>
-
-	<Style Selector="Button.Stop">
-		<Setter Property="Background" Value="{StaticResource BtnSecondary}"/>
-		<Setter Property="Foreground" Value="#ff1103" />
 	</Style>
 
 	<Style Selector="Button.SecondBtn">
@@ -88,8 +103,8 @@
 		<Setter Property="Background" Value="{StaticResource MyRed}"/>
 	</Style>
 
-	<Style Selector="ToggleButton:checked">
-		<Setter Property="Background" Value="#4CAF50"/>
+	<Style Selector="ToggleButton:checked /template/ ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource BtnStart}"/>
 
 	</Style>
 
@@ -219,4 +234,9 @@
 	<Style Selector="Window">
 		<Setter Property="Background" Value="{StaticResource Page}"/>
 	</Style>
+
+
+
+
+
 </Styles>
