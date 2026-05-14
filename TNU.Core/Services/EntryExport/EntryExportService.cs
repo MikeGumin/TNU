@@ -47,11 +47,13 @@ public class EntryExportService : IEntryExportService
             // Encoding = Encoding.UTF8
         };
 
-        using (var writer = new StreamWriter(stream))
-        using (var csv = new CsvWriter(writer, config))
+        await using (var writer = new StreamWriter(stream))
+        await using (var csv = new CsvWriter(writer, config))
         {
             csv.WriteHeader<EntryExportHeader>();
             await csv.NextRecordAsync();
+            
+            var orderEntryList = entryList.OrderBy(e => e.StartTime).ToList();
 
             csv.WriteRecord(new EntryExportHeader()
             {
@@ -61,8 +63,8 @@ public class EntryExportService : IEntryExportService
                 RespondentCode = observation.RespondentId,
                 RespondentFullName = observation.RespondentName,
                 EntryDate = DateTime.Now.ToString("dd/MM/yyyy"),
-                StartObservation = observation.JobDate.ToString("HH:mm:ss"),
-                EndObservation = DateTime.Now.ToString("HH:mm:ss"),
+                StartObservation = orderEntryList[0].JobDate.Add(DateTime.Parse(orderEntryList[0].StartTime).TimeOfDay).ToString("HH:mm:ss"),
+                EndObservation = orderEntryList[^1].JobDate.Add(DateTime.Parse(orderEntryList[^1].EndTime).TimeOfDay).ToString("HH:mm:ss"),
             });
             await csv.NextRecordAsync();
             
@@ -72,7 +74,6 @@ public class EntryExportService : IEntryExportService
             await csv.NextRecordAsync();
             
             var exportList = new List<EntryExportResponse>();
-            var orderEntryList = entryList.OrderBy(e => e.StartTime);
             var id = 1;
 
             foreach (var entry in orderEntryList)
@@ -83,11 +84,11 @@ public class EntryExportService : IEntryExportService
                     {
                         Id = id++,
                         JobTitle = entry.JobName,
+                        DuringTime = entry.StartTime,
                         JobTime = entry.JobSample.Substring(0, entry.JobSample.LastIndexOf(':')),
-                        JobDate = entry.JobDate,
-                        JobDateStart = entry.StartTime,
+                        JobDate = entry.JobDate.ToString("dd/MM/yyyy"),
+                        JobDateStart = entry.JobDate.Add(DateTime.Parse(entry.StartTime).TimeOfDay).ToString("HH:mm:ss"),
                         JobDateEnd = entry.JobDate.Add(DateTime.Parse(entry.EndTime).TimeOfDay).ToString("HH:mm:ss"),
-                        DuringTime = entry.EndTime,
                         IsCorrectly = entry.IsTimedCorrectly ? "Да" : "Нет",
                         JobCode = entry.JobCode,
                         Comments =  entry.Description,
