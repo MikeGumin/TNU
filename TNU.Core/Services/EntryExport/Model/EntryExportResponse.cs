@@ -56,7 +56,7 @@ public class EntryExportResponse
     /// Дата, когда проводилась работа
     /// </summary>
     [Name("Дата работы")]
-    public required DateTime JobDate { get; set; }
+    public required string JobDate { get; set; }
     
     /// <summary>
     /// Дата, когда проводилась работа

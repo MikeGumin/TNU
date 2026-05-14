@@ -69,7 +69,7 @@
                 </StackPanel>
             </Border>
 
-            <Button Classes="SecondBtn" Command="{Binding OpenFileCommand}"  Content=" Открыть регистр&#x0a;наименования задач"
+            <Button Classes="SecondBtn" Command="{Binding OpenFileCommand}"  Content=" Открыть перечень&#x0a;наименований задач"
                     Background="#EAEAEA"
                     Foreground="#8D8D8D"
                     HorizontalAlignment="Stretch"
@@ -87,7 +87,7 @@
                     Margin="0 10 0 0 "
                     FontFamily="{StaticResource RussianRailFont}"/>
 
-            <Button Classes="SecondBtn" Command="{Binding ImportActivityListCommand}"  Content="Загрузить регистр&#x0a;наименования задач"
+            <Button Classes="SecondBtn" Command="{Binding ImportActivityListCommand}"  Content="Загрузить перечень&#x0a;наименований задач"
                     Background="#EAEAEA"
                     Foreground="#8D8D8D"
                     HorizontalAlignment="Stretch"
