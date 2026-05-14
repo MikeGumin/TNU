@@ -46,13 +46,6 @@ namespace TNU.Core.ViewModels
             // Проверка введены ли данные в окна. Работает, но пока убрал 
             if (IsCompleted())
                 OnLoginSuccess();
-            else
-            {
-                var dialog = new ConfirmDialog($"Заполните все поля");
-                dialog.ShowDialog(App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
-                    ? desktop.MainWindow
-                    : null);
-            }
         }
 
         [RelayCommand]

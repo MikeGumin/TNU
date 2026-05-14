@@ -35,15 +35,16 @@
     </Style>
 
     <Style Selector="AutoCompleteBox">
-        <Setter Property="Foreground" Value="{StaticResource Page}" />
+        <Setter Property="Foreground" Value="{StaticResource MainFont}" />
+        <Setter Property="TextElement.Background" Value="{StaticResource BtnSecondary}" />
     </Style>
 
     <Style Selector="AutoCompleteBox ListBoxItem">
         <Setter Property="Background" Value="{StaticResource Form}" />
     </Style>
-    <Style Selector="AutoCompleteBox TextElement">
-        <Setter Property="Background" Value="{StaticResource BtnSecondary}" />
-        <Setter Property="Foreground" Value="{StaticResource MainFont}" />
+
+    <Style Selector="AutoCompleteBox ContentPresenter:pointerover">
+        <Setter Property="Background" Value="{StaticResource SecondFond}" />
     </Style>
 
 
