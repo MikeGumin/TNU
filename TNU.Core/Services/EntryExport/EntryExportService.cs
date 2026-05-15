@@ -62,7 +62,8 @@ public class EntryExportService : IEntryExportService
                 Enterprise = observation.Enterprise,
                 RespondentCode = observation.RespondentId,
                 RespondentFullName = observation.RespondentName,
-                EntryDate = DateTime.Now.ToString("dd/MM/yyyy"),
+                EntryDt = DateTime.Now.ToString("dd/MM/yyyy"),
+                EntryTm = DateTime.Now.ToString("HH:mm:ss"),
                 StartObservation = orderEntryList[0].JobDate.Add(DateTime.Parse(orderEntryList[0].StartTime).TimeOfDay).ToString("HH:mm:ss"),
                 EndObservation = orderEntryList[^1].JobDate.Add(DateTime.Parse(orderEntryList[^1].EndTime).TimeOfDay).ToString("HH:mm:ss"),
             });

@@ -113,8 +113,6 @@ namespace TNU.Core.ViewModels
         {
             await _fileDialogService.OpenFileAsync();
 
-            _isActivityListExport = true;
-
             return OperationResult<string>.Ok();
         }
 

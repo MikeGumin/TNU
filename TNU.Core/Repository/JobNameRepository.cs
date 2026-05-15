@@ -22,7 +22,10 @@ namespace TNU.Core.Repository
             foreach (var job in ReadCsvFile.Read())
             {
                 AddJob(new JobTitleEnum(job[0])); // добавляем наименование в список из файла
-                JobNameCodeList[job[0]] = job[1]; // добавляем наименование в 
+                if (!string.IsNullOrWhiteSpace(job[1]))
+                {
+                    JobNameCodeList[job[0]] = job[1]; // добавляем наименование в
+                }
             }
         }
 
