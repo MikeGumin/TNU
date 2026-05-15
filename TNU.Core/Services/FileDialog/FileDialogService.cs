@@ -57,29 +57,38 @@ public class FileDialogService : IFileDialogService
         
         if (files.Count >= 1)
         {
-            await using var stream = await files[0].OpenReadAsync();
-            using var streamReader = new StreamReader(stream);
-
-            string? line;
-
-            while ((line = await streamReader.ReadLineAsync()) is not null)
+            string relativePath = SystemConst.JobNameFilePath;
+            string fullPath = Path.Combine(AppContext.BaseDirectory, relativePath);
+            
+            await using (StreamWriter writer = new StreamWriter(fullPath, false))
             {
-                if (string.IsNullOrWhiteSpace(line)) continue;
-                
-                var columns = line.Split(':');
-                
-                var jobName = columns[0].Trim();
-                JobNameRepository.JobNameList.Add(new JobTitleEnum(jobName));
+                await using var stream = await files[0].OpenReadAsync();
+                using var streamReader = new StreamReader(stream);
 
-                if (columns.Length > 1)
+                string? line;
+
+                while ((line = await streamReader.ReadLineAsync()) is not null)
                 {
-                    var code = columns[1].Trim();
-                    if (!string.IsNullOrWhiteSpace(code))
-                    {
-                        JobNameRepository.JobNameCodeList[jobName] = code;    
-                    }  
+                    if (string.IsNullOrWhiteSpace(line)) continue;
+
+                    writer.WriteLine(line);
+                
+                    // var columns = line.Split(':');
+                    //
+                    // var jobName = columns[0].Trim();
+                    // JobNameRepository.JobNameList.Add(new JobTitleEnum(jobName));
+                    //
+                    // if (columns.Length > 1)
+                    // {
+                    //     var code = columns[1].Trim();
+                    //     if (!string.IsNullOrWhiteSpace(code))
+                    //     {
+                    //         JobNameRepository.JobNameCodeList[jobName] = code;    
+                    //     }  
+                    // }
                 }
             }
+            
         }
         
         // foreach (var file in JobNameRepository.JobNameCodeList) Console.WriteLine(file.Key + "-" + file.Value);

@@ -15,9 +15,14 @@ public class EntryExportHeader
     /// <summary>
     /// Род деятельности
     /// </summary>
-    // [ExcelColumnName("Род деятельности")]
     [Name("Дата")]
-    public required string EntryDate { get; set; }
+    public required string EntryDt { get; set; }
+    
+    /// <summary>
+    /// Род деятельности
+    /// </summary>
+    [Name("Время")]
+    public required string EntryTm { get; set; }
     
     /// <summary>
     /// 
