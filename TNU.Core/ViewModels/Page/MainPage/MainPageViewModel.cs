@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Avalonia.Controls;
+using CommunityToolkit.Mvvm.Input;
+using DocumentFormat.OpenXml.Vml.Office;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -6,8 +9,6 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Avalonia.Controls;
-using CommunityToolkit.Mvvm.Input;
 using TNU.Core.Models;
 using TNU.Core.Models.Enum;
 using TNU.Core.Services;
@@ -96,6 +97,14 @@ public partial class MainPageViewModel : PageViewModelBase
         SystemStatic.GeneralStopwatch.Stop();
 
         Title = "MainPage";
+
+        foreach (string[] job in ReadCsvFile.Read(SystemConst.StartingPreparationsFilePath))
+        {
+            var entry = new JobEntryClock();
+            entry.Entry.JobName = job[0];
+            entry.IsSavePrepareJob = Convert.ToBoolean(job[1]);
+            ListPreparation.Add(entry);
+        }
     }
 
     #endregion

@@ -11,13 +11,14 @@ namespace TNU.Core.Services.CsvFile
 {
     static class ReadCsvFile
     {
-        private static readonly string FilePath = SystemConst.JobNameFilePath;
-        public static List<string[]> Read()
+        private static readonly string FilePath = SystemConst.StartingPreparationsFilePath;
+        public static List<string[]> Read(string FilePath = SystemConst.JobNameFilePath)
         {
             if (!File.Exists(FilePath))
-                using (File.Create(FilePath)) { } ;
+                using (File.Create(FilePath)) { }
+            ;
 
-            
+
             string[] lines = File.ReadAllLines(FilePath);
 
             List<string[]> result = new List<string[]>();
@@ -35,6 +36,7 @@ namespace TNU.Core.Services.CsvFile
 
             return result;
         }
+
         public static void Write(string? jobName)
         {
             if (string.IsNullOrEmpty(jobName))

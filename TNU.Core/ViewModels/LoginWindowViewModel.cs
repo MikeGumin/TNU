@@ -51,7 +51,13 @@ namespace TNU.Core.ViewModels
         [RelayCommand]
         public void OpenFile()
         {
-            _fileOpenerService.OpenFile();
+            _fileOpenerService.OpenFile(SystemConst.JobNameFilePath);
+        }
+
+        [RelayCommand]
+        public void OpenSecondFile()
+        {
+            _fileOpenerService.OpenFile(SystemConst.StartingPreparationsFilePath);
         }
 
         private void OnLoginSuccess()

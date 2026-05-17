@@ -7,10 +7,10 @@ namespace TNU.Core.Services.FileOpener
 {
     public class FileOpenerService : IFileOpenerService
     {
-        public void OpenFile()
+        public void OpenFile(string filePath)
         {
             // длаем из относительного пути полный 
-            string relativePath = SystemConst.JobNameFilePath;
+            string relativePath = filePath;
             string fullPath = Path.Combine(AppContext.BaseDirectory, relativePath);
 
             if (File.Exists(fullPath))
