@@ -4,6 +4,7 @@ namespace TNU.Core
     static public class SystemConst
     {
         public const string JobNameFilePath = "ActivityList.csv";
+        public const string StartingPreparationsFilePath = "StartingPreparations.csv";
 
         /// <summary>
         /// Индекс верхней строки дата
