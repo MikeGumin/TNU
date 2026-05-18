@@ -100,10 +100,19 @@ public partial class MainPageViewModel : PageViewModelBase
 
         foreach (string[] job in ReadCsvFile.Read(SystemConst.StartingPreparationsFilePath))
         {
-            var entry = new JobEntryClock();
-            entry.Entry.JobName = job[0];
-            entry.IsSavePrepareJob = Convert.ToBoolean(job[1]);
-            ListPreparation.Add(entry);
+            try
+            {
+                var entry = new JobEntryClock();
+                entry.Entry.JobName = job[0];
+
+                if (bool.TryParse(job[1], out bool isTrue))
+                {
+                    entry.IsSavePrepareJob = isTrue;
+                }
+
+                ListPreparation.Add(entry);
+            }
+            catch{}
         }
     }
 
