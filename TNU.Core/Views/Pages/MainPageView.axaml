@@ -107,12 +107,12 @@
 																		Command="{Binding ElementName=LeftDockPanel, Path=DataContext.EndTimerCommand}"
 																		CommandParameter="{Binding}"/>
 
-																	<ToggleButton IsChecked="False"
-																			Margin="10 0 0 0"
-																			Content="{Binding BtnText}"
-																			Command="{Binding ElementName=LeftDockPanel, Path=DataContext.ChangeTimerCommand}"
-																			CommandParameter="{Binding}"
-																			Background="#8D8D8D"/>
+																<ToggleButton IsChecked="False"
+																			  Margin="10 0 0 0"
+																			  Content="{Binding BtnText}"
+																			  Command="{Binding ElementName=LeftDockPanel, Path=DataContext.ChangeTimerCommand}"
+																			  CommandParameter="{Binding}"
+																			  Background="#8D8D8D"/>
 
 															</StackPanel>
 														</DockPanel>
@@ -165,7 +165,7 @@
 					</Grid>
 				</Border>
 
-				<Grid Grid.Row="1" >
+				<Grid Grid.Row="1">
 					<Button
 					Content="Добавить наблюдение"
 					HorizontalAlignment="Stretch"
@@ -183,67 +183,69 @@
 		ResizeDirection="Columns"/>
 		<!--Правая панель: сохранённые записи-->
 		<DockPanel Grid.Column="3" Grid.Row="1" Background="#F8F8F8">
-			<Grid RowDefinitions="30, *, 50">
-				<TextBlock Text="Заготовки"
-						   FontWeight="Bold"
-						   Margin="5"
-						   Padding="5"
-						   HorizontalAlignment="Stretch"
-						   TextAlignment="Center"/>
+			<Grid RowDefinitions="*, 50">
+				<Border Grid.Row="0">
+					<Grid RowDefinitions="30, *">
+						<TextBlock Text="Заготовки"
+								   FontWeight="Bold"
+								   Margin="5"
+								   Padding="5"
+								   HorizontalAlignment="Stretch"
+								   TextAlignment="Center"/>
 
-				<Border Grid.Row="1">
-					<ScrollViewer >
-						<StackPanel>
+						<ScrollViewer  Grid.Row="1">
 							<StackPanel>
-								<ItemsControl ItemsSource="{Binding ListPreparation}">
-									<ItemsControl.ItemTemplate>
-										<DataTemplate>
-											<Border CornerRadius="5" Background="#FFFFFF">
-												<Grid ColumnDefinitions="30, *, Auto, Auto" Background="#F4F4F4" Margin="10 0 " ColumnSpacing="10">
-													<CheckBox Margin="10 5 0 5"
-															  Grid.Column="0"
-															  IsChecked="{Binding IsSavePrepareJob}"
-															  />
+								<StackPanel>
+									<ItemsControl ItemsSource="{Binding ListPreparation}">
+										<ItemsControl.ItemTemplate>
+											<DataTemplate>
+												<Border CornerRadius="5" Background="#FFFFFF">
+													<Grid ColumnDefinitions="30, *, Auto, Auto" Background="#F4F4F4" Margin="10 0 " ColumnSpacing="10">
+														<CheckBox Margin="10 5 0 5"
+																  Grid.Column="0"
+																  IsChecked="{Binding IsSavePrepareJob}"
+																  />
 
-													<AutoCompleteBox Grid.Column="1"
-																	 x:Name="JobNameTextBox"
-																	 Text="{Binding Entry.JobName}"
-																	 ItemsSource="{x:Static repository1:JobNameRepository.JobNameList}"
-																	 FilterMode="Contains"
-																	 MinimumPrefixLength="1"
-																	 IsTextCompletionEnabled="True"
-																	 BorderBrush="#8D8D8D"
-																	 BorderThickness="2"
-																	 Margin="0 5 0 5">
-														<i:Interaction.Behaviors>
-															<behaviors:AddNewJobBehavior />
-														</i:Interaction.Behaviors>
+														<AutoCompleteBox Grid.Column="1"
+																		 x:Name="JobNameTextBox"
+																		 Text="{Binding Entry.JobName}"
+																		 ItemsSource="{x:Static repository1:JobNameRepository.JobNameList}"
+																		 FilterMode="Contains"
+																		 MinimumPrefixLength="1"
+																		 IsTextCompletionEnabled="True"
+																		 BorderBrush="#8D8D8D"
+																		 BorderThickness="2"
+																		 Margin="0 5 0 5">
+															<i:Interaction.Behaviors>
+																<behaviors:AddNewJobBehavior />
+															</i:Interaction.Behaviors>
 
-														<AutoCompleteBox.ItemTemplate>
-															<DataTemplate x:DataType="enum:JobTitleEnum">
-																<TextBlock Text="{Binding Name}"
-																		   FontSize="14"
-																		   Padding="4"/>
-															</DataTemplate>
-														</AutoCompleteBox.ItemTemplate>
-													</AutoCompleteBox>
+															<AutoCompleteBox.ItemTemplate>
+																<DataTemplate x:DataType="enum:JobTitleEnum">
+																	<TextBlock Text="{Binding Name}"
+																			   FontSize="14"
+																			   Padding="4"/>
+																</DataTemplate>
+															</AutoCompleteBox.ItemTemplate>
+														</AutoCompleteBox>
 
-													<Button Grid.Column="2" Content="Старт" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.AddTaskForomListPreparationCommand}" CommandParameter="{Binding}"/>
-													<Button Grid.Column="3" Classes="Gray" Content="Удалить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.DeliteFromListPreparationCommand}" CommandParameter="{Binding}"
-															Margin="0 0 10 0"/>
+														<Button Grid.Column="2" Content="Старт" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.AddTaskForomListPreparationCommand}" CommandParameter="{Binding}"/>
+														<Button Grid.Column="3" Classes="Gray" Content="Удалить" Command="{Binding  ElementName=LeftDockPanel,  Path=DataContext.DeliteFromListPreparationCommand}" CommandParameter="{Binding}"
+																Margin="0 0 10 0"/>
 
-												</Grid>
-											</Border>
+													</Grid>
+												</Border>
 
-										</DataTemplate>
-									</ItemsControl.ItemTemplate>
-								</ItemsControl>
+											</DataTemplate>
+										</ItemsControl.ItemTemplate>
+									</ItemsControl>
+								</StackPanel>
 							</StackPanel>
-						</StackPanel>
-					</ScrollViewer>
+						</ScrollViewer>
+					</Grid>
 				</Border>
 
-				<Grid Grid.Row="2">
+				<Grid Grid.Row="1">
 					<Button
 					Content="Добавить заготовку"
 					HorizontalAlignment="Stretch"
