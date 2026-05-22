@@ -35,19 +35,16 @@ public class EntryExportService : IEntryExportService
         {
             return OperationResult<string>.Fail("Ошибка при сохранение файла. Попробуйте еще раз.");
         }
+        
+        var bomEncoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true);
 
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             Delimiter = ";",
-            Encoding = Encoding.UTF8,
-            // Дополнительно полезные настройки:
-            // HasHeaderRecord = true, // по умолчанию true
-            // Quote = '"',
-            // Escape = '\\',
-            // Encoding = Encoding.UTF8
+            Encoding = bomEncoding,
         };
 
-        await using (var writer = new StreamWriter(stream))
+        await using (var writer = new StreamWriter(stream, bomEncoding))
         await using (var csv = new CsvWriter(writer, config))
         {
             csv.WriteHeader<EntryExportHeader>();

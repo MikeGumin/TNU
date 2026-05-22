@@ -109,6 +109,8 @@
 
 																<ToggleButton IsChecked="False"
 																			  Margin="10 0 0 0"
+																			  HorizontalContentAlignment="Center"
+																			  Width="75"
 																			  Content="{Binding BtnText}"
 																			  Command="{Binding ElementName=LeftDockPanel, Path=DataContext.ChangeTimerCommand}"
 																			  CommandParameter="{Binding}"
