@@ -48,11 +48,18 @@ public class FileDialogService : IFileDialogService
     {
         var topLevel = _getTopLevel();
         if (topLevel is null) return;
+        
+        var csvOnly = new FilePickerFileType("CSV Files")
+        {
+            Patterns = ["*.csv"],
+            MimeTypes = ["text/csv"]
+        };
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
             Title = "Открыть файл",
             AllowMultiple = false, // Только один файл
+            FileTypeFilter = [ csvOnly ]
         });
         
         if (files.Count >= 1)
