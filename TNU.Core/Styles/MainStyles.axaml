@@ -246,7 +246,7 @@
 
 	<!-- Hover мышью -->
 	<Style Selector="AutoCompleteBox ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#3399FF"/>
+		<Setter Property="Background" Value="{StaticResource BtnDef}"/>
 	</Style>
 	<Style Selector="AutoCompleteBox ListBoxItem:pointerover TextBlock">
 		<Setter Property="Foreground" Value="White"/>
@@ -254,7 +254,7 @@
 
 	<!-- ===== SELECTED (клавиши ↑↓ или клик) — фон + цвет текста ===== -->
 	<Style Selector="AutoCompleteBox ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#0078D4"/>
+		<Setter Property="Background" Value="{StaticResource BtnDef}"/>
 	</Style>
 	<Style Selector="AutoCompleteBox ListBoxItem:selected TextBlock">
 		<Setter Property="Foreground" Value="White"/>
@@ -262,7 +262,7 @@
 
 	<!-- ===== SELECTED + HOVER — фон + цвет текста ===== -->
 	<Style Selector="AutoCompleteBox ListBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="#005EA6"/>
+		<Setter Property="Background" Value="{StaticResource BtnDef}"/>
 	</Style>
 	<Style Selector="AutoCompleteBox ListBoxItem:selected:pointerover TextBlock">
 		<Setter Property="Foreground" Value="White"/>
