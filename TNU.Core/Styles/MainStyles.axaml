@@ -236,7 +236,37 @@
 		<Setter Property="Background" Value="{StaticResource Page}"/>
 	</Style>
 
+	<!-- Выпадающий список -->
+	
+	<!-- Обычный элемент -->
+	<Style Selector="AutoCompleteBox ListBoxItem">
+		<Setter Property="Padding" Value="4 6"/>
+		<Setter Property="CornerRadius" Value="4"/>
+	</Style>
 
+	<!-- Hover мышью -->
+	<Style Selector="AutoCompleteBox ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#3399FF"/>
+	</Style>
+	<Style Selector="AutoCompleteBox ListBoxItem:pointerover TextBlock">
+		<Setter Property="Foreground" Value="White"/>
+	</Style>
+
+	<!-- ===== SELECTED (клавиши ↑↓ или клик) — фон + цвет текста ===== -->
+	<Style Selector="AutoCompleteBox ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#0078D4"/>
+	</Style>
+	<Style Selector="AutoCompleteBox ListBoxItem:selected TextBlock">
+		<Setter Property="Foreground" Value="White"/>
+	</Style>
+
+	<!-- ===== SELECTED + HOVER — фон + цвет текста ===== -->
+	<Style Selector="AutoCompleteBox ListBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="#005EA6"/>
+	</Style>
+	<Style Selector="AutoCompleteBox ListBoxItem:selected:pointerover TextBlock">
+		<Setter Property="Foreground" Value="White"/>
+	</Style>
 
 
 

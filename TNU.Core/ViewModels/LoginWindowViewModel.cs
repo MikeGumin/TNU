@@ -114,6 +114,10 @@ namespace TNU.Core.ViewModels
             _windowService.CloseCurrentWindow(frdWindow);
         }
 
+        /// <summary>
+        /// Загрузка перечня наименования задач
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
         private async Task<OperationResult<string>> ImportActivityList()
         {
