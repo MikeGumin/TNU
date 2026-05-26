@@ -24,7 +24,98 @@
     </Window.Styles>
 
     <Grid ColumnDefinitions="Auto,*,Auto"
-          RowDefinitions="auto,*,auto">
+          RowDefinitions="auto,*">
+        
+       <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+           
+            <Border Background="{StaticResource Page}" Padding="10,8">
+                <Grid ColumnDefinitions="Auto,*">
+                    
+                    <Button x:Name="HamburgerButton"
+                            BorderThickness="0"
+                            Padding="6,4"
+                            VerticalAlignment="Center"
+                            Click="HamburgerButton_Click"
+                            Cursor="Hand">
+                        <Panel Width="22" Height="20" VerticalAlignment="Center">
+                            <Path x:Name="BurgerIcon"
+                                  Data="M0,2 H22 M0,9 H22 M0,16 H22"
+                                  Stroke="White"
+                                  StrokeThickness="2.5"
+                                  StrokeLineCap="Round"/>
+                        </Panel>
+                    </Button>
+
+                    <TextBlock Name="TitleTextBlock"
+                               Grid.Column="1"
+                               FontSize="17"
+                               FontWeight="SemiBold"
+                               Foreground="White"
+                               Margin="14,0,0,0"
+                               VerticalAlignment="Center"
+                               FontFamily="{StaticResource RussianRailFont}"/>
+                </Grid>
+            </Border>
+            
+            <SplitView Name="mySplitView"
+                       Grid.Row="1"
+                       OpenPaneLength="230"
+                       PanePlacement="Left"
+                       DisplayMode="Inline"
+                       CompactPaneLength="0">
+                <SplitView.Pane>
+                    <Border Background="{StaticResource Page}"
+                            BorderBrush="{StaticResource BtnDef}">
+                        <StackPanel>
+
+                            <Button Classes="BurgerButton" Command="{Binding OpenFileCommand}">
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <Path Width="18" Height="16"
+                                          Stretch="Uniform"
+                                          Fill="{StaticResource Page}"
+                                          Data="M1,3 L7,3 L9,1 L17,1 L17,13 L1,13 Z M1,5 L17,5"/>
+                                    <TextBlock Classes="BurgerTextBlock" Text="Открыть перечень&#x0a;наименований задач"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Classes="BurgerButton" Command="{Binding OpenSecondFileCommand}">
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <Path Width="18" Height="16"
+                                          Stretch="Uniform"
+                                          Fill="{StaticResource Page}"
+                                          Data="M2,1 L10,1 L16,7 L16,15 L2,15 Z M10,1 L10,7 L16,7"/>
+                                    <TextBlock Classes="BurgerTextBlock" Text="Открыть перечень&#x0a;стартовых заготовок"/>
+                                </StackPanel>
+                            </Button>
+                            
+                            <Button Classes="BurgerButton" Command="{Binding OpenFrdListCommand}" Padding="16,12">
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <Path Width="18" Height="16"
+                                          Stretch="Uniform"
+                                          Fill="{StaticResource Page}"
+                                          Data="M1,1 L15,1 L15,15 L1,15 Z M4,5 H12 M4,8 H12 M4,11 H9"/>
+                                    <TextBlock Classes="BurgerTextBlock" Text="Открыть список ФРД"/>
+                                </StackPanel>
+                            </Button>
+                            
+                            <Button Classes="BurgerButton" Command="{Binding ImportActivityListCommand}">
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <Path Width="18" Height="16"
+                                          Stretch="Uniform"
+                                          Fill="{StaticResource Page}"
+                                          Data="M8,1 L8,11 M4,7 L8,11 L12,7 M1,13 L15,13 L15,15 L1,15 Z"/>
+                                    <TextBlock Classes="BurgerTextBlock" Text="Загрузить перечень&#x0a;наименований задач"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </SplitView.Pane>
+            </SplitView>
+        </Grid>
 
 
         <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -68,42 +159,42 @@
 
                 </StackPanel>
             </Border>
-
-            <Button Classes="SecondBtn" Command="{Binding OpenFileCommand}"  Content=" Открыть перечень&#x0a;наименований задач"
-                    Background="#EAEAEA"
-                    Foreground="#8D8D8D"
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Center"
-                    Padding="5"
-                    Margin="0 10 0 0 "
-                    FontFamily="{StaticResource RussianRailFont}"/>
-
-            <Button Classes="SecondBtn" Command="{Binding OpenSecondFileCommand}"  Content=" Открыть перечень&#x0a;стартовых заготовок"
-                    Background="#EAEAEA"
-                    Foreground="#8D8D8D"
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Center"
-                    Padding="5"
-                    Margin="0 10 0 0 "
-                    FontFamily="{StaticResource RussianRailFont}"/>
-
-            <Button Classes="SecondBtn" Command="{Binding OpenFrdListCommand}"  Content="Открыть список ФРД"
-                    Background="#EAEAEA"
-                    Foreground="#8D8D8D"
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Center"
-                    Padding="5"
-                    Margin="0 10 0 0 "
-                    FontFamily="{StaticResource RussianRailFont}"/>
-
-            <Button Classes="SecondBtn" Command="{Binding ImportActivityListCommand}"  Content="Загрузить перечень&#x0a;наименований задач"
-                    Background="#EAEAEA"
-                    Foreground="#8D8D8D"
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Center"
-                    Padding="5"
-                    Margin="0 10 0 0 "
-                    FontFamily="{StaticResource RussianRailFont}"/>
+            <!-- -->
+            <!-- <Button Classes="SecondBtn" Command="{Binding OpenFileCommand}"  Content=" Открыть перечень&#x0a;наименований задач" -->
+            <!--         Background="#EAEAEA" -->
+            <!--         Foreground="#8D8D8D" -->
+            <!--         HorizontalAlignment="Stretch" -->
+            <!--         HorizontalContentAlignment="Center" -->
+            <!--         Padding="5" -->
+            <!--         Margin="0 10 0 0 " -->
+            <!--         FontFamily="{StaticResource RussianRailFont}"/> -->
+            <!-- -->
+            <!-- <Button Classes="SecondBtn" Command="{Binding OpenSecondFileCommand}"  Content=" Открыть перечень&#x0a;стартовых заготовок" -->
+            <!--         Background="#EAEAEA" -->
+            <!--         Foreground="#8D8D8D" -->
+            <!--         HorizontalAlignment="Stretch" -->
+            <!--         HorizontalContentAlignment="Center" -->
+            <!--         Padding="5" -->
+            <!--         Margin="0 10 0 0 " -->
+            <!--         FontFamily="{StaticResource RussianRailFont}"/> -->
+            <!-- -->
+            <!-- <Button Classes="SecondBtn" Command="{Binding OpenFrdListCommand}"  Content="Открыть список ФРД" -->
+            <!--         Background="#EAEAEA" -->
+            <!--         Foreground="#8D8D8D" -->
+            <!--         HorizontalAlignment="Stretch" -->
+            <!--         HorizontalContentAlignment="Center" -->
+            <!--         Padding="5" -->
+            <!--         Margin="0 10 0 0 " -->
+            <!--         FontFamily="{StaticResource RussianRailFont}"/> -->
+            <!-- -->
+            <!-- <Button Classes="SecondBtn" Command="{Binding ImportActivityListCommand}"  Content="Загрузить перечень&#x0a;наименований задач" -->
+            <!--         Background="#EAEAEA" -->
+            <!--         Foreground="#8D8D8D" -->
+            <!--         HorizontalAlignment="Stretch" -->
+            <!--         HorizontalContentAlignment="Center" -->
+            <!--         Padding="5" -->
+            <!--         Margin="0 10 0 0 " -->
+            <!--         FontFamily="{StaticResource RussianRailFont}"/> -->
         </StackPanel>
 
     </Grid>
