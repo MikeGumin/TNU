@@ -7,7 +7,7 @@
         CanResize="False">
 
     <StackPanel Margin="20" Spacing="20">
-        <TextBlock x:Name="MessageText" TextWrapping="Wrap" Foreground="White"/>
+        <TextBlock x:Name="MessageText" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="White"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
             <Button Content="Да" Width="80" Click="OnYes_Click"/>
             <Button Content="Нет" Width="80" Click="OnNo_Click" />

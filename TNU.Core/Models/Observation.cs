@@ -36,16 +36,16 @@ namespace TNU.Core.Models
         /// <summary>
         /// События которые входят в наблюдения
         /// </summary>
-        public ObservableCollection<JobEntryClock> JobEntriesActiv { get; private set; } = [];
+        public ObservableCollection<JobEntryClock> ActivityJobEntries { get; private set; } = [];
 
         public void AddToActivList(string jobName="") 
         {
-            JobEntriesActiv.Add(CreateJobEntryServise.CreateJobEntry(jobName));
+            ActivityJobEntries.Add(CreateJobEntryServise.CreateJobEntry(jobName));
         }
         public JobEntryClock AddToActivListR(string jobName="") 
         {
             JobEntryClock jobEntryClock = CreateJobEntryServise.CreateJobEntry(jobName);
-            JobEntriesActiv.Insert(0, jobEntryClock);
+            ActivityJobEntries.Insert(0, jobEntryClock);
             return jobEntryClock;
         }
 

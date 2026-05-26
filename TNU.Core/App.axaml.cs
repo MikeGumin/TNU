@@ -16,6 +16,7 @@ using TNU.Core.ViewModels;
 using TNU.Core.Views.DialogViews;
 using LoginWindow = TNU.Core.Views.LoginWindow;
 using LoginWindowViewModel = TNU.Core.ViewModels.LoginWindowViewModel;
+using MainPageViewModel = TNU.Core.ViewModels.Page.MainPage.MainPageViewModel;
 
 namespace TNU.Core;
 
@@ -35,7 +36,7 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             var collection = new ServiceCollection();
-            collection.AddSingleton<ViewModels.MainPageViewModel>();
+            collection.AddSingleton<MainPageViewModel>();
             collection.AddSingleton<ConfirmDialog>();
             collection.AddSingleton<InformationWindow>();
             collection.AddSingleton<LoginWindowViewModel>();

@@ -33,6 +33,23 @@
     <Style Selector="AutoCompleteBox TextBlock">
         <Setter Property="Foreground" Value="{StaticResource MainFont}" />
     </Style>
+	
+	<Style Selector="TextBox">
+		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
+	</Style>
+	
+	<Style Selector="AutoCompleteBox">
+		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
+	</Style>
+	
+	<Style Selector="TextBlock">
+		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
+	</Style>
+	
+	<Style Selector="Button ToolTip">
+        <Setter Property="Foreground" Value="{StaticResource MainFont}" />
+        <Setter Property="Background" Value="{StaticResource BtnSecondary}" />
+	</Style>
 
     <Style Selector="AutoCompleteBox">
         <Setter Property="Foreground" Value="{StaticResource MainFont}" />
@@ -46,12 +63,6 @@
     <Style Selector="AutoCompleteBox ContentPresenter:pointerover">
         <Setter Property="Background" Value="{StaticResource SecondFond}" />
     </Style>
-
-
-
-
-
-
 
 	<Style Selector="DataGrid">
 		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
@@ -83,9 +94,7 @@
 		<Setter Property="Background" Value="{StaticResource BtnHover}" />
 		<Setter Property="Foreground" Value="{StaticResource MainFont}" />
 	</Style>
-
-
-
+	
 	<!-- Стиль когда кнопка нажимается -->
 	<Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
 		<Setter Property="Background" Value="{StaticResource BtnHover}" />
@@ -267,7 +276,11 @@
 	<Style Selector="AutoCompleteBox ListBoxItem:selected:pointerover TextBlock">
 		<Setter Property="Foreground" Value="White"/>
 	</Style>
-
-
-
+	
+	<Style Selector="TextBox.TextBoxMainTime">
+		<Setter Property="FontFamily" Value="{StaticResource RussianRailFont}"/>
+		<Setter Property="Background" Value="{StaticResource Page}"/>
+		<Setter Property="HorizontalContentAlignment" Value="Left"/>
+		<Setter Property="BorderBrush" Value="{StaticResource Page}"/>
+	</Style>
 </Styles>

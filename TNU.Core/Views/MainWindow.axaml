@@ -7,21 +7,15 @@
 		x:Class="TNU.Core.Views.MainWindow"
 
 		x:DataType="mainWindow:MainWindowViewModel"
-
-		xmlns:models1="clr-namespace:TNU.Core.Models"
-		xmlns:repository1="clr-namespace:TNU.Core.Repository"
 		xmlns:sysStatic="clr-namespace:TNU.Core.SystemStatic"
 		xmlns:viewModels="clr-namespace:TNU.Core.ViewModels"
-		xmlns:enum="clr-namespace:TNU.Core.Models.Enum"
-		xmlns:visualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
-		xmlns:behaviors="clr-namespace:TNU.Core.Behaviors"
 		xmlns:views="clr-namespace:TNU.Core"
-		xmlns:i="using:Avalonia.Xaml.Interactivity"
 	
 		xmlns:mainWindow="clr-namespace:TNU.Core.ViewModels.MainWindow"
-		
+		xmlns:mainPage="clr-namespace:TNU.Core.ViewModels.Page.MainPage"
 
-		FontFamily="Segoe UI, Arial, sans-serif"
+
+		FontFamily="RussianRailFont"
 
 		Icon="/Assets/Ricon.png"
 		Title="ТНУ">
@@ -30,7 +24,7 @@
 
 	<Window.DataTemplates>
 		<!-- Главная страница -->
-		<DataTemplate DataType="viewModels:MainPageViewModel">
+		<DataTemplate DataType="mainPage:MainPageViewModel">
 			<views:MainPageView />
 		</DataTemplate>
 
