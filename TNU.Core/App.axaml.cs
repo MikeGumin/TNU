@@ -37,6 +37,7 @@ public partial class App : Application
             var collection = new ServiceCollection();
             collection.AddSingleton<ViewModels.MainPageViewModel>();
             collection.AddSingleton<ConfirmDialog>();
+            collection.AddSingleton<InformationWindow>();
             collection.AddSingleton<LoginWindowViewModel>();
             collection.AddSingleton<AllFrdWindowViewModel>();
             collection.AddSingleton<FrdPageViewModel>();

@@ -75,6 +75,11 @@ public partial class FrdPageViewModel: PageViewModelBase
         {
             await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, FrdWindow!);
         }
+        
+        var dialog = new InformationWindow();
+        await dialog.ShowDialog(App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+            ? desktop.MainWindow
+            : null);
     }
 
     /// <summary>

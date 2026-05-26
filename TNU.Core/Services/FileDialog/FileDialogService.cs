@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
+using CsvHelper.Configuration;
 using TNU.Core.Models.Enum;
 using TNU.Core.Repository;
 
@@ -67,10 +69,15 @@ public class FileDialogService : IFileDialogService
             string relativePath = SystemConst.JobNameFilePath;
             string fullPath = Path.Combine(AppContext.BaseDirectory, relativePath);
             
-            await using (StreamWriter writer = new StreamWriter(fullPath, false))
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                Encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true)
+            };
+            
+            await using (StreamWriter writer = new StreamWriter(fullPath, false, config.Encoding))
             {
                 await using var stream = await files[0].OpenReadAsync();
-                using var streamReader = new StreamReader(stream);
+                using var streamReader = new StreamReader(stream, config.Encoding);
 
                 string? line;
 

@@ -7,7 +7,8 @@
         xmlns:viewModels="clr-namespace:TNU.Core.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="TNU.Core.Views.AllFrdWindow"
-        Title="AllFrdWindow">
+        Title="AllFrdWindow"
+        Icon="/Assets/Ricon.png">
     
     <Window.Styles>
         <StyleInclude Source="/Styles/MainStyles.axaml"></StyleInclude>
