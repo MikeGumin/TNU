@@ -29,22 +29,18 @@ public class EntryExportService : IEntryExportService
         {
             return OperationResult<string>.Fail("У вас нет завершенных записей.");
         }
-
-        var stream = await fileDialogService.SaveFileAsync($"output{DateTime.Now:yyyy-MM-dd_HH-mm-ss}");
-        if (stream is null)
-        {
-            return OperationResult<string>.Fail("Ошибка при сохранение файла. Попробуйте еще раз.");
-        }
         
-        var bomEncoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true);
-
+        string baseDirectory = AppContext.BaseDirectory;
+        
+        string filePath = Path.Combine(baseDirectory, $"output{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.csv");
+        
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             Delimiter = ";",
-            Encoding = bomEncoding,
+            Encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true)
         };
 
-        await using (var writer = new StreamWriter(stream, bomEncoding))
+        await using (var writer = new StreamWriter(filePath, false, config.Encoding)) 
         await using (var csv = new CsvWriter(writer, config))
         {
             csv.WriteHeader<EntryExportHeader>();

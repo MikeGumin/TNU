@@ -17,7 +17,7 @@
 		xmlns:behaviors="clr-namespace:TNU.Core.Behaviors"
 		xmlns:views="clr-namespace:TNU.Core"
 		xmlns:i="using:Avalonia.Xaml.Interactivity"
-
+	
 		xmlns:mainWindow="clr-namespace:TNU.Core.ViewModels.MainWindow"
 		
 

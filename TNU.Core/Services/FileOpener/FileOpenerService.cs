@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
+using CsvHelper.Configuration;
 
 namespace TNU.Core.Services.FileOpener
 {
@@ -24,7 +27,7 @@ namespace TNU.Core.Services.FileOpener
             // длаем из относительного пути полный 
             string fullPath = Path.Combine(AppContext.BaseDirectory, fileName);
             
-            Console.WriteLine(fullPath);
+            // Console.WriteLine(fullPath);
 
             if (File.Exists(fullPath))
             {

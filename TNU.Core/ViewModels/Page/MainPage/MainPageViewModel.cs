@@ -5,10 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CsvHelper.Configuration;
 using TNU.Core.Models;
 using TNU.Core.Models.Enum;
 using TNU.Core.Services;
@@ -97,7 +100,7 @@ public partial class MainPageViewModel : PageViewModelBase
         SystemStatic.GeneralStopwatch.Stop();
 
         Title = "MainPage";
-
+        
         foreach (string[] job in ReadCsvFile.Read(SystemConst.StartingPreparationsFilePath))
         {
             try
@@ -112,7 +115,10 @@ public partial class MainPageViewModel : PageViewModelBase
 
                 ListPreparation.Add(entry);
             }
-            catch{}
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
         }
     }
 
@@ -166,8 +172,13 @@ public partial class MainPageViewModel : PageViewModelBase
         {
             JobEntryClock model = MainObservation.AddToActivListR(j.Entry.JobName);
             model.Entry.JobCode = j.Entry.JobCode;
+            
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                Encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true)
+            };
 
-            File.AppendAllLines(SystemStatic.EntryFilePath, new[] { model.Entry.Id.ToString() });
+            File.AppendAllLines(SystemStatic.EntryFilePath, new[] { Environment.NewLine + model.Entry.Id}, config.Encoding);
 
             if (!j.IsSavePrepareJob)
             {
