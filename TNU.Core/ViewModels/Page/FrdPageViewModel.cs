@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using TNU.Core.Models;
@@ -65,6 +66,21 @@ public partial class FrdPageViewModel: PageViewModelBase
    [RelayCommand(CanExecute = nameof(CanExport))]
     private async Task ExportEntries()
     {
+        var dialog = new InformationWindow();
+        
+        if (ObservationElement.ActivityJobEntries.Count != 0 || ObservationElement.ActivityJobEntries.Any())
+        {
+            dialog.Title = "Ошибка экспорта";
+            dialog.MessageText.Text = "Есть несохраненные записи";
+            // 
+            
+            await dialog.ShowDialog(App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop1
+                ? desktop1.MainWindow
+                : null);
+            
+            return;
+        }
+        
         var exportResult = await _entryExportService.CsvEntryAsync(
             ObservationElement,
             FinishedEntriesRepository.FinishedEntries,
@@ -76,7 +92,6 @@ public partial class FrdPageViewModel: PageViewModelBase
             await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, FrdWindow!);
         }
         
-        var dialog = new InformationWindow();
         await dialog.ShowDialog(App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
             ? desktop.MainWindow
             : null);
@@ -126,12 +141,9 @@ public partial class FrdPageViewModel: PageViewModelBase
         get => _mainObservation;
         set
         {
-            if (_mainObservation == null)
-            {
-                _mainObservation = value;
-                OnPropertyChanged();
+            _mainObservation = value;
+            OnPropertyChanged();
                 //_finishedEntryService.FinishedEntries = value.FinishedEntries;
-            }
         }
     }
 
@@ -143,10 +155,10 @@ public partial class FrdPageViewModel: PageViewModelBase
     {
         var mainWindow = new Views.MainWindow()
         {
-            DataContext = App.Services.GetRequiredService<MainPageViewModel>()
+            DataContext = App.Services.GetRequiredService<Page.MainPage.MainPageViewModel>()
         };
 
-        if (mainWindow.DataContext is MainPageViewModel a)
+        if (mainWindow.DataContext is Page.MainPage.MainPageViewModel a)
         {
             a.MainObservation = ObservationElement;
         }

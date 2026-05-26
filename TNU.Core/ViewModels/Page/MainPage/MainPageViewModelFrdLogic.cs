@@ -2,9 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using TNU.Core.Models;
 using TNU.Core.Services;
-using TNU.Core.Services.CloseWindow;
 
-namespace TNU.Core.ViewModels;
+namespace TNU.Core.ViewModels.Page.MainPage;
 
 public partial class MainPageViewModel
 {

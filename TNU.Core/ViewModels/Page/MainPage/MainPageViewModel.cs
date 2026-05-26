@@ -1,16 +1,12 @@
-﻿using Avalonia.Controls;
-using CommunityToolkit.Mvvm.Input;
-using DocumentFormat.OpenXml.Vml.Office;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Globalization;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using Avalonia.Controls;
+using CommunityToolkit.Mvvm.Input;
 using CsvHelper.Configuration;
 using TNU.Core.Models;
 using TNU.Core.Models.Enum;
@@ -22,7 +18,7 @@ using TNU.Core.Services.FileDialog;
 using TNU.Core.Services.FinishedEntry;
 using EditEntryWindow = TNU.Core.Views.EditEntryWindow;
 
-namespace TNU.Core.ViewModels;
+namespace TNU.Core.ViewModels.Page.MainPage;
 
 
 public partial class MainPageViewModel : PageViewModelBase
@@ -259,7 +255,7 @@ public partial class MainPageViewModel : PageViewModelBase
                 jobModel.Entry.IsTimedCorrectly = jobModel.IsSavePrepareJob;
 
                 _finishedEntryService.SaveEntry(new List<JobEntry>() { jobModel.Entry });
-                MainObservation.JobEntriesActiv.Remove(jobModel);
+                MainObservation.ActivityJobEntries.Remove(jobModel);
 
                 ReadCsvFile.DeleteEntry(jobModel.Entry.Id.ToString(), SystemStatic.EntryFilePath);
                 ReadCsvFile.WriteJobInFile(jobModel.Entry, SystemStatic.EntryFilePath);

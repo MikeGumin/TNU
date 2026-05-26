@@ -4,27 +4,26 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 
-			 x:DataType="viewModels:MainPageViewModel"
+			 x:DataType="mainPage:MainPageViewModel"
 
 			 xmlns:ia="using:Avalonia.Xaml.Interactions"
-
-			 xmlns:mainWindow="clr-namespace:TNU.Core.ViewModels.MainWindow"
-			 xmlns:viewModels="clr-namespace:TNU.Core.ViewModels"
 			 xmlns:repository1="clr-namespace:TNU.Core.Repository"
 			 xmlns:behaviors="clr-namespace:TNU.Core.Behaviors"
 			 xmlns:enum="clr-namespace:TNU.Core.Models.Enum"
 			 xmlns:i="using:Avalonia.Xaml.Interactivity"
-			 x:Class="TNU.Core.MainPageView">
+			 xmlns:mainPage="clr-namespace:TNU.Core.ViewModels.Page.MainPage"
+			 x:Class="TNU.Core.MainPageView"
+			 FontFamily="RussianRailFont">
 
 	<Design.DataContext>
-		<viewModels:MainPageViewModel/>
+		<mainPage:MainPageViewModel/>
 	</Design.DataContext>
 
 	<UserControl.Styles>
 		<StyleInclude Source="/Styles/MainStyles.axaml"></StyleInclude>
 	</UserControl.Styles>
 
-	<Grid ShowGridLines="True">
+	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="0"/>
 			<ColumnDefinition Width="70*"/>
@@ -41,13 +40,13 @@
 		<!--Статчные поля-->
 		<StackPanel Classes="Header" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3">
 			<TextBlock VerticalAlignment="Center" Text="Дата: "/>
-			<TextBox Width="100" Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}'}"/>
+			<TextBox Classes="TextBoxMainTime" Text="{Binding MainObservation.JobDate, StringFormat='{}{0:dd/MM/yyyy}'}" Width="110"/>
 			<TextBlock VerticalAlignment="Center" Margin="15 0 0 0" Text="Код респондента: "/>
 			<TextBlock VerticalAlignment="Center" Text="{Binding MainObservation.RespondentId}"/>
 			<TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="Предприятие: "/>
 			<TextBlock VerticalAlignment="Center" Text="{Binding MainObservation.City}"/>
 			<TextBlock VerticalAlignment="Center" Margin="10 0 0 0" Text="Начало наблюдения:"/>
-			<TextBox Text="{Binding GeneralTime, StringFormat='{}{0:HH:mm:ss}'}" Width="75"/>
+			<TextBox Classes="TextBoxMainTime" Text="{Binding GeneralTime, StringFormat='{}{0:HH:mm:ss}'}" Width="95" />
 			<!--<Button Content="Завершить ФРД" Command="{Binding OpenFrdWindowCommand}" />-->
 		</StackPanel>
 
@@ -65,13 +64,11 @@
 								   Margin="5"
 								   HorizontalAlignment="Stretch"
 								   TextAlignment="Center"
-								   Padding="5"
-
-								   />
+								   Padding="5"/>
 
 						<ScrollViewer Grid.Row="1">
 							<StackPanel>
-								<ItemsControl ItemsSource="{Binding MainObservation.JobEntriesActiv}">
+								<ItemsControl ItemsSource="{Binding MainObservation.ActivityJobEntries}">
 									<ItemsControl.ItemTemplate>
 										<DataTemplate>
 											<StackPanel

@@ -47,8 +47,8 @@
 
                         <!-- Чекбокс активен (checked) -->
                         <Style Selector="DataGridCell CheckBox:checked /template/ Border#NormalRectangle">
-                            <Setter Property="Background" Value="#4CAF50"/>
-                            <Setter Property="BorderBrush" Value="#388E3C"/>
+                            <Setter Property="Background" Value="#0066A1"/>
+                            <Setter Property="BorderBrush" Value="#00a0dc"/>
                         </Style>
 
                         <!-- Чекбокс неактивен (unchecked) -->
@@ -98,7 +98,7 @@
                             </DataGridTemplateColumn.CellEditingTemplate>
                         </DataGridTemplateColumn>
                         <DataGridCheckBoxColumn Header="Уточнить время" Binding="{Binding IsTimedCorrectly}"/>
-                        <DataGridTextColumn Width="*" Header="Коментарий" Binding="{Binding Description}"/>
+                        <DataGridTextColumn Width="*" Header="Комментарий" Binding="{Binding Description}"/>
                     </DataGrid.Columns>
                 </DataGrid>
 

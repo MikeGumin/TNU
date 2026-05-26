@@ -27,7 +27,7 @@ namespace TNU.Core.ViewModels.MainWindow
         public MainWindowViewModel(Observation obs)
         {
             MainPageView main = new MainPageView();
-            MainPageViewModel maintPage = App.Services.GetRequiredService<MainPageViewModel>();
+            Page.MainPage.MainPageViewModel maintPage = App.Services.GetRequiredService<Page.MainPage.MainPageViewModel>();
             maintPage.MainObservation = obs;
             main.DataContext = maintPage;
 
