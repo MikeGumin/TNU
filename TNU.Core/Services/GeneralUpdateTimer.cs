@@ -43,5 +43,13 @@ namespace TNU.Core.Services
         {
             dl += model.Timer.ReDrowTimer;
         }
+        static public void RemoveEvent(JobEntryClock model)
+        {
+            try
+            {
+                dl -= model.Timer.ReDrowTimer;
+            }
+            catch { }
+        }
     }
 }
