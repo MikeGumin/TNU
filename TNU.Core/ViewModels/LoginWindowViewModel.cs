@@ -90,11 +90,15 @@ namespace TNU.Core.ViewModels
 
             foreach (var file in files)
             {
-                FrdRepository.FinishedFrd.Add(new FrdModel()
+                var metaData = GetMetaDataHelper.GetMetaData(file);
+            
+                FrdRepository.FinishedFrd.Add( new FrdModel()
                 {
                     Id = frdId++,
                     FileName = Path.GetFileName(file),
-                    CreatedAt = File.GetCreationTime(file),
+                    CreatedAt =  File.GetCreationTime(file),
+                    Author = metaData.Author,
+                    Enterprise = metaData.Enterprise,
                 });
             }
 
