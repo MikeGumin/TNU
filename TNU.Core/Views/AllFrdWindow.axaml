@@ -59,6 +59,13 @@
                         <DataGridTextColumn Header="Время окн."
                                             Binding="{Binding Path=CreatedAt}"
                                             x:DataType="models:FrdModel"/>
+                        <DataGridTextColumn Header="ФИО эксперта"
+                                            Binding="{Binding Path=Author}"
+                                            x:DataType="models:FrdModel"/>
+                        <DataGridTextColumn Header="Предприятие"
+                                            Binding="{Binding Path=Enterprise}"
+                                            x:DataType="models:FrdModel"/>
+                        
                     </DataGrid.Columns>
                 </DataGrid>
                 
