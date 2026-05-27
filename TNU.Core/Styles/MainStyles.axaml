@@ -283,4 +283,33 @@
 		<Setter Property="HorizontalContentAlignment" Value="Left"/>
 		<Setter Property="BorderBrush" Value="{StaticResource Page}"/>
 	</Style>
+	
+	<Style Selector="SplitView > Border > StackPanel > Button:pointerover /template/ ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource BtnHover}"/>
+	</Style>
+	
+	<!-- Бургер из логина -->
+	<Style Selector="Button.BurgerButton">
+		<Setter Property="HorizontalAlignment" Value="Stretch"/>
+		<Setter Property="HorizontalContentAlignment" Value="Left"/>
+		<Setter Property="Background" Value="{StaticResource BtnDef}"/>
+		<Setter Property="CornerRadius" Value="5"/>
+		<Setter Property="Padding" Value="16, 2"/>
+		<Setter Property="Cursor" Value="Hand"/>
+		<Setter Property="FontFamily" Value="StaticResource RussianRailFont}"/>
+	</Style>
+	<Style Selector="TextBlock.BurgerTextBlock">
+		<Setter Property="Foreground" Value="#C8CCDE"/>
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="LineHeight" Value="18"/>
+		<Setter Property="TextWrapping" Value="Wrap"/>
+		<Setter Property="MaxWidth" Value="170"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+	</Style>
+	<Style Selector="Button.NavItem:pointerover">
+		<Setter Property="Background" Value="{StaticResource BtnHover}"/>
+	</Style>
+	<Style Selector="Button.NavItem:pressed">
+		<Setter Property="Background" Value="{StaticResource BtnHover}"/>
+	</Style>
 </Styles>
