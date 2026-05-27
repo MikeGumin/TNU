@@ -38,6 +38,20 @@ namespace TNU.Core.Services
             }
         }
 
+        static public void ChangeStatusTimer(JobEntryClock jobTimer)
+        {
+            if (jobTimer.Entry.RecordStatus == RecordStatusEnum.Start)
+            {
+                jobTimer.Entry.RecordStatus = RecordStatusEnum.Stop;
+                GeneralUpdateTimer.RemoveEvent(jobTimer);
+            }
+            else
+            {
+                jobTimer.Entry.RecordStatus = RecordStatusEnum.Start;
+                GeneralUpdateTimer.AddEvent(jobTimer);
+            }
+        }
+
         [RelayCommand]
         static public void EndTimer(JobEntryClock jobTimer)
         {

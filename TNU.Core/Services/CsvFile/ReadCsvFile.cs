@@ -11,7 +11,7 @@ namespace TNU.Core.Services.CsvFile
 {
     static class ReadCsvFile
     {
-        private static readonly string FilePath = SystemConst.StartingPreparationsFilePath;
+        private static readonly string FilePath = SystemConst.JobNameFilePath;
         public static List<string[]> Read(string FilePath = SystemConst.JobNameFilePath)
         {
             if (!File.Exists(FilePath))

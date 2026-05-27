@@ -136,9 +136,6 @@ public partial class MainPageViewModel : PageViewModelBase
         JobEntryClock model = MainObservation.AddToActivListR();
 
         File.AppendAllLines(SystemStatic.EntryFilePath, new[] { model.Entry.Id.ToString() });
-
-        GeneralUpdateTimer.AddEvent(model);
-
     }
 
 
@@ -180,8 +177,6 @@ public partial class MainPageViewModel : PageViewModelBase
             {
                 DeliteFromListPreparation(j);
             }
-
-            GeneralUpdateTimer.AddEvent(model);
 
             if (!GeneralUpdateTimer.IsEnabled)
             {
@@ -227,10 +222,8 @@ public partial class MainPageViewModel : PageViewModelBase
     {
         if (obj is JobEntryClock j)
         {
-            TimerControlService.ChangeTimer(j);
+            TimerControlService.ChangeStatusTimer(j);
             j.ChangeBtnText();
-
-
         }
     }
 

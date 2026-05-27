@@ -121,7 +121,15 @@ namespace TNU.Core.ViewModels
         [RelayCommand]
         private async Task<OperationResult<string>> ImportActivityList()
         {
-            await _fileDialogService.OpenFileAsync();
+            await _fileDialogService.OpenFileAsync(SystemConst.JobNameFilePath);
+
+            return OperationResult<string>.Ok();
+        }
+
+        [RelayCommand]
+        private async Task<OperationResult<string>> ImportStartPrepairList()
+        {
+            await _fileDialogService.OpenFileAsync(SystemConst.StartingPreparationsFilePath);
 
             return OperationResult<string>.Ok();
         }

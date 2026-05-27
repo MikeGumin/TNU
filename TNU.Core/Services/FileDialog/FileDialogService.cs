@@ -46,7 +46,7 @@ public class FileDialogService : IFileDialogService
     }
     
     /// <inheritdoc />
-    public async Task OpenFileAsync()
+    public async Task OpenFileAsync(string relativePath)
     {
         var topLevel = _getTopLevel();
         if (topLevel is null) return;
@@ -66,7 +66,6 @@ public class FileDialogService : IFileDialogService
         
         if (files.Count >= 1)
         {
-            string relativePath = SystemConst.JobNameFilePath;
             string fullPath = Path.Combine(AppContext.BaseDirectory, relativePath);
             
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -87,25 +86,9 @@ public class FileDialogService : IFileDialogService
 
                     writer.WriteLine(line);
                 
-                    // var columns = line.Split(':');
-                    //
-                    // var jobName = columns[0].Trim();
-                    // JobNameRepository.JobNameList.Add(new JobTitleEnum(jobName));
-                    //
-                    // if (columns.Length > 1)
-                    // {
-                    //     var code = columns[1].Trim();
-                    //     if (!string.IsNullOrWhiteSpace(code))
-                    //     {
-                    //         JobNameRepository.JobNameCodeList[jobName] = code;    
-                    //     }  
-                    // }
                 }
             }
-            
         }
-        
-        // foreach (var file in JobNameRepository.JobNameCodeList) Console.WriteLine(file.Key + "-" + file.Value);
         
     }
 }

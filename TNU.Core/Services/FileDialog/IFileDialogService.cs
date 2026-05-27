@@ -17,5 +17,5 @@ public interface IFileDialogService
     /// <summary>
     /// Открыть файловый диалог 
     /// </summary>
-    Task OpenFileAsync();
+    Task OpenFileAsync(string relativePath);
 }

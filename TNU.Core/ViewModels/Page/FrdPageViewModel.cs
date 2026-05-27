@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using TNU.Core.Models;
 using TNU.Core.Repository;
+using TNU.Core.Services;
 using TNU.Core.Services.CloseWindow;
 using TNU.Core.Services.EntryExport;
 using TNU.Core.Services.FileDialog;
@@ -20,15 +21,15 @@ namespace TNU.Core.ViewModels;
 /// <summary>
 /// Логика окна с сохраненными записями за весь ФРД
 /// </summary>
-public partial class FrdPageViewModel: PageViewModelBase
+public partial class FrdPageViewModel : PageViewModelBase
 {
     private readonly IEntryExportService _entryExportService;
     private readonly IFileDialogService _fileDialogService;
     private readonly ErrorMessageHelper _errorMessageHelper;
     private readonly IWindowService _windowService;
-    private int frdId = 1;
+
     public Observation ObservationElement { get; set; } = new Observation();
-    
+
     public Window? FrdWindow { get; set; }
 
 
@@ -48,7 +49,7 @@ public partial class FrdPageViewModel: PageViewModelBase
 
     public FrdPageViewModel(
         IEntryExportService entryExportService,
-        IFileDialogService fileDialogService, 
+        IFileDialogService fileDialogService,
         ErrorMessageHelper errorMessageHelper,
         IWindowService windowService)
     {
@@ -60,27 +61,30 @@ public partial class FrdPageViewModel: PageViewModelBase
         Title = "FrdList";
     }
 
-   /// <summary>
-   /// Метод для экспорта завершенных задач
-   /// </summary>
-   [RelayCommand(CanExecute = nameof(CanExport))]
+    /// <summary>
+    /// Метод для экспорта завершенных задач
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanExport))]
     private async Task ExportEntries()
     {
+        GeneralUpdateTimer.StopTimer();
+        SystemStatic.GeneralStopwatch.Stop();
+
         var dialog = new InformationWindow();
-        
+
         if (ObservationElement.ActivityJobEntries.Count != 0 || ObservationElement.ActivityJobEntries.Any())
         {
             dialog.Title = "Ошибка экспорта";
             dialog.MessageText.Text = "Есть несохраненные записи";
             // 
-            
+
             await dialog.ShowDialog(App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop1
                 ? desktop1.MainWindow
                 : null);
-            
+
             return;
         }
-        
+
         var exportResult = await _entryExportService.CsvEntryAsync(
             ObservationElement,
             FinishedEntriesRepository.FinishedEntries,
@@ -91,7 +95,7 @@ public partial class FrdPageViewModel: PageViewModelBase
         {
             await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, FrdWindow!);
         }
-        
+
         await dialog.ShowDialog(App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
             ? desktop.MainWindow
             : null);
@@ -104,13 +108,13 @@ public partial class FrdPageViewModel: PageViewModelBase
     private async Task ExportEntriesInGanta()
     {
         var exportResult = await _entryExportService.ExportDiagrammaGanta(FinishedEntriesRepository.FinishedEntries, _fileDialogService);
-        
+
         if (exportResult.IsFailed)
         {
             await _errorMessageHelper.ShowErrorMessage("Ошибка экспорта файлов", exportResult.ErrorMessage, FrdWindow!);
         }
     }
-    
+
     #region Проверка на возможность экспорта
 
     /// <summary>
@@ -134,7 +138,7 @@ public partial class FrdPageViewModel: PageViewModelBase
     private bool CanExport() => !_isExporting;
 
     #endregion
-    
+
     private Observation _mainObservation;
     public Observation MainObservation
     {
@@ -143,7 +147,7 @@ public partial class FrdPageViewModel: PageViewModelBase
         {
             _mainObservation = value;
             OnPropertyChanged();
-                //_finishedEntryService.FinishedEntries = value.FinishedEntries;
+            //_finishedEntryService.FinishedEntries = value.FinishedEntries;
         }
     }
 
@@ -172,19 +176,21 @@ public partial class FrdPageViewModel: PageViewModelBase
     private void GoToListFrd()
     {
         var files = Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory, "output*", SearchOption.AllDirectories);
-        
+
         FrdRepository.FinishedFrd.Clear();
+
+        int frdId = 1;
 
         foreach (var file in files)
         {
-            FrdRepository.FinishedFrd.Add( new FrdModel()
+            FrdRepository.FinishedFrd.Add(new FrdModel()
             {
                 Id = frdId++,
                 FileName = Path.GetFileName(file),
-                CreatedAt =  File.GetCreationTime(file),
+                CreatedAt = File.GetCreationTime(file),
             });
         }
-        
+
         var frdWindow = new Views.AllFrdWindow()
         {
             DataContext = App.Services.GetRequiredService<AllFrdWindowViewModel>()

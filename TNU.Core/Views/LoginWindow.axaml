@@ -111,6 +111,18 @@
                                     <TextBlock Classes="BurgerTextBlock" Text="Загрузить перечень&#x0a;наименований задач"/>
                                 </StackPanel>
                             </Button>
+
+                            <Button Classes="BurgerButton" Command="{Binding ImportStartPrepairListCommand}">
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <Path Width="18" Height="16"
+                                          Stretch="Uniform"
+                                          Fill="{StaticResource Page}"
+                                          Data="M8,1 L8,11 M4,7 L8,11 L12,7 M1,13 L15,13 L15,15 L1,15 Z"/>
+                                    <TextBlock Classes="BurgerTextBlock" Text="Загрузить перечень&#x0a;стартовых заготовок"/>
+                                </StackPanel>
+                            </Button>
+
+
                         </StackPanel>
                     </Border>
                 </SplitView.Pane>
