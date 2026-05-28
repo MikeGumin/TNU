@@ -92,7 +92,16 @@ namespace TNU.Core.ViewModels
             {
                 var metaData = GetMetaDataHelper.GetMetaData(file);
             
-                FrdRepository.FinishedFrd.Add( new FrdModel()
+                FrdRepository.FinishedFrd.Add( new FrdModel
+                {
+                    Id = frdId,
+                    FileName = Path.GetFileName(file),
+                    CreatedAt =  File.GetCreationTime(file),
+                    Author = metaData.Author,
+                    Enterprise = metaData.Enterprise,
+                });
+            
+                FrdRepository.FinishedFrdReserve.Add( new FrdModel
                 {
                     Id = frdId++,
                     FileName = Path.GetFileName(file),

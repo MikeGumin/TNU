@@ -11,6 +11,7 @@ using TNU.Core.Services.CloseWindow;
 using TNU.Core.Services.EntryExport;
 using TNU.Core.Services.FileDialog;
 using TNU.Core.Services.FileOpener;
+using TNU.Core.Services.FilterLogic;
 using TNU.Core.Services.FinishedEntry;
 using TNU.Core.ViewModels;
 using TNU.Core.Views.DialogViews;
@@ -51,6 +52,7 @@ public partial class App : Application
             collection.AddScoped<IEntryExportService, EntryExportService>();
             collection.AddScoped<IFileOpenerService, FileOpenerService>();
             collection.AddScoped<IFinishedEntryService, FinishedEntryService>();
+            collection.AddScoped<IFilterLogicService, FilterLogicService>();
 
             // Передаём Func — TopLevel будет получен позже, в момент вызова
             collection.AddSingleton<IFileDialogService>(_ =>

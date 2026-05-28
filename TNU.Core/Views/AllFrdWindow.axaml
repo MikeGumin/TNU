@@ -5,6 +5,7 @@
         xmlns:repository1="clr-namespace:TNU.Core.Repository"
         xmlns:models="clr-namespace:TNU.Core.Models"
         xmlns:viewModels="clr-namespace:TNU.Core.ViewModels"
+        xmlns:views="clr-namespace:TNU.Core.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="TNU.Core.Views.AllFrdWindow"
         Title="AllFrdWindow"
@@ -16,7 +17,7 @@
     
     <DockPanel x:Name="FrdDockPanel" x:DataType="viewModels:AllFrdWindowViewModel" Background="#F8F8F8">
         <Border Padding="10">
-            <Grid RowDefinitions="Auto, *, Auto" RowSpacing="10">
+            <Grid RowDefinitions="Auto, Auto, *, Auto" RowSpacing="10">
                 
                 <TextBlock Grid.Row="0"
                            Text="Список ФРД на устройстве"
@@ -25,7 +26,39 @@
                            HorizontalAlignment="Center"
                            Foreground="#8D8D8D"/>
                 
-                <DataGrid Grid.Row="1"
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center" Text="Фильтр"/> 
+                    
+                    <ComboBox Name="FieldComboBox" Width="220" 
+                              SelectedIndex="0"
+                              SelectionChanged="FieldComboBox_SelectedIndexChanged"
+                              SelectedItem="{Binding SelectedField}"
+                              Background = "{StaticResource Page}"
+                              Foreground = "{StaticResource MainFont}">
+                        <ComboBoxItem Content="Id" />
+                        <ComboBoxItem Content="Наименование файла" />
+                        <ComboBoxItem Content="Время окн." />
+                        <ComboBoxItem Content="ФИО эксперта" />
+                        <ComboBoxItem Content="Предприятие" />
+                    </ComboBox>
+                    
+                    <ComboBox Name="OperatorComboBox" Width="70" SelectedIndex="0" 
+                              SelectedItem="{Binding SelectedOperator}"
+                              ItemsSource="{Binding ListOperators}"
+                              Background = "{StaticResource Page}"
+                              Foreground = "{StaticResource MainFont}"/>
+                    
+                    <TextBlock VerticalAlignment="Center" Text="Значение:" />
+                    <TextBox BorderThickness="2" BorderBrush="{StaticResource SecondFond}" Name="ValTextBox" HorizontalContentAlignment="Center" Text="{Binding Value}"/>
+                    
+                    <Button Content="Фильтр" Command="{Binding FilterFrdListCommand}"/>
+                    
+                    <Button Margin="30 0 0 0" Content="Очистить" 
+                            Command="{Binding CleaningFrdFilterCommand}"/>
+                    
+                </StackPanel>
+                
+                <DataGrid Grid.Row="2"
                           ItemsSource="{x:Static repository1:FrdRepository.FinishedFrd}"
                           AutoGenerateColumns="False"
                           GridLinesVisibility="All"
@@ -69,7 +102,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 
-                <StackPanel Grid.Row="2"
+                <StackPanel Grid.Row="3"
                             Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             Margin="0 0 0 10">
