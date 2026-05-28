@@ -32,9 +32,6 @@ public static class GetMetaDataHelper
         csv.ReadHeader();
         
         csv.Read();
-        
-        var firstLine = File.ReadLines(filePath).FirstOrDefault();
-        Console.WriteLine($"Первая строка: {firstLine}");
 
         var author = csv.GetField("ФИО наблюдателя");
         var enterprise = csv.GetField("Предприятие");

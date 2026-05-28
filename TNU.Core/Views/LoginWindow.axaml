@@ -161,7 +161,7 @@
                                TextWrapping="Wrap" Foreground="Gray"/>
                     <TextBox Classes="LoginText" Text="{Binding ObservationElement.City}"/>
 
-                    <TextBlock Text="Предпиятие проведения замера"
+                    <TextBlock Text="Предприятие проведения замера"
                                TextWrapping="Wrap" Foreground="Gray"/>
                     <TextBox Classes="LoginText" Text="{Binding ObservationElement.Enterprise}"/>
 

@@ -179,7 +179,16 @@ public partial class FrdPageViewModel: PageViewModelBase
         {
             var metaData = GetMetaDataHelper.GetMetaData(file);
             
-            FrdRepository.FinishedFrd.Add( new FrdModel()
+            FrdRepository.FinishedFrd.Add( new FrdModel
+            {
+                Id = frdId,
+                FileName = Path.GetFileName(file),
+                CreatedAt =  File.GetCreationTime(file),
+                Author = metaData.Author,
+                Enterprise = metaData.Enterprise,
+            });
+            
+            FrdRepository.FinishedFrdReserve.Add( new FrdModel
             {
                 Id = frdId++,
                 FileName = Path.GetFileName(file),

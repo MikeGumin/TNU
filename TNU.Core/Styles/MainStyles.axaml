@@ -339,4 +339,16 @@
 	<Style Selector="Button.NavItem:pressed">
 		<Setter Property="Background" Value="{StaticResource BtnHover}"/>
 	</Style>
+	   
+	   <Style Selector="ComboBoxItem">
+		   <Setter Property="Background" Value="{StaticResource Page}"/>
+		   <Setter Property="Foreground" Value="{StaticResource MainFont}"/>
+	   </Style>
+	   <Style Selector="ComboBox">
+		   <Setter Property="Background" Value="{StaticResource Page}"/>
+		   <Setter Property="Foreground" Value="{StaticResource MainFont}"/>
+		   <Setter Property="BorderThickness" Value="2"/>
+		   <Setter Property="BorderBrush" Value="{StaticResource SecondFond}"/>
+	   </Style>
+	   
 </Styles>
